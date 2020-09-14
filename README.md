@@ -1,5 +1,5 @@
-# Project Name
-## FintechApp
+### Project Name
+# FintechApp
 
 ### Author
 Rudolf Oganesyan
