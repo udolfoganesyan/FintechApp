@@ -47,6 +47,13 @@ class AvatarImageView: UIImageView {
         nameLabel.font = .systemFont(ofSize: self.frame.height / 2)
     }
     
+    private func setupLabel() {
+        addSubview(nameLabel)
+        
+        nameLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        nameLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+    }
+    
     func setupWith(firstName: String, lastName: String, color: UIColor) {
         nameLabel.text = String(firstName.prefix(1))
         nameLabel.text?.append(contentsOf: lastName.prefix(1))
@@ -64,12 +71,5 @@ class AvatarImageView: UIImageView {
         bottomAnchor.constraint(equalTo: parentView.bottomAnchor).isActive = true
         leadingAnchor.constraint(equalTo: parentView.leadingAnchor).isActive = true
         trailingAnchor.constraint(equalTo: parentView.trailingAnchor).isActive = true
-    }
-    
-    private func setupLabel() {
-        addSubview(nameLabel)
-        
-        nameLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        nameLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
 }
