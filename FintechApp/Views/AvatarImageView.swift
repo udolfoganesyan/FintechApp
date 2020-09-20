@@ -15,7 +15,7 @@ class AvatarImageView: UIImageView {
         case square
     }
     
-    private var style: AvatarStyle
+    private let style: AvatarStyle
     
     private let nameLabel: UILabel = {
         let label = UILabel()
