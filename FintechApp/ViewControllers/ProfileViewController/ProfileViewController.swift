@@ -13,10 +13,22 @@ class ProfileViewController: UIViewController {
     
     @IBOutlet private weak var avatarContainerView: UIView!
     @IBOutlet private weak var nameLabel: UILabel!
+    @IBOutlet private weak var aboutLabel: UILabel!
     @IBOutlet private weak var saveButton: UIButton!
     @IBOutlet private weak var editButton: UIButton!
     
     private let avatarView = AvatarImageView(style: .circle)
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        
+        //        save button has not been initialized yet
+        //            Logger.log("\(saveButton.frame)")
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +42,7 @@ class ProfileViewController: UIViewController {
         super.viewDidAppear(animated)
         
         Logger.log("\(saveButton.frame)")
+        //        Once view controllers' view has been added to the view hierarchy, all ui element have been initalised and drawn viewDidAppear is called, so before viewdidappear frame can be different.
     }
     
     private func setupSubviews() {
@@ -66,7 +79,9 @@ class ProfileViewController: UIViewController {
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
+        #if !targetEnvironment(simulator)
         alertController.addAction(cameraAction)
+        #endif
         alertController.addAction(galleryAction)
         alertController.addAction(cancelAction)
         alertController.pruneNegativeWidthConstraints()
@@ -82,12 +97,9 @@ class ProfileViewController: UIViewController {
         imagePickerController.delegate = self
         imagePickerController.sourceType = type
         if type == .camera {
-            #if !targetEnvironment(simulator)
             imagePickerController.cameraDevice = .front
-            #endif
         }
         imagePickerController.allowsEditing = true
-        imagePickerController.mediaTypes = [String(kUTTypeImage)]
         
         present(imagePickerController, animated: true)
     }
