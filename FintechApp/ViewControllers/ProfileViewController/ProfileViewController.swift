@@ -62,7 +62,7 @@ class ProfileViewController: UIViewController {
         avatarContainerView.bringSubviewToFront(editButton)
     }
     
-    @IBAction func editButtonTouched(_ sender: UIButton) {
+    @IBAction private func editButtonTouched(_ sender: UIButton) {
         presentaActionSheet()
     }
     
