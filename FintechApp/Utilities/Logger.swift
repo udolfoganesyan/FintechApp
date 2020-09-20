@@ -13,7 +13,7 @@ struct Logger {
     // in case we dont need logs even in debug mode
     static let isOn = true
     
-    static func log(message: String) {
+    static func log(_ message: String) {
         #if DEBUG
         if isOn {
             print(message, "\n")
