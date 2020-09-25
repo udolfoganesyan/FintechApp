@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A10A883C251E8BF8006B3017 /* OnlineBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A883B251E8BF8006B3017 /* OnlineBadgeView.swift */; };
 		A139ED93251741A000DA947B /* AvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A139ED92251741A000DA947B /* AvatarImageView.swift */; };
 		A147585D250F5FA2004DFCAA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A147585C250F5FA2004DFCAA /* AppDelegate.swift */; };
 		A1475861250F5FA2004DFCAA /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1475860250F5FA2004DFCAA /* ProfileViewController.swift */; };
@@ -16,9 +17,16 @@
 		A1475874250F6036004DFCAA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A1475873250F6036004DFCAA /* README.md */; };
 		A16570822517600300C22EAD /* UIAlertController+ConstraintsFix.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16570812517600300C22EAD /* UIAlertController+ConstraintsFix.swift */; };
 		A16570852517E6A700C22EAD /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A16570842517E6A700C22EAD /* ProfileViewController.xib */; };
+		A1C7439B251E386B005B5195 /* ConversationsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C7439A251E386B005B5195 /* ConversationsListViewController.swift */; };
+		A1C743A0251E395D005B5195 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C7439F251E395D005B5195 /* TestData.swift */; };
+		A1C743A3251E39BF005B5195 /* ConversationCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C743A2251E39BF005B5195 /* ConversationCellModel.swift */; };
+		A1C743A7251E3ABA005B5195 /* ConversationsListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C743A5251E3ABA005B5195 /* ConversationsListTableViewCell.swift */; };
+		A1C743A8251E3ABA005B5195 /* ConversationsListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A1C743A6251E3ABA005B5195 /* ConversationsListTableViewCell.xib */; };
+		A1C743AB251E3C6B005B5195 /* UITableViewCell+reuseIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C743AA251E3C6B005B5195 /* UITableViewCell+reuseIdentifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A10A883B251E8BF8006B3017 /* OnlineBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineBadgeView.swift; sourceTree = "<group>"; };
 		A139ED92251741A000DA947B /* AvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarImageView.swift; sourceTree = "<group>"; };
 		A1475859250F5FA2004DFCAA /* FintechApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FintechApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A147585C250F5FA2004DFCAA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -30,6 +38,12 @@
 		A1475873250F6036004DFCAA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A16570812517600300C22EAD /* UIAlertController+ConstraintsFix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+ConstraintsFix.swift"; sourceTree = "<group>"; };
 		A16570842517E6A700C22EAD /* ProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
+		A1C7439A251E386B005B5195 /* ConversationsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListViewController.swift; sourceTree = "<group>"; };
+		A1C7439F251E395D005B5195 /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
+		A1C743A2251E39BF005B5195 /* ConversationCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCellModel.swift; sourceTree = "<group>"; };
+		A1C743A5251E3ABA005B5195 /* ConversationsListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListTableViewCell.swift; sourceTree = "<group>"; };
+		A1C743A6251E3ABA005B5195 /* ConversationsListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationsListTableViewCell.xib; sourceTree = "<group>"; };
+		A1C743AA251E3C6B005B5195 /* UITableViewCell+reuseIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+reuseIdentifier.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				A16570862517EC0E00C22EAD /* ProfileViewController */,
+				A1C7439D251E3872005B5195 /* ConversationsList */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -55,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				A139ED92251741A000DA947B /* AvatarImageView.swift */,
+				A10A883B251E8BF8006B3017 /* OnlineBadgeView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -103,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				A16570812517600300C22EAD /* UIAlertController+ConstraintsFix.swift */,
+				A1C743AA251E3C6B005B5195 /* UITableViewCell+reuseIdentifier.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -114,6 +131,18 @@
 				A16570842517E6A700C22EAD /* ProfileViewController.xib */,
 			);
 			path = ProfileViewController;
+			sourceTree = "<group>";
+		};
+		A1C7439D251E3872005B5195 /* ConversationsList */ = {
+			isa = PBXGroup;
+			children = (
+				A1C7439A251E386B005B5195 /* ConversationsListViewController.swift */,
+				A1C743A2251E39BF005B5195 /* ConversationCellModel.swift */,
+				A1C7439F251E395D005B5195 /* TestData.swift */,
+				A1C743A5251E3ABA005B5195 /* ConversationsListTableViewCell.swift */,
+				A1C743A6251E3ABA005B5195 /* ConversationsListTableViewCell.xib */,
+			);
+			path = ConversationsList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -177,6 +206,7 @@
 				A1475869250F5FA3004DFCAA /* LaunchScreen.storyboard in Resources */,
 				A1475866250F5FA3004DFCAA /* Assets.xcassets in Resources */,
 				A1475874250F6036004DFCAA /* README.md in Resources */,
+				A1C743A8251E3ABA005B5195 /* ConversationsListTableViewCell.xib in Resources */,
 				A16570852517E6A700C22EAD /* ProfileViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -190,9 +220,15 @@
 			files = (
 				A16570822517600300C22EAD /* UIAlertController+ConstraintsFix.swift in Sources */,
 				A1475861250F5FA2004DFCAA /* ProfileViewController.swift in Sources */,
+				A1C743A3251E39BF005B5195 /* ConversationCellModel.swift in Sources */,
 				A139ED93251741A000DA947B /* AvatarImageView.swift in Sources */,
 				A1475871250F5FEA004DFCAA /* Logger.swift in Sources */,
+				A1C743A7251E3ABA005B5195 /* ConversationsListTableViewCell.swift in Sources */,
+				A10A883C251E8BF8006B3017 /* OnlineBadgeView.swift in Sources */,
 				A147585D250F5FA2004DFCAA /* AppDelegate.swift in Sources */,
+				A1C743A0251E395D005B5195 /* TestData.swift in Sources */,
+				A1C7439B251E386B005B5195 /* ConversationsListViewController.swift in Sources */,
+				A1C743AB251E3C6B005B5195 /* UITableViewCell+reuseIdentifier.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
