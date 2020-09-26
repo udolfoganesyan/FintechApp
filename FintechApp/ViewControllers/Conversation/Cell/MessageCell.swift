@@ -64,9 +64,7 @@ final class MessageCell: UITableViewCell {
 // MARK: - ConfigurableView
 
 extension MessageCell: ConfigurableView {
-    
-    typealias ConfigurationModel = MessageCellModel
-    
+        
     func configure(with model: MessageCellModel) {
         messageLabel.text = model.text
         isIncoming = Bool.random()

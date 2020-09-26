@@ -9,7 +9,6 @@
 import UIKit
 
 protocol ConfigurableView {
-    
     associatedtype ConfigurationModel
     func configure(with model: ConfigurationModel)
 }
@@ -37,9 +36,7 @@ final class ConversationCell: UITableViewCell {
 // MARK: - ConfigurableView
 
 extension ConversationCell: ConfigurableView {
-    
-    typealias ConfigurationModel = ConversationCellModel
-    
+        
     func configure(with model: ConversationCellModel) {
         nameLabel.text = model.name
         avatarView.setupWith(firstName: model.name, lastName: "", color: .randomLightColor)

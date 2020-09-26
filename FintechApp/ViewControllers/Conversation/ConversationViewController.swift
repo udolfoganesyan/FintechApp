@@ -19,6 +19,8 @@ class ConversationViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        navigationController?.navigationBar.prefersLargeTitles = false
+
         tableView.scrollToRow(at: IndexPath(row: messagesTestData.count - 1, section: 0), at: .bottom, animated: true)
     }
     
@@ -26,6 +28,7 @@ class ConversationViewController: UITableViewController {
         tableView.register(MessageCell.self, forCellReuseIdentifier: MessageCell.reuseIdentifier)
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
+        tableView.tableFooterView = UIView()
     }
 }
 

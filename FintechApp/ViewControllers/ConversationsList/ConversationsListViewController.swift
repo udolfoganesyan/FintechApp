@@ -19,6 +19,12 @@ class ConversationsListViewController: UITableViewController {
         setupTableView()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
     private func setupNavigationBar() {
         title = "Tinkoff Chat"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -47,6 +53,7 @@ class ConversationsListViewController: UITableViewController {
     
     private func setupTableView() {
         tableView.register(ConversationCell.nib, forCellReuseIdentifier: ConversationCell.reuseIdentifier)
+        tableView.tableFooterView = UIView()
     }
 }
 
@@ -55,7 +62,9 @@ class ConversationsListViewController: UITableViewController {
 extension ConversationsListViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        navigationController?.pushViewController(ConversationViewController(), animated: true)
+        let conversationsViewController = ConversationViewController()
+        conversationsViewController.title = conversationsTestData[indexPath.row].name
+        navigationController?.pushViewController(conversationsViewController, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
