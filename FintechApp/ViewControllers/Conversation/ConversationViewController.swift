@@ -19,11 +19,11 @@ class ConversationViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        tableView.scrollToRow(at: IndexPath(row: conversationsTestData.count - 1, section: 0), at: .bottom, animated: true)
+        tableView.scrollToRow(at: IndexPath(row: messagesTestData.count - 1, section: 0), at: .bottom, animated: true)
     }
     
     private func setupTableView() {
-        tableView.register(ConversationTableViewCell.self, forCellReuseIdentifier: ConversationTableViewCell.reuseIdentifier)
+        tableView.register(MessageCell.self, forCellReuseIdentifier: MessageCell.reuseIdentifier)
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
     }
@@ -34,18 +34,17 @@ class ConversationViewController: UITableViewController {
 extension ConversationViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        conversationsTestData.count
+        messagesTestData.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ConversationTableViewCell.reuseIdentifier, for: indexPath) as? ConversationTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MessageCell.reuseIdentifier, for: indexPath) as? MessageCell else {
             return UITableViewCell()
         }
         
-        let model = conversationsTestData[indexPath.row]
+        let model = messagesTestData[indexPath.row]
         
         cell.configure(with: model)
-        cell.isIncoming = indexPath.row % 2 == 0 ? true : false
         return cell
     }
 }

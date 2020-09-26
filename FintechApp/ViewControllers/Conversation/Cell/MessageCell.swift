@@ -1,5 +1,5 @@
 //
-//  ConversationTableViewCell.swift
+//  MessageCell.swift
 //  FintechApp
 //
 //  Created by Rudolf Oganesyan on 26.09.2020.
@@ -8,16 +8,16 @@
 
 import UIKit
 
-final class ConversationTableViewCell: UITableViewCell {
+final class MessageCell: UITableViewCell {
     
     private let messageLabel = UILabel()
     private let messageBackgroundView = UIView()
     private var leadingMessageConstraint: NSLayoutConstraint?
     private var trailingMessageConstraint: NSLayoutConstraint?
     
-     var isIncoming: Bool = false {
+    private var isIncoming: Bool = false {
         didSet {
-            messageBackgroundView.backgroundColor = isIncoming ? Constants.Colors.gray : Constants.Colors.outgoingMessage
+            messageBackgroundView.backgroundColor = isIncoming ? Constants.Colors.incomingMessage : Constants.Colors.outgoingMessage
             if isIncoming {
                 leadingMessageConstraint?.isActive = true
                 trailingMessageConstraint?.isActive = false
@@ -50,7 +50,7 @@ final class ConversationTableViewCell: UITableViewCell {
         
         messageLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12).isActive = true
         messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12).isActive = true
-        messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant: bounds.width * 0.65).isActive = true
+        messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant: bounds.width * 0.75).isActive = true
         leadingMessageConstraint = messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20)
         trailingMessageConstraint = messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
         
@@ -61,13 +61,14 @@ final class ConversationTableViewCell: UITableViewCell {
     }
 }
 
-// MARK: - ConfigurableCell
+// MARK: - ConfigurableView
 
-extension ConversationTableViewCell: ConfigurableCell {
+extension MessageCell: ConfigurableView {
     
-    typealias ConfigurationModel = ConversationCellModel
+    typealias ConfigurationModel = MessageCellModel
     
-    func configure(with model: ConversationCellModel) {
-        messageLabel.text = model.message
+    func configure(with model: MessageCellModel) {
+        messageLabel.text = model.text
+        isIncoming = Bool.random()
     }
 }

@@ -1,5 +1,5 @@
 //
-//  ConversationsListTableViewCell.swift
+//  ConversationCell.swift
 //  FintechApp
 //
 //  Created by Rudolf Oganesyan on 25.09.2020.
@@ -8,7 +8,13 @@
 
 import UIKit
 
-final class ConversationsListTableViewCell: UITableViewCell {
+protocol ConfigurableView {
+    
+    associatedtype ConfigurationModel
+    func configure(with model: ConfigurationModel)
+}
+
+final class ConversationCell: UITableViewCell {
     
     @IBOutlet private weak var avatarContainer: UIView!
     @IBOutlet private weak var nameLabel: UILabel!
@@ -28,9 +34,9 @@ final class ConversationsListTableViewCell: UITableViewCell {
     }
 }
 
-// MARK: - ConfigurableCell
+// MARK: - ConfigurableView
 
-extension ConversationsListTableViewCell: ConfigurableCell {
+extension ConversationCell: ConfigurableView {
     
     typealias ConfigurationModel = ConversationCellModel
     
@@ -55,11 +61,11 @@ extension ConversationsListTableViewCell: ConfigurableCell {
     private func setDate(_ date: Date) {
         let calendar = Calendar.current
         if calendar.isDateInToday(date) {
-            ConversationsListTableViewCell.dateFormatter.dateFormat = "HH:mm"
+            ConversationCell.dateFormatter.dateFormat = "HH:mm"
         } else {
-            ConversationsListTableViewCell.dateFormatter.dateFormat = "dd MMM"
+            ConversationCell.dateFormatter.dateFormat = "dd MMM"
         }
-        let dateString = ConversationsListTableViewCell.dateFormatter.string(from: date)
+        let dateString = ConversationCell.dateFormatter.string(from: date)
         dateLabel.text = dateString
     }
 }

@@ -24,7 +24,7 @@ class ConversationsListViewController: UITableViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         
         let settingsButton = UIBarButtonItem(image: #imageLiteral(resourceName: "settings"), style: .plain, target: nil, action: nil)
-        settingsButton.tintColor = Constants.Colors.gray
+        settingsButton.tintColor = Constants.Colors.settingsGray
         navigationItem.setLeftBarButton(settingsButton, animated: true)
         
         let avatarView = AvatarImageView(style: .circle)
@@ -46,7 +46,7 @@ class ConversationsListViewController: UITableViewController {
     }
     
     private func setupTableView() {
-        tableView.register(ConversationsListTableViewCell.nib, forCellReuseIdentifier: ConversationsListTableViewCell.reuseIdentifier)
+        tableView.register(ConversationCell.nib, forCellReuseIdentifier: ConversationCell.reuseIdentifier)
     }
 }
 
@@ -73,7 +73,7 @@ extension ConversationsListViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ConversationsListTableViewCell.reuseIdentifier, for: indexPath) as? ConversationsListTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ConversationCell.reuseIdentifier, for: indexPath) as? ConversationCell else {
             return UITableViewCell()
         }
         

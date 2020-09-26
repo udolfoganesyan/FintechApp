@@ -8,15 +8,7 @@
 
 import UIKit
 
-protocol ConfigurableCell: class {
-    static var nib: UINib { get }
-    static var reuseIdentifier: String { get }
-    
-    associatedtype ConfigurationModel
-    func configure(with model: ConfigurationModel)
-}
-
-extension ConfigurableCell {
+extension UITableViewCell {
     
     static var nib: UINib {
         return UINib(nibName: reuseIdentifier, bundle: nil)
