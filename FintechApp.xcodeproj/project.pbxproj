@@ -11,7 +11,7 @@
 		A10A887D251F30CC006B3017 /* UIColor+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A887C251F30CC006B3017 /* UIColor+Random.swift */; };
 		A10A8880251F3C60006B3017 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A887F251F3C60006B3017 /* ConversationViewController.swift */; };
 		A10A8889251F3CC2006B3017 /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A8887251F3CC2006B3017 /* ConversationTableViewCell.swift */; };
-		A10A888A251F3CC2006B3017 /* ConversationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A10A8888251F3CC2006B3017 /* ConversationTableViewCell.xib */; };
+		A10A8891251F58C6006B3017 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A8890251F58C6006B3017 /* Constants.swift */; };
 		A139ED93251741A000DA947B /* AvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A139ED92251741A000DA947B /* AvatarImageView.swift */; };
 		A147585D250F5FA2004DFCAA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A147585C250F5FA2004DFCAA /* AppDelegate.swift */; };
 		A1475861250F5FA2004DFCAA /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1475860250F5FA2004DFCAA /* ProfileViewController.swift */; };
@@ -34,7 +34,7 @@
 		A10A887C251F30CC006B3017 /* UIColor+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Random.swift"; sourceTree = "<group>"; };
 		A10A887F251F3C60006B3017 /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
 		A10A8887251F3CC2006B3017 /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
-		A10A8888251F3CC2006B3017 /* ConversationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationTableViewCell.xib; sourceTree = "<group>"; };
+		A10A8890251F58C6006B3017 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A139ED92251741A000DA947B /* AvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarImageView.swift; sourceTree = "<group>"; };
 		A1475859250F5FA2004DFCAA /* FintechApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FintechApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A147585C250F5FA2004DFCAA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -87,7 +87,6 @@
 			isa = PBXGroup;
 			children = (
 				A10A8887251F3CC2006B3017 /* ConversationTableViewCell.swift */,
-				A10A8888251F3CC2006B3017 /* ConversationTableViewCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -147,6 +146,7 @@
 			children = (
 				A1475870250F5FEA004DFCAA /* Logger.swift */,
 				A16570832517601700C22EAD /* Extensions */,
+				A10A8890251F58C6006B3017 /* Constants.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -239,7 +239,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A10A888A251F3CC2006B3017 /* ConversationTableViewCell.xib in Resources */,
 				A1475869250F5FA3004DFCAA /* LaunchScreen.storyboard in Resources */,
 				A1475866250F5FA3004DFCAA /* Assets.xcassets in Resources */,
 				A1475874250F6036004DFCAA /* README.md in Resources */,
@@ -260,6 +259,7 @@
 				A1C743A3251E39BF005B5195 /* ConversationCellModel.swift in Sources */,
 				A10A8880251F3C60006B3017 /* ConversationViewController.swift in Sources */,
 				A139ED93251741A000DA947B /* AvatarImageView.swift in Sources */,
+				A10A8891251F58C6006B3017 /* Constants.swift in Sources */,
 				A10A887D251F30CC006B3017 /* UIColor+Random.swift in Sources */,
 				A1475871250F5FEA004DFCAA /* Logger.swift in Sources */,
 				A1C743A7251E3ABA005B5195 /* ConversationsListTableViewCell.swift in Sources */,

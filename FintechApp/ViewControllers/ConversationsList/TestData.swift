@@ -13,7 +13,7 @@ let conversationsTestData = [
     ConversationCellModel(name: "Alex", message: "", date: Date(), isOnline: false, hasUnreadMessages: false),
     ConversationCellModel(name: "Max", message: "Why?", date: Date().addingTimeInterval(-86400), isOnline: true, hasUnreadMessages: true),
     ConversationCellModel(name: "Sally", message: "Well done", date: Date().addingTimeInterval(-89000), isOnline: true, hasUnreadMessages: false),
-    ConversationCellModel(name: "Nick", message: "Qwerty?", date: Date().addingTimeInterval(-189000), isOnline: false, hasUnreadMessages: false),
+    ConversationCellModel(name: "Nick", message: "Qwerty? BlahBlahBlahBlahBlahBlahBlahBlahBlah", date: Date().addingTimeInterval(-189000), isOnline: false, hasUnreadMessages: false),
     ConversationCellModel(name: "Joe", message: "Qwerty?", date: Date().addingTimeInterval(-189000), isOnline: false, hasUnreadMessages: false),
     ConversationCellModel(name: "Michelle", message: "Qwerty?", date: Date().addingTimeInterval(-189000), isOnline: false, hasUnreadMessages: false),
     ConversationCellModel(name: "Sara", message: "Qwerty?", date: Date().addingTimeInterval(-189000), isOnline: false, hasUnreadMessages: false),

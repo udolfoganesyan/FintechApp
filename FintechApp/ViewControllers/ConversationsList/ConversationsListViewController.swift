@@ -8,22 +8,13 @@
 
 import UIKit
 
-class ConversationsListViewController: UIViewController {
+class ConversationsListViewController: UITableViewController {
     
-    private lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(ConversationsListTableViewCell.nib, forCellReuseIdentifier: ConversationsListTableViewCell.reuseIdentifier)
-        tableView.delegate = self
-        tableView.dataSource = self
-        return tableView
-    }()
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-
+        
         setupNavigationBar()
         setupTableView()
     }
@@ -33,7 +24,7 @@ class ConversationsListViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         
         let settingsButton = UIBarButtonItem(image: #imageLiteral(resourceName: "settings"), style: .plain, target: nil, action: nil)
-        settingsButton.tintColor = UIColor(red: 0.329, green: 0.329, blue: 0.345, alpha: 0.65)
+        settingsButton.tintColor = Constants.Colors.gray
         navigationItem.setLeftBarButton(settingsButton, animated: true)
         
         let avatarView = AvatarImageView(style: .circle)
@@ -55,37 +46,33 @@ class ConversationsListViewController: UIViewController {
     }
     
     private func setupTableView() {
-        view.addSubview(tableView)
-        
-        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        tableView.register(ConversationsListTableViewCell.nib, forCellReuseIdentifier: ConversationsListTableViewCell.reuseIdentifier)
     }
 }
 
 // MARK: - UITableViewDelegate
 
-extension ConversationsListViewController: UITableViewDelegate {
+extension ConversationsListViewController {
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        navigationController?.pushViewController(ConversationViewController(), animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
 // MARK: - UITableViewDataSource
 
-extension ConversationsListViewController: UITableViewDataSource {
-
-    func numberOfSections(in tableView: UITableView) -> Int {
+extension ConversationsListViewController {
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
         1
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         conversationsTestData.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ConversationsListTableViewCell.reuseIdentifier, for: indexPath) as? ConversationsListTableViewCell else {
             return UITableViewCell()
         }

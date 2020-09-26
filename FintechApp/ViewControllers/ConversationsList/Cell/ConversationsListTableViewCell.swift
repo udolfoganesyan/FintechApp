@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ConversationsListTableViewCell: UITableViewCell {
+final class ConversationsListTableViewCell: UITableViewCell {
     
     @IBOutlet private weak var avatarContainer: UIView!
     @IBOutlet private weak var nameLabel: UILabel!

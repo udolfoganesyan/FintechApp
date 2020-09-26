@@ -37,7 +37,7 @@ final class OnlineBadgeView: UIView {
         innerBadge.translatesAutoresizingMaskIntoConstraints = false
         addSubview(innerBadge)
         
-        innerBadge.backgroundColor = UIColor(red: 0.353, green: 0.831, blue: 0.224, alpha: 1)
+        innerBadge.backgroundColor = Constants.Colors.onlineBadgeGreen
         innerBadge.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.65).isActive = true
         innerBadge.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.65).isActive = true
         innerBadge.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
