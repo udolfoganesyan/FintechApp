@@ -91,6 +91,10 @@ class ProfileViewController: UIViewController {
         
         present(imagePickerController, animated: true)
     }
+    
+    @IBAction private func closeButtonTouched(_ sender: UIButton) {
+        dismiss(animated: true)
+    }
 }
 
 // MARK: - UIImagePickerControllerDelegate
