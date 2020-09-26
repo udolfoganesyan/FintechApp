@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OnlineBadgeView: UIView {
+final class OnlineBadgeView: UIView {
     
     private let innerBadge = UIView()
     
@@ -43,5 +43,4 @@ class OnlineBadgeView: UIView {
         innerBadge.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         innerBadge.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
-    
 }

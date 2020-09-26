@@ -6,7 +6,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -22,13 +21,14 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pKq-wp-wq1">
                         <rect key="frame" x="16" y="12" width="343" height="66"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pencil.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="eXV-eI-faS">
-                                <rect key="frame" x="0.0" y="5.5" width="56" height="55"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UNl-pO-FHi">
+                                <rect key="frame" x="0.0" y="5" width="56" height="56"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="56" id="hPI-uE-tFs"/>
-                                    <constraint firstAttribute="width" secondItem="eXV-eI-faS" secondAttribute="height" multiplier="1:1" id="wX2-Eq-LQS"/>
+                                    <constraint firstAttribute="width" secondItem="UNl-pO-FHi" secondAttribute="height" multiplier="1:1" id="LMK-ts-8UU"/>
+                                    <constraint firstAttribute="width" constant="56" id="ujZ-qQ-Vhi"/>
                                 </constraints>
-                            </imageView>
+                            </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="iH1-Q7-cx5">
                                 <rect key="frame" x="68" y="0.0" width="275" height="66"/>
                                 <subviews>
@@ -62,14 +62,14 @@
                                 </constraints>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="eXV-eI-faS" firstAttribute="leading" secondItem="pKq-wp-wq1" secondAttribute="leading" id="01t-Vy-9YQ"/>
-                            <constraint firstItem="eXV-eI-faS" firstAttribute="centerY" secondItem="pKq-wp-wq1" secondAttribute="centerY" id="08I-o3-mIH"/>
+                            <constraint firstItem="iH1-Q7-cx5" firstAttribute="leading" secondItem="UNl-pO-FHi" secondAttribute="trailing" constant="12" id="7J9-ZD-7aW"/>
                             <constraint firstAttribute="trailing" secondItem="iH1-Q7-cx5" secondAttribute="trailing" id="95r-Ad-nfm"/>
                             <constraint firstAttribute="bottom" secondItem="iH1-Q7-cx5" secondAttribute="bottom" id="L9d-yn-Dnn"/>
                             <constraint firstItem="iH1-Q7-cx5" firstAttribute="top" secondItem="pKq-wp-wq1" secondAttribute="top" id="O1A-fr-KvY"/>
-                            <constraint firstItem="iH1-Q7-cx5" firstAttribute="leading" secondItem="eXV-eI-faS" secondAttribute="trailing" constant="12" id="PW2-W5-DhR"/>
+                            <constraint firstItem="UNl-pO-FHi" firstAttribute="leading" secondItem="pKq-wp-wq1" secondAttribute="leading" id="TaH-xb-uk9"/>
+                            <constraint firstItem="UNl-pO-FHi" firstAttribute="centerY" secondItem="pKq-wp-wq1" secondAttribute="centerY" id="xnr-Bp-AZF"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -82,18 +82,12 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="avatarContainer" destination="UNl-pO-FHi" id="XaG-O5-1ak"/>
                 <outlet property="dateLabel" destination="0aI-Rl-dZg" id="EMQ-Su-odB"/>
                 <outlet property="messageLabel" destination="h9Q-6j-UrN" id="Nqe-5x-yoH"/>
                 <outlet property="nameLabel" destination="MgA-CB-s1B" id="ueM-6f-JbA"/>
-                <outlet property="photoImageView" destination="eXV-eI-faS" id="idj-ad-ltK"/>
             </connections>
             <point key="canvasLocation" x="151.44927536231884" y="103.79464285714285"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="pencil.circle.fill" catalog="system" width="128" height="121"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-    </resources>
 </document>

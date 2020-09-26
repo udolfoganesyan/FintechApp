@@ -34,7 +34,7 @@ class ConversationsListViewController: UIViewController {
         
         let settingsButton = UIBarButtonItem(image: #imageLiteral(resourceName: "settings"), style: .plain, target: nil, action: nil)
         settingsButton.tintColor = UIColor(red: 0.329, green: 0.329, blue: 0.345, alpha: 0.65)
-        navigationItem.leftBarButtonItem = settingsButton
+        navigationItem.setLeftBarButton(settingsButton, animated: true)
         
         let avatarView = AvatarImageView(style: .circle)
         let avatarViewContainer = UIView()
@@ -69,7 +69,7 @@ class ConversationsListViewController: UIViewController {
 extension ConversationsListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
@@ -82,7 +82,7 @@ extension ConversationsListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        200
+        conversationsTestData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -90,7 +90,7 @@ extension ConversationsListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let model = ConversationCellModel(name: "qwerqwer", message: "kjhdalisuhdfhsdkjhfa", date: Date(), isOnline: Int.random(in: 0...1000) % 2 == 0 ? true : false, hasUnreadMessages: false)
+        let model = conversationsTestData[indexPath.row]
         
         cell.configure(with: model)
         

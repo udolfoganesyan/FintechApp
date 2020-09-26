@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AvatarImageView: UIImageView {
+final class AvatarImageView: UIImageView {
     
     enum AvatarStyle {
         case circle
@@ -55,8 +55,8 @@ class AvatarImageView: UIImageView {
     }
     
     func setupWith(firstName: String, lastName: String, color: UIColor) {
-        nameLabel.text = String(firstName.prefix(1))
-        nameLabel.text?.append(contentsOf: lastName.prefix(1))
+        nameLabel.text = String(firstName.prefix(1)).uppercased()
+        nameLabel.text?.append(contentsOf: lastName.prefix(1).uppercased())
         backgroundColor = color
     }
     
