@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ProfileViewController.swift
 //  FintechApp
 //
 //  Created by Rudolf Oganesyan on 13.09.2020.

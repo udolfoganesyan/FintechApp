@@ -36,12 +36,12 @@ final class ConversationCell: UITableViewCell {
 // MARK: - ConfigurableView
 
 extension ConversationCell: ConfigurableView {
-        
+    
     func configure(with model: ConversationCellModel) {
         nameLabel.text = model.name
         avatarView.setupWith(firstName: model.name, lastName: "", color: .randomLightColor)
         onlineBadge.isHidden = !model.isOnline
-        backgroundColor = model.isOnline ? #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 0.2025096318) : .white
+        backgroundColor = model.isOnline ? #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 0.07) : .white
         messageLabel.text = model.message
         messageLabel.font = .systemFont(ofSize: 16)
         if model.message.isEmpty {
@@ -52,7 +52,6 @@ extension ConversationCell: ConfigurableView {
         }
         
         setDate(model.date)
-        
     }
     
     private func setDate(_ date: Date) {

@@ -63,7 +63,7 @@ extension ConversationsListViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let conversationsViewController = ConversationViewController()
-        conversationsViewController.title = conversationsTestData[indexPath.row].name
+        conversationsViewController.title = conversationsTestData[indexPath.section][indexPath.row].name
         navigationController?.pushViewController(conversationsViewController, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -74,11 +74,19 @@ extension ConversationsListViewController {
 extension ConversationsListViewController {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        1
+        conversationsTestData.count
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Online"
+        } else {
+            return "History"
+        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        conversationsTestData.count
+        conversationsTestData[section].count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -86,7 +94,7 @@ extension ConversationsListViewController {
             return UITableViewCell()
         }
         
-        let model = conversationsTestData[indexPath.row]
+        let model = conversationsTestData[indexPath.section][indexPath.row]
         
         cell.configure(with: model)
         
