@@ -73,10 +73,20 @@
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="UNl-pO-FHi" secondAttribute="bottom" constant="4" id="yze-Xf-1C4"/>
                         </constraints>
                     </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G75-Kh-pIU">
+                        <rect key="frame" x="12" y="89" width="363" height="1"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.099288313356164379" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="L0L-v3-tOg"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" secondItem="G75-Kh-pIU" secondAttribute="trailing" id="1yL-c0-qyb"/>
                     <constraint firstItem="pKq-wp-wq1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="AsW-E4-6H5"/>
                     <constraint firstAttribute="bottom" secondItem="pKq-wp-wq1" secondAttribute="bottom" constant="12" id="WsT-br-fg4"/>
+                    <constraint firstItem="G75-Kh-pIU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="Zyi-4o-YoJ"/>
+                    <constraint firstAttribute="bottom" secondItem="G75-Kh-pIU" secondAttribute="bottom" id="n38-hp-lJC"/>
                     <constraint firstAttribute="trailing" secondItem="pKq-wp-wq1" secondAttribute="trailing" constant="12" id="yXl-0T-iZv"/>
                     <constraint firstItem="pKq-wp-wq1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="zNx-mk-rfg"/>
                 </constraints>
@@ -88,7 +98,7 @@
                 <outlet property="messageLabel" destination="h9Q-6j-UrN" id="Nqe-5x-yoH"/>
                 <outlet property="nameLabel" destination="MgA-CB-s1B" id="ueM-6f-JbA"/>
             </connections>
-            <point key="canvasLocation" x="151.44927536231884" y="103.79464285714285"/>
+            <point key="canvasLocation" x="150" y="107"/>
         </tableViewCell>
     </objects>
 </document>

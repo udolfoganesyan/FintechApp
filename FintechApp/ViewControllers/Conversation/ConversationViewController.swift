@@ -28,7 +28,6 @@ class ConversationViewController: UITableViewController {
         tableView.register(MessageCell.self, forCellReuseIdentifier: MessageCell.reuseIdentifier)
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
-        tableView.tableFooterView = UIView()
     }
 }
 

@@ -47,7 +47,7 @@ class ConversationsListViewController: UITableViewController {
     
     private func setupTableView() {
         tableView.register(ConversationCell.nib, forCellReuseIdentifier: ConversationCell.reuseIdentifier)
-        tableView.tableFooterView = UIView()
+        tableView.separatorStyle = .none
     }
 }
 
