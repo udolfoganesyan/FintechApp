@@ -17,7 +17,7 @@ final class AvatarImageView: UIImageView {
     
     private let style: AvatarStyle
     
-    private let nameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

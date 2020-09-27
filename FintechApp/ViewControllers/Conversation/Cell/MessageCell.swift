@@ -10,8 +10,8 @@ import UIKit
 
 final class MessageCell: UITableViewCell {
     
-    private let messageLabel = UILabel()
-    private let messageBackgroundView = UIView()
+    private lazy var messageLabel = UILabel()
+    private lazy var messageBackgroundView = UIView()
     private var leadingMessageConstraint: NSLayoutConstraint?
     private var trailingMessageConstraint: NSLayoutConstraint?
     

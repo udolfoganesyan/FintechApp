@@ -10,7 +10,7 @@ import UIKit
 
 final class OnlineBadgeView: UIView {
     
-    private let innerBadge = UIView()
+    private lazy var innerBadge = UIView()
     
     override func layoutSubviews() {
         super.layoutSubviews()

@@ -20,8 +20,8 @@ final class ConversationCell: UITableViewCell {
     @IBOutlet private weak var dateLabel: UILabel!
     @IBOutlet private weak var messageLabel: UILabel!
     
-    private let onlineBadge = OnlineBadgeView()
-    private let avatarView = AvatarImageView(style: .circle)
+    private lazy var onlineBadge = OnlineBadgeView()
+    private lazy var avatarView = AvatarImageView(style: .circle)
     
     private static let dateFormatter = DateFormatter()
     

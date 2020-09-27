@@ -17,7 +17,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet private weak var saveButton: UIButton!
     @IBOutlet private weak var editButton: UIButton!
     
-    private let avatarView = AvatarImageView(style: .circle)
+    private lazy var avatarView = AvatarImageView(style: .circle)
     
     init() {
         super.init(nibName: nil, bundle: nil)
