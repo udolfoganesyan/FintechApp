@@ -19,12 +19,6 @@ class ConversationsListViewController: UITableViewController {
         setupTableView()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        navigationController?.navigationBar.prefersLargeTitles = true
-    }
-    
     private func setupNavigationBar() {
         title = "Tinkoff Chat"
         navigationController?.navigationBar.prefersLargeTitles = true
