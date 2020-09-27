@@ -38,6 +38,13 @@ final class MessageCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        leadingMessageConstraint?.isActive = false
+        trailingMessageConstraint?.isActive = false
+    }
+    
     private func setupMessageLabel() {
         messageLabel.numberOfLines = 0
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
