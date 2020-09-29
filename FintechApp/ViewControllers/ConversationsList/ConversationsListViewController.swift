@@ -8,7 +8,17 @@
 
 import UIKit
 
-class ConversationsListViewController: UITableViewController {
+class ConversationsListViewController: UIViewController {
+    
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(ConversationCell.nib, forCellReuseIdentifier: ConversationCell.reuseIdentifier)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.tableFooterView = UIView()
+        return tableView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,16 +56,19 @@ class ConversationsListViewController: UITableViewController {
     }
     
     private func setupTableView() {
-        tableView.register(ConversationCell.nib, forCellReuseIdentifier: ConversationCell.reuseIdentifier)
-        tableView.separatorStyle = .none
+        view.addSubview(tableView)
+        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
 }
 
 // MARK: - UITableViewDelegate
 
-extension ConversationsListViewController {
+extension ConversationsListViewController: UITableViewDelegate {
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let conversationsViewController = ConversationViewController()
         conversationsViewController.title = conversationsTestData[indexPath.section][indexPath.row].name
         navigationController?.pushViewController(conversationsViewController, animated: true)
@@ -65,13 +78,13 @@ extension ConversationsListViewController {
 
 // MARK: - UITableViewDataSource
 
-extension ConversationsListViewController {
+extension ConversationsListViewController: UITableViewDataSource {
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         conversationsTestData.count
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
             return "Online"
         } else {
@@ -79,11 +92,11 @@ extension ConversationsListViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         conversationsTestData[section].count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ConversationCell.reuseIdentifier, for: indexPath) as? ConversationCell else {
             return UITableViewCell()
         }
