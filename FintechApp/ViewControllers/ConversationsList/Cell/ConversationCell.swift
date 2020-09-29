@@ -44,14 +44,15 @@ extension ConversationCell: ConfigurableView {
         backgroundColor = model.isOnline ? #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 0.07) : .white
         messageLabel.text = model.message
         messageLabel.font = .systemFont(ofSize: 16)
+        setDate(model.date)
+
         if model.message.isEmpty {
             messageLabel.text = "No messages yet"
             messageLabel.font = .italicSystemFont(ofSize: 16)
+            dateLabel.text = ""
         } else if model.hasUnreadMessages {
             messageLabel.font = .boldSystemFont(ofSize: 16)
         }
-        
-        setDate(model.date)
     }
     
     private func setDate(_ date: Date) {
