@@ -49,7 +49,7 @@ extension ConversationCell: ConfigurableView {
         if model.message.isEmpty {
             messageLabel.text = "No messages yet"
             messageLabel.font = .italicSystemFont(ofSize: 16)
-            dateLabel.text = ""
+            dateLabel.text = " "
         } else if model.hasUnreadMessages {
             messageLabel.font = .boldSystemFont(ofSize: 16)
         }
