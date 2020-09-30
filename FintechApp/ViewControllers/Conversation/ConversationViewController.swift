@@ -28,10 +28,10 @@ class ConversationViewController: UIViewController {
         setupTableView()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
-        tableView.scrollToRow(at: IndexPath(row: messagesTestData.count - 1, section: 0), at: .bottom, animated: true)
+        tableView.scrollToRow(at: IndexPath(row: messagesTestData.count - 1, section: 0), at: .bottom, animated: false)
     }
     
     private func setupTableView() {
