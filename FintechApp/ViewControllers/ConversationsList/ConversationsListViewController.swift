@@ -33,7 +33,7 @@ class ConversationsListViewController: UIViewController {
         title = "Tinkoff Chat"
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        let settingsButton = UIBarButtonItem(image: #imageLiteral(resourceName: "settings"), style: .plain, target: nil, action: nil)
+        let settingsButton = UIBarButtonItem(image: #imageLiteral(resourceName: "settings"), style: .plain, target: self, action: #selector(handleSettings))
         settingsButton.tintColor = Constants.Colors.settingsGray
         navigationItem.setLeftBarButton(settingsButton, animated: true)
         
@@ -48,6 +48,11 @@ class ConversationsListViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleProfileTap))
         avatarViewContainer.addGestureRecognizer(tapGesture)
         navigationItem.setRightBarButton(profileButton, animated: true)
+    }
+    
+    @objc private func handleSettings() {
+        let settingsViewController = SettingsViewController()
+        navigationController?.pushViewController(settingsViewController, animated: true)
     }
     
     @objc private func handleProfileTap() {

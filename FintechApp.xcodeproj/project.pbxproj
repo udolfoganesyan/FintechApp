@@ -13,6 +13,8 @@
 		A10A8889251F3CC2006B3017 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A8887251F3CC2006B3017 /* MessageCell.swift */; };
 		A10A8891251F58C6006B3017 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A8890251F58C6006B3017 /* Constants.swift */; };
 		A10A8894251F6238006B3017 /* MessageCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A8893251F6238006B3017 /* MessageCellModel.swift */; };
+		A12320742528C30B005F8249 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12320722528C30B005F8249 /* SettingsViewController.swift */; };
+		A12320752528C30B005F8249 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A12320732528C30B005F8249 /* SettingsViewController.xib */; };
 		A139ED93251741A000DA947B /* AvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A139ED92251741A000DA947B /* AvatarImageView.swift */; };
 		A147585D250F5FA2004DFCAA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A147585C250F5FA2004DFCAA /* AppDelegate.swift */; };
 		A1475861250F5FA2004DFCAA /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1475860250F5FA2004DFCAA /* ProfileViewController.swift */; };
@@ -37,6 +39,8 @@
 		A10A8887251F3CC2006B3017 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		A10A8890251F58C6006B3017 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A10A8893251F6238006B3017 /* MessageCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCellModel.swift; sourceTree = "<group>"; };
+		A12320722528C30B005F8249 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		A12320732528C30B005F8249 /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		A139ED92251741A000DA947B /* AvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarImageView.swift; sourceTree = "<group>"; };
 		A1475859250F5FA2004DFCAA /* FintechApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FintechApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A147585C250F5FA2004DFCAA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -95,12 +99,22 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		A12320772528C313005F8249 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				A12320722528C30B005F8249 /* SettingsViewController.swift */,
+				A12320732528C30B005F8249 /* SettingsViewController.xib */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		A139ED912517416600DA947B /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				A16570862517EC0E00C22EAD /* ProfileViewController */,
 				A1C7439D251E3872005B5195 /* ConversationsList */,
 				A10A8882251F3C65006B3017 /* Conversation */,
+				A12320772528C313005F8249 /* Settings */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -243,6 +257,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1475869250F5FA3004DFCAA /* LaunchScreen.storyboard in Resources */,
+				A12320752528C30B005F8249 /* SettingsViewController.xib in Resources */,
 				A1475866250F5FA3004DFCAA /* Assets.xcassets in Resources */,
 				A1475874250F6036004DFCAA /* README.md in Resources */,
 				A1C743A8251E3ABA005B5195 /* ConversationCell.xib in Resources */,
@@ -269,6 +284,7 @@
 				A1C743A7251E3ABA005B5195 /* ConversationCell.swift in Sources */,
 				A10A883C251E8BF8006B3017 /* OnlineBadgeView.swift in Sources */,
 				A147585D250F5FA2004DFCAA /* AppDelegate.swift in Sources */,
+				A12320742528C30B005F8249 /* SettingsViewController.swift in Sources */,
 				A10A8889251F3CC2006B3017 /* MessageCell.swift in Sources */,
 				A1C743A0251E395D005B5195 /* TestData.swift in Sources */,
 				A1C7439B251E386B005B5195 /* ConversationsListViewController.swift in Sources */,
