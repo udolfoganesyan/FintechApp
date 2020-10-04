@@ -34,6 +34,9 @@ class ProfileViewController: UIViewController {
     }
     
     private func setupSubviews() {
+        view.backgroundColor = ThemeManager.currentTheme.backgroundColor
+        nameLabel.textColor = ThemeManager.currentTheme.primaryTextColor
+        aboutLabel.textColor = ThemeManager.currentTheme.primaryTextColor
         setupSaveButton()
         setupAvatarView()
     }
@@ -41,6 +44,7 @@ class ProfileViewController: UIViewController {
     private func setupSaveButton() {
         saveButton.layer.cornerRadius = 14
         saveButton.layer.masksToBounds = true
+        saveButton.backgroundColor = ThemeManager.currentTheme.buttonBackgroundColor
     }
     
     private func setupAvatarView() {

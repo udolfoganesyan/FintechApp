@@ -17,6 +17,7 @@ class ConversationViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.dataSource = self
+        tableView.backgroundColor = ThemeManager.currentTheme.backgroundColor
         return tableView
     }()
     
@@ -26,7 +27,6 @@ class ConversationViewController: UIViewController {
         navigationItem.largeTitleDisplayMode = .never
         
         setupTableView()
-        updateTheme()
     }
     
     override func viewDidLayoutSubviews() {
@@ -41,10 +41,6 @@ class ConversationViewController: UIViewController {
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-    }
-    
-    private func updateTheme() {
-        tableView.backgroundColor = ThemeManager.currentTheme.backgroundColor
     }
 }
 

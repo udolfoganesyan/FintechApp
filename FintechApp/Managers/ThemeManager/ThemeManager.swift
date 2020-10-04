@@ -6,7 +6,7 @@
 //  Copyright © 2020 Рудольф О. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 enum ThemeManager {
     
@@ -22,5 +22,7 @@ enum ThemeManager {
     
     static func updateThemeWith(_ theme: Theme) {
         UserDefaults.standard.setValue(theme.rawValue, forKey: selectedThemeKey)
+        
+        
     }
 }

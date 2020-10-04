@@ -16,10 +16,12 @@ enum Theme: Int {
     
     var backgroundColor: UIColor {
         switch self {
+        case .classic:
+            return .groupTableViewBackground
+        case .day:
+            return .white
         case .night :
             return .black
-        default:
-            return .white
         }
     }
     
@@ -78,6 +80,15 @@ enum Theme: Int {
             return .black
         default:
             return .white
+        }
+    }
+    
+    var buttonBackgroundColor: UIColor {
+        switch self {
+        case .night:
+            return UIColor(red: 0.106, green: 0.106, blue: 0.106, alpha: 1)
+        default:
+            return UIColor(red: 0.97, green: 0.97, blue: 0.97, alpha: 1)
         }
     }
 }

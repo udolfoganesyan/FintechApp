@@ -85,6 +85,7 @@ class ThemeSettingsViewController: UIViewController {
             delegate?.didChangeTheme()
             updateTheme()
         }
+        
     }
     
     @objc private func handleNightTheme() {
