@@ -32,7 +32,6 @@ class ConversationsListViewController: UIViewController {
     
     private func setupNavigationBar() {
         title = "Tinkoff Chat"
-        navigationController?.navigationBar.prefersLargeTitles = true
         
         let settingsButton = UIBarButtonItem(image: #imageLiteral(resourceName: "settings"), style: .plain, target: self, action: #selector(handleSettings))
         settingsButton.tintColor = Constants.Colors.settingsGray
@@ -53,8 +52,8 @@ class ConversationsListViewController: UIViewController {
     
     @objc private func handleSettings() {
         let settingsViewController = ThemeSettingsViewController()
-//        settingsViewController.delegate = self
-        settingsViewController.changeThemeClosure = updateTheme
+        settingsViewController.delegate = self
+//        settingsViewController.changeThemeClosure = updateTheme
         navigationController?.pushViewController(settingsViewController, animated: true)
     }
     
@@ -134,5 +133,8 @@ extension ConversationsListViewController: SettingsDelegate {
     private func updateTheme() {
         tableView.backgroundColor = ThemeManager.currentTheme.backgroundColor
         tableView.reloadData()
+        
+        navigationController?.navigationBar.barTintColor = ThemeManager.currentTheme.backgroundColor
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: ThemeManager.currentTheme.primaryTextColor]
     }
 }

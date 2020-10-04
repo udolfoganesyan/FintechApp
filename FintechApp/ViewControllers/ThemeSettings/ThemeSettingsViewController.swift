@@ -41,7 +41,7 @@ class ThemeSettingsViewController: UIViewController {
         
         nightThemeContainer.layer.borderColor = UIColor.gray.cgColor
         nightThemeContainer.layer.cornerRadius = 8
-                
+        
         switch ThemeManager.currentTheme {
         case .classic:
             classicThemeContainer.layer.borderWidth = 2

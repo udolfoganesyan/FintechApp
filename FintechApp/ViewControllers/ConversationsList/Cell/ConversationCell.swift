@@ -30,6 +30,10 @@ final class ConversationCell: UITableViewCell {
         
         avatarView.install(on: avatarContainer)
         onlineBadge.install(on: avatarContainer)
+        
+        let backgroundColorView = UIView()
+        backgroundColorView.backgroundColor = UIColor.darkGray.withAlphaComponent(0.3)
+        self.selectedBackgroundView = backgroundColorView
     }
 }
 

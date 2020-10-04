@@ -20,6 +20,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = navController
         window?.makeKeyAndVisible()
         
+        setupNavigationBarAppearance()
+        
         return true
+    }
+    
+    private func setupNavigationBarAppearance() {
+        let navigationBarAppearace = UINavigationBar.appearance()
+
+        navigationBarAppearace.barTintColor = ThemeManager.currentTheme.backgroundColor
+        navigationBarAppearace.titleTextAttributes = [NSAttributedString.Key.foregroundColor: ThemeManager.currentTheme.primaryTextColor]
     }
 }
