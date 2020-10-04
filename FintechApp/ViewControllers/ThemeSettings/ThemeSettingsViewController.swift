@@ -22,17 +22,17 @@ class ThemeSettingsViewController: UIViewController {
     @IBOutlet private weak var nightLabel: UILabel!
     
     weak var delegate: SettingsDelegate?
+    var changeThemeClosure: (() -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupViews()
         setupGestures()
+        updateTheme()
     }
     
     private func setupViews() {
-        updateTheme()
-        
         classicThemeContainer.layer.borderColor = UIColor.gray.cgColor
         classicThemeContainer.layer.cornerRadius = 8
         
@@ -71,6 +71,7 @@ class ThemeSettingsViewController: UIViewController {
         if ThemeManager.currentTheme != .classic {
             ThemeManager.updateThemeWith(.classic)
             delegate?.didChangeTheme()
+            changeThemeClosure?()
             updateTheme()
         }
     }
@@ -83,6 +84,7 @@ class ThemeSettingsViewController: UIViewController {
         if ThemeManager.currentTheme != .day {
             ThemeManager.updateThemeWith(.day)
             delegate?.didChangeTheme()
+            changeThemeClosure?()
             updateTheme()
         }
         
@@ -96,6 +98,7 @@ class ThemeSettingsViewController: UIViewController {
         if ThemeManager.currentTheme != .night {
             ThemeManager.updateThemeWith(.night)
             delegate?.didChangeTheme()
+            changeThemeClosure?()
             updateTheme()
         }
     }

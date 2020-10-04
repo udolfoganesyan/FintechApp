@@ -53,7 +53,8 @@ class ConversationsListViewController: UIViewController {
     
     @objc private func handleSettings() {
         let settingsViewController = ThemeSettingsViewController()
-        settingsViewController.delegate = self
+//        settingsViewController.delegate = self
+        settingsViewController.changeThemeClosure = updateTheme
         navigationController?.pushViewController(settingsViewController, animated: true)
     }
     
