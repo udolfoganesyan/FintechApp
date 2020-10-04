@@ -27,6 +27,7 @@ class ConversationsListViewController: UIViewController {
         
         setupNavigationBar()
         setupTableView()
+        updateTheme()
     }
     
     private func setupNavigationBar() {
@@ -51,7 +52,8 @@ class ConversationsListViewController: UIViewController {
     }
     
     @objc private func handleSettings() {
-        let settingsViewController = SettingsViewController()
+        let settingsViewController = ThemeSettingsViewController()
+        settingsViewController.delegate = self
         navigationController?.pushViewController(settingsViewController, animated: true)
     }
     
@@ -111,5 +113,19 @@ extension ConversationsListViewController: UITableViewDataSource {
         cell.configure(with: model)
         
         return cell
+    }
+}
+
+// MARK: - SettingsDelegate
+
+extension ConversationsListViewController: SettingsDelegate {
+    
+    func didChangeTheme() {
+        updateTheme()
+    }
+    
+    private func updateTheme() {
+        tableView.backgroundColor = ThemeManager.currentTheme.backgroundColor
+        tableView.reloadData()
     }
 }

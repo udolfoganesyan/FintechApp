@@ -38,10 +38,14 @@ final class ConversationCell: UITableViewCell {
 extension ConversationCell: ConfigurableView {
     
     func configure(with model: ConversationCellModel) {
+        nameLabel.textColor = ThemeManager.currentTheme.primaryTextColor
+        messageLabel.textColor = ThemeManager.currentTheme.secondaryTextColor
+        dateLabel.textColor = ThemeManager.currentTheme.secondaryTextColor
+        
         nameLabel.text = model.name
         avatarView.setupWith(firstName: model.name, lastName: "", color: .randomLightColor)
         onlineBadge.isHidden = !model.isOnline
-        backgroundColor = model.isOnline ? #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 0.07) : .white
+        backgroundColor = model.isOnline ? #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 0.07) : .clear
         messageLabel.text = model.message
         messageLabel.font = .systemFont(ofSize: 16)
         setDate(model.date)

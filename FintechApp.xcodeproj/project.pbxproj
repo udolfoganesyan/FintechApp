@@ -13,8 +13,10 @@
 		A10A8889251F3CC2006B3017 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A8887251F3CC2006B3017 /* MessageCell.swift */; };
 		A10A8891251F58C6006B3017 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A8890251F58C6006B3017 /* Constants.swift */; };
 		A10A8894251F6238006B3017 /* MessageCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A8893251F6238006B3017 /* MessageCellModel.swift */; };
-		A12320742528C30B005F8249 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12320722528C30B005F8249 /* SettingsViewController.swift */; };
-		A12320752528C30B005F8249 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A12320732528C30B005F8249 /* SettingsViewController.xib */; };
+		A12320742528C30B005F8249 /* ThemeSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12320722528C30B005F8249 /* ThemeSettingsViewController.swift */; };
+		A12320752528C30B005F8249 /* ThemeSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A12320732528C30B005F8249 /* ThemeSettingsViewController.xib */; };
+		A123207E2529C845005F8249 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A123207D2529C845005F8249 /* ThemeManager.swift */; };
+		A12320862529CB87005F8249 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12320852529CB87005F8249 /* Theme.swift */; };
 		A139ED93251741A000DA947B /* AvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A139ED92251741A000DA947B /* AvatarImageView.swift */; };
 		A147585D250F5FA2004DFCAA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A147585C250F5FA2004DFCAA /* AppDelegate.swift */; };
 		A1475861250F5FA2004DFCAA /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1475860250F5FA2004DFCAA /* ProfileViewController.swift */; };
@@ -39,8 +41,10 @@
 		A10A8887251F3CC2006B3017 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		A10A8890251F58C6006B3017 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A10A8893251F6238006B3017 /* MessageCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCellModel.swift; sourceTree = "<group>"; };
-		A12320722528C30B005F8249 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		A12320732528C30B005F8249 /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
+		A12320722528C30B005F8249 /* ThemeSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSettingsViewController.swift; sourceTree = "<group>"; };
+		A12320732528C30B005F8249 /* ThemeSettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeSettingsViewController.xib; sourceTree = "<group>"; };
+		A123207D2529C845005F8249 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
+		A12320852529CB87005F8249 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		A139ED92251741A000DA947B /* AvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarImageView.swift; sourceTree = "<group>"; };
 		A1475859250F5FA2004DFCAA /* FintechApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FintechApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A147585C250F5FA2004DFCAA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -99,13 +103,30 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
-		A12320772528C313005F8249 /* Settings */ = {
+		A12320772528C313005F8249 /* ThemeSettings */ = {
 			isa = PBXGroup;
 			children = (
-				A12320722528C30B005F8249 /* SettingsViewController.swift */,
-				A12320732528C30B005F8249 /* SettingsViewController.xib */,
+				A12320722528C30B005F8249 /* ThemeSettingsViewController.swift */,
+				A12320732528C30B005F8249 /* ThemeSettingsViewController.xib */,
 			);
-			path = Settings;
+			path = ThemeSettings;
+			sourceTree = "<group>";
+		};
+		A12320802529C84B005F8249 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				A12320842529CB7B005F8249 /* ThemeManager */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		A12320842529CB7B005F8249 /* ThemeManager */ = {
+			isa = PBXGroup;
+			children = (
+				A123207D2529C845005F8249 /* ThemeManager.swift */,
+				A12320852529CB87005F8249 /* Theme.swift */,
+			);
+			path = ThemeManager;
 			sourceTree = "<group>";
 		};
 		A139ED912517416600DA947B /* ViewControllers */ = {
@@ -114,7 +135,7 @@
 				A16570862517EC0E00C22EAD /* ProfileViewController */,
 				A1C7439D251E3872005B5195 /* ConversationsList */,
 				A10A8882251F3C65006B3017 /* Conversation */,
-				A12320772528C313005F8249 /* Settings */,
+				A12320772528C313005F8249 /* ThemeSettings */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -152,6 +173,7 @@
 				A1C7439F251E395D005B5195 /* TestData.swift */,
 				A139ED912517416600DA947B /* ViewControllers */,
 				A139ED94251741A900DA947B /* Views */,
+				A12320802529C84B005F8249 /* Managers */,
 				A1475872250F6000004DFCAA /* Utilities */,
 				A1475865250F5FA3004DFCAA /* Assets.xcassets */,
 				A1475867250F5FA3004DFCAA /* LaunchScreen.storyboard */,
@@ -257,7 +279,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1475869250F5FA3004DFCAA /* LaunchScreen.storyboard in Resources */,
-				A12320752528C30B005F8249 /* SettingsViewController.xib in Resources */,
+				A12320752528C30B005F8249 /* ThemeSettingsViewController.xib in Resources */,
 				A1475866250F5FA3004DFCAA /* Assets.xcassets in Resources */,
 				A1475874250F6036004DFCAA /* README.md in Resources */,
 				A1C743A8251E3ABA005B5195 /* ConversationCell.xib in Resources */,
@@ -277,6 +299,7 @@
 				A1C743A3251E39BF005B5195 /* ConversationCellModel.swift in Sources */,
 				A10A8880251F3C60006B3017 /* ConversationViewController.swift in Sources */,
 				A139ED93251741A000DA947B /* AvatarImageView.swift in Sources */,
+				A123207E2529C845005F8249 /* ThemeManager.swift in Sources */,
 				A10A8891251F58C6006B3017 /* Constants.swift in Sources */,
 				A10A887D251F30CC006B3017 /* UIColor+Random.swift in Sources */,
 				A10A8894251F6238006B3017 /* MessageCellModel.swift in Sources */,
@@ -284,7 +307,8 @@
 				A1C743A7251E3ABA005B5195 /* ConversationCell.swift in Sources */,
 				A10A883C251E8BF8006B3017 /* OnlineBadgeView.swift in Sources */,
 				A147585D250F5FA2004DFCAA /* AppDelegate.swift in Sources */,
-				A12320742528C30B005F8249 /* SettingsViewController.swift in Sources */,
+				A12320862529CB87005F8249 /* Theme.swift in Sources */,
+				A12320742528C30B005F8249 /* ThemeSettingsViewController.swift in Sources */,
 				A10A8889251F3CC2006B3017 /* MessageCell.swift in Sources */,
 				A1C743A0251E395D005B5195 /* TestData.swift in Sources */,
 				A1C7439B251E386B005B5195 /* ConversationsListViewController.swift in Sources */,
