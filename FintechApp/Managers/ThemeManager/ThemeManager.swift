@@ -23,6 +23,13 @@ enum ThemeManager {
     static func updateThemeWith(_ theme: Theme) {
         UserDefaults.standard.setValue(theme.rawValue, forKey: selectedThemeKey)
         
+        setupNavigationBarAppearance()
+    }
+    
+    static func setupNavigationBarAppearance() {
+        let navigationBarAppearace = UINavigationBar.appearance()
         
+        navigationBarAppearace.barTintColor = ThemeManager.currentTheme.backgroundColor
+        navigationBarAppearace.titleTextAttributes = [NSAttributedString.Key.foregroundColor: ThemeManager.currentTheme.primaryTextColor]
     }
 }
