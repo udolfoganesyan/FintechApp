@@ -12,13 +12,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ThemeSettingsViewController" customModule="FintechApp" customModuleProvider="target">
             <connections>
                 <outlet property="classicLabel" destination="hQZ-by-tMk" id="VqG-bO-UMn"/>
-                <outlet property="classicThemeBackground" destination="B8C-jM-iJG" id="Knh-U7-xdI"/>
                 <outlet property="classicThemeContainer" destination="fHL-Yw-A7b" id="Sid-k5-2rh"/>
                 <outlet property="dayLabel" destination="tW9-T8-xCK" id="9gX-83-RAC"/>
-                <outlet property="dayThemeBackground" destination="jdd-6n-WD7" id="fky-J6-geN"/>
                 <outlet property="dayThemeContainer" destination="Vxr-oj-doC" id="bJ6-ul-qsW"/>
                 <outlet property="nightLabel" destination="RKZ-Ku-Cfi" id="ows-J1-CU6"/>
-                <outlet property="nightThemeBackground" destination="O2r-9w-0WZ" id="wXH-b6-Z5y"/>
                 <outlet property="nightThemeContainer" destination="syM-Pq-mSW" id="gH3-mR-dbn"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -28,18 +25,6 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B8C-jM-iJG">
-                    <rect key="frame" x="52" y="224" width="310.5" height="125.5"/>
-                    <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jdd-6n-WD7">
-                    <rect key="frame" x="52" y="385.5" width="310.5" height="125"/>
-                    <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O2r-9w-0WZ">
-                    <rect key="frame" x="52" y="546.5" width="310.5" height="125.5"/>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                </view>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="36" translatesAutoresizingMaskIntoConstraints="NO" id="yn2-Ia-c9k">
                     <rect key="frame" x="52" y="224" width="310.5" height="448"/>
                     <subviews>
@@ -130,22 +115,10 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="jdd-6n-WD7" firstAttribute="trailing" secondItem="Vxr-oj-doC" secondAttribute="trailing" id="8g6-6n-qyi"/>
-                <constraint firstItem="O2r-9w-0WZ" firstAttribute="bottom" secondItem="syM-Pq-mSW" secondAttribute="bottom" id="9NY-og-sgB"/>
-                <constraint firstItem="jdd-6n-WD7" firstAttribute="bottom" secondItem="Vxr-oj-doC" secondAttribute="bottom" id="A05-zP-yyP"/>
-                <constraint firstItem="B8C-jM-iJG" firstAttribute="bottom" secondItem="fHL-Yw-A7b" secondAttribute="bottom" id="Arv-Jw-TP3"/>
-                <constraint firstItem="jdd-6n-WD7" firstAttribute="top" secondItem="Vxr-oj-doC" secondAttribute="top" id="FfU-KC-ES8"/>
-                <constraint firstItem="O2r-9w-0WZ" firstAttribute="leading" secondItem="syM-Pq-mSW" secondAttribute="leading" id="Pb7-51-tZa"/>
-                <constraint firstItem="O2r-9w-0WZ" firstAttribute="trailing" secondItem="syM-Pq-mSW" secondAttribute="trailing" id="Q95-XF-Un3"/>
-                <constraint firstItem="B8C-jM-iJG" firstAttribute="leading" secondItem="fHL-Yw-A7b" secondAttribute="leading" id="RMa-tG-Y3d"/>
                 <constraint firstItem="yn2-Ia-c9k" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.75" id="U3i-2X-nqs"/>
-                <constraint firstItem="O2r-9w-0WZ" firstAttribute="top" secondItem="syM-Pq-mSW" secondAttribute="top" id="UJ4-q3-E6Z"/>
-                <constraint firstItem="B8C-jM-iJG" firstAttribute="trailing" secondItem="fHL-Yw-A7b" secondAttribute="trailing" id="WVf-Fh-wUL"/>
                 <constraint firstItem="yn2-Ia-c9k" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="cqm-hr-UDR"/>
                 <constraint firstItem="yn2-Ia-c9k" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="cuq-WD-Req"/>
-                <constraint firstItem="B8C-jM-iJG" firstAttribute="top" secondItem="fHL-Yw-A7b" secondAttribute="top" id="fC0-W1-JvT"/>
                 <constraint firstItem="yn2-Ia-c9k" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.5" id="gL3-dI-MRn"/>
-                <constraint firstItem="jdd-6n-WD7" firstAttribute="leading" secondItem="Vxr-oj-doC" secondAttribute="leading" id="plq-mk-EO6"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="122.54464285714285"/>
         </view>

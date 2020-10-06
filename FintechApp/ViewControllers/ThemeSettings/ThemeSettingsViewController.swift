@@ -20,9 +20,6 @@ class ThemeSettingsViewController: UIViewController {
     @IBOutlet private weak var classicLabel: UILabel!
     @IBOutlet private weak var dayLabel: UILabel!
     @IBOutlet private weak var nightLabel: UILabel!
-    @IBOutlet private weak var classicThemeBackground: UIView!
-    @IBOutlet private weak var dayThemeBackground: UIView!
-    @IBOutlet private weak var nightThemeBackground: UIView!
     
     weak var delegate: SettingsDelegate?
     var changeThemeClosure: (() -> Void)?
@@ -37,19 +34,14 @@ class ThemeSettingsViewController: UIViewController {
     private func setupViews() {
         classicThemeContainer.layer.borderColor = UIColor.gray.cgColor
         classicThemeContainer.layer.cornerRadius = 8
-        classicThemeBackground.layer.cornerRadius = 8
-        classicThemeBackground.alpha = 0
         
         dayThemeContainer.layer.borderColor = UIColor.gray.cgColor
         dayThemeContainer.layer.cornerRadius = 8
-        dayThemeBackground.layer.cornerRadius = 8
-        dayThemeBackground.alpha = 0
         
         nightThemeContainer.layer.borderColor = UIColor.gray.cgColor
         nightThemeContainer.layer.cornerRadius = 8
-        nightThemeBackground.layer.cornerRadius = 8
-        nightThemeBackground.alpha = 0
         
+        updateButtonState(ThemeManager.currentTheme)
         updateTheme(ThemeManager.currentTheme)
     }
     
@@ -96,29 +88,29 @@ class ThemeSettingsViewController: UIViewController {
     private func updateButtonState(_ theme: Theme) {
         switch theme {
         case .classic:
-            self.classicThemeContainer.layer.borderWidth = 2
-            self.dayThemeContainer.layer.borderWidth = 0
-            self.nightThemeContainer.layer.borderWidth = 0
+            classicThemeContainer.layer.borderWidth = 2
+            dayThemeContainer.layer.borderWidth = 0
+            nightThemeContainer.layer.borderWidth = 0
             
-            self.classicThemeBackground.alpha = 0.3
-            self.dayThemeBackground.alpha = 0
-            self.nightThemeBackground.alpha = 0
+            classicThemeContainer.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
+            dayThemeContainer.backgroundColor = .clear
+            nightThemeContainer.backgroundColor = .clear
         case .day:
-            self.classicThemeContainer.layer.borderWidth = 0
-            self.dayThemeContainer.layer.borderWidth = 2
-            self.nightThemeContainer.layer.borderWidth = 0
+            classicThemeContainer.layer.borderWidth = 0
+            dayThemeContainer.layer.borderWidth = 2
+            nightThemeContainer.layer.borderWidth = 0
             
-            self.classicThemeBackground.alpha = 0
-            self.dayThemeBackground.alpha = 0.3
-            self.nightThemeBackground.alpha = 0
+            classicThemeContainer.backgroundColor = .clear
+            dayThemeContainer.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
+            nightThemeContainer.backgroundColor = .clear
         case .night:
-            self.classicThemeContainer.layer.borderWidth = 0
-            self.dayThemeContainer.layer.borderWidth = 0
-            self.nightThemeContainer.layer.borderWidth = 2
+            classicThemeContainer.layer.borderWidth = 0
+            dayThemeContainer.layer.borderWidth = 0
+            nightThemeContainer.layer.borderWidth = 2
             
-            self.classicThemeBackground.alpha = 0
-            self.dayThemeBackground.alpha = 0
-            self.nightThemeBackground.alpha = 0.3
+            classicThemeContainer.backgroundColor = .clear
+            dayThemeContainer.backgroundColor = .clear
+            nightThemeContainer.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
         }
     }
     
