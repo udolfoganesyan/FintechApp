@@ -21,6 +21,8 @@ class ThemeSettingsViewController: UIViewController {
     @IBOutlet private weak var dayLabel: UILabel!
     @IBOutlet private weak var nightLabel: UILabel!
     
+    // в нашем случае, поскольку родитель(conversationslistviewcontroller)
+    //    не держит ссылку на этот vc - retain cycle'а нет, даже если делегата не делать weak
     weak var delegate: SettingsDelegate?
     var changeThemeClosure: (() -> Void)?
     
