@@ -77,6 +77,20 @@
                         <constraint firstAttribute="trailing" secondItem="9mR-z0-ZNj" secondAttribute="trailing" id="YvX-9m-rIr"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d79-4t-izx">
+                    <rect key="frame" x="358" y="60" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="d79-4t-izx" secondAttribute="height" multiplier="1:1" id="DUg-we-NX7"/>
+                        <constraint firstAttribute="width" constant="40" id="ajl-wi-Qol"/>
+                    </constraints>
+                    <color key="tintColor" red="0.32941176470588235" green="0.32941176470588235" blue="0.34509803921568627" alpha="1" colorSpace="calibratedRGB"/>
+                    <state key="normal" image="close">
+                        <color key="titleColor" systemColor="labelColor"/>
+                    </state>
+                    <connections>
+                        <action selector="closeButtonTouched:" destination="-1" eventType="touchUpInside" id="cbN-ci-w2x"/>
+                    </connections>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="pII-QZ-E3y"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -85,6 +99,8 @@
                 <constraint firstItem="BKD-rA-ke0" firstAttribute="top" secondItem="pII-QZ-E3y" secondAttribute="top" constant="45" id="8DQ-bD-ATW"/>
                 <constraint firstItem="Sn9-GA-dPG" firstAttribute="centerX" secondItem="d3J-wB-wpx" secondAttribute="centerX" id="Ajw-L1-7iG"/>
                 <constraint firstItem="pII-QZ-E3y" firstAttribute="trailing" secondItem="he3-lu-Q3o" secondAttribute="trailing" constant="12" id="GFX-13-dQK"/>
+                <constraint firstItem="pII-QZ-E3y" firstAttribute="trailing" secondItem="d79-4t-izx" secondAttribute="trailing" constant="16" id="IKs-Uh-0d3"/>
+                <constraint firstItem="d79-4t-izx" firstAttribute="top" secondItem="pII-QZ-E3y" secondAttribute="top" constant="16" id="KF1-vu-a8D"/>
                 <constraint firstItem="he3-lu-Q3o" firstAttribute="centerX" secondItem="d3J-wB-wpx" secondAttribute="centerX" id="KuT-zU-1CZ"/>
                 <constraint firstItem="pII-QZ-E3y" firstAttribute="bottom" secondItem="Sn9-GA-dPG" secondAttribute="bottom" constant="30" id="QfQ-JA-Uoa"/>
                 <constraint firstItem="pII-QZ-E3y" firstAttribute="trailing" secondItem="KrE-0p-SvI" secondAttribute="trailing" constant="36" id="R13-bA-SjN"/>
@@ -100,6 +116,10 @@
         </view>
     </objects>
     <resources>
+        <image name="close" width="70" height="70"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

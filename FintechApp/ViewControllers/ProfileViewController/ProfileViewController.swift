@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ProfileViewController.swift
 //  FintechApp
 //
 //  Created by Rudolf Oganesyan on 13.09.2020.
@@ -17,13 +17,10 @@ class ProfileViewController: UIViewController {
     @IBOutlet private weak var saveButton: UIButton!
     @IBOutlet private weak var editButton: UIButton!
     
-    private let avatarView = AvatarImageView(style: .circle)
+    private lazy var avatarView = AvatarImageView(style: .circle)
     
     init() {
         super.init(nibName: nil, bundle: nil)
-        
-        //        save button has not been initialized yet
-        //            Logger.log("\(saveButton.frame)")
     }
     
     required init?(coder: NSCoder) {
@@ -32,17 +29,8 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        Logger.log("\(saveButton.frame)")
-        
+                
         setupSubviews()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        Logger.log("\(saveButton.frame)")
-        //        Once view controllers' view has been added to the view hierarchy, all ui element have been initalised and drawn viewDidAppear is called, so before viewdidappear frame can be different.
     }
     
     private func setupSubviews() {
@@ -102,6 +90,10 @@ class ProfileViewController: UIViewController {
         imagePickerController.allowsEditing = true
         
         present(imagePickerController, animated: true)
+    }
+    
+    @IBAction private func closeButtonTouched(_ sender: UIButton) {
+        dismiss(animated: true)
     }
 }
 
