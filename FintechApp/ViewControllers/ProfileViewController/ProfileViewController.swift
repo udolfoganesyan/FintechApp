@@ -13,11 +13,19 @@ class ProfileViewController: UIViewController {
     
     @IBOutlet private weak var avatarContainerView: UIView!
     @IBOutlet private weak var nameLabel: UILabel!
+    @IBOutlet private weak var fullNameTextField: UITextField!
     @IBOutlet private weak var aboutLabel: UILabel!
-    @IBOutlet private weak var saveButton: UIButton!
+    @IBOutlet private weak var aboutTextView: UITextView!
+    @IBOutlet private weak var aboutLabelContainer: UIView!
+    @IBOutlet private weak var aboutInfoLabel: UILabel!
+    @IBOutlet private weak var gcdSaveButton: UIButton!
+    @IBOutlet private weak var operationSaveButton: UIButton!
     @IBOutlet private weak var editButton: UIButton!
+    @IBOutlet private weak var closeButton: UIButton!
+    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     
     private lazy var avatarView = AvatarImageView(style: .circle)
+    private var inEditingMode = false
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -29,7 +37,7 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
         setupSubviews()
     }
     
@@ -37,25 +45,91 @@ class ProfileViewController: UIViewController {
         view.backgroundColor = ThemeManager.currentTheme.backgroundColor
         nameLabel.textColor = ThemeManager.currentTheme.primaryTextColor
         aboutLabel.textColor = ThemeManager.currentTheme.primaryTextColor
-        setupSaveButton()
+        aboutInfoLabel.textColor = ThemeManager.currentTheme.secondaryTextColor
+        fullNameTextField.backgroundColor = ThemeManager.currentTheme.incomingCellColor
+        fullNameTextField.textColor = ThemeManager.currentTheme.primaryTextColor
+        fullNameTextField.attributedPlaceholder =
+            NSAttributedString(string: "Full name",
+                               attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.currentTheme.secondaryTextColor])
+        aboutTextView.delegate = self
+        aboutTextView.backgroundColor = ThemeManager.currentTheme.incomingCellColor
+        aboutTextView.textColor = ThemeManager.currentTheme.primaryTextColor
+        activityIndicator.color = ThemeManager.currentTheme.secondaryTextColor
+        setupSaveButtons()
         setupAvatarView()
     }
     
-    private func setupSaveButton() {
-        saveButton.layer.cornerRadius = 14
-        saveButton.layer.masksToBounds = true
-        saveButton.backgroundColor = ThemeManager.currentTheme.buttonBackgroundColor
+    private func setupSaveButtons() {
+        gcdSaveButton.layer.cornerRadius = 14
+        gcdSaveButton.layer.masksToBounds = true
+        gcdSaveButton.backgroundColor = ThemeManager.currentTheme.buttonBackgroundColor
+        
+        operationSaveButton.layer.cornerRadius = 14
+        operationSaveButton.layer.masksToBounds = true
+        operationSaveButton.backgroundColor = ThemeManager.currentTheme.buttonBackgroundColor
     }
     
     private func setupAvatarView() {
         avatarView.install(on: avatarContainerView)
         avatarView.setupWith(firstName: "Rudolf", lastName: "Oganesyan", color: #colorLiteral(red: 0.8941176471, green: 0.9098039216, blue: 0.168627451, alpha: 1))
+        let avatarTap = UITapGestureRecognizer(target: self, action: #selector(handleAvatar))
+        avatarView.addGestureRecognizer(avatarTap)
+        avatarView.isUserInteractionEnabled = true
         
         avatarContainerView.bringSubviewToFront(editButton)
     }
     
+    @objc private func handleAvatar() {
+        if inEditingMode {
+            presentaActionSheet()
+        }
+    }
+    
+    @IBAction private func fullNameDidChange(_ sender: UITextField) {
+        checkChangesAndSetSaveButtons()
+        
+    }
+    
+    private func checkChangesAndSetSaveButtons() {
+        if aboutTextView.text != aboutLabel.text || nameLabel.text != fullNameTextField.text {
+            gcdSaveButton.isEnabled = true
+            operationSaveButton.isEnabled = true
+        } else {
+            gcdSaveButton.isEnabled = false
+            operationSaveButton.isEnabled = false
+        }
+    }
+    
+    @IBAction private func saveViaGCDTouched(_ sender: UIButton) {
+        disableUI()
+        
+    }
+    
+    @IBAction private func saveViaOperationTouched(_ sender: UIButton) {
+        disableUI()
+        
+    }
+    
+    private func disableUI() {
+        activityIndicator.startAnimating()
+        closeButton.isEnabled = false
+        editButton.isEnabled = false
+        gcdSaveButton.isEnabled = false
+        operationSaveButton.isEnabled = false
+        fullNameTextField.isEnabled = false
+        aboutTextView.isEditable = false
+    }
+    
     @IBAction private func editButtonTouched(_ sender: UIButton) {
-        presentaActionSheet()
+        inEditingMode.toggle()
+        UIView.animate(withDuration: 0.1) {
+            self.fullNameTextField.isHidden.toggle()
+            self.nameLabel.isHidden.toggle()
+            self.aboutTextView.isHidden.toggle()
+            self.aboutLabelContainer.isHidden.toggle()
+            self.gcdSaveButton.isHidden.toggle()
+            self.operationSaveButton.isHidden.toggle()
+        }
     }
     
     private func presentaActionSheet() {
@@ -98,6 +172,16 @@ class ProfileViewController: UIViewController {
     
     @IBAction private func closeButtonTouched(_ sender: UIButton) {
         dismiss(animated: true)
+    }
+}
+
+// MARK: - UITextViewDelegate
+
+extension ProfileViewController: UITextViewDelegate {
+    
+    func textViewDidChange(_ textView: UITextView) {
+        checkChangesAndSetSaveButtons()
+        
     }
 }
 

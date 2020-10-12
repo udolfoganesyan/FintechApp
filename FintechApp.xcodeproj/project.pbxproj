@@ -26,6 +26,9 @@
 		A1475874250F6036004DFCAA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A1475873250F6036004DFCAA /* README.md */; };
 		A16570822517600300C22EAD /* UIAlertController+ConstraintsFix.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16570812517600300C22EAD /* UIAlertController+ConstraintsFix.swift */; };
 		A16570852517E6A700C22EAD /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A16570842517E6A700C22EAD /* ProfileViewController.xib */; };
+		A18E47392534BB330096D1B3 /* GCDDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18E47382534BB330096D1B3 /* GCDDataManager.swift */; };
+		A18E473C2534BB430096D1B3 /* OperationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18E473B2534BB430096D1B3 /* OperationDataManager.swift */; };
+		A18E47432534C4BA0096D1B3 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18E47422534C4BA0096D1B3 /* UIViewController+Alert.swift */; };
 		A1C7439B251E386B005B5195 /* ConversationsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C7439A251E386B005B5195 /* ConversationsListViewController.swift */; };
 		A1C743A0251E395D005B5195 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C7439F251E395D005B5195 /* TestData.swift */; };
 		A1C743A3251E39BF005B5195 /* ConversationCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C743A2251E39BF005B5195 /* ConversationCellModel.swift */; };
@@ -56,6 +59,9 @@
 		A1475873250F6036004DFCAA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A16570812517600300C22EAD /* UIAlertController+ConstraintsFix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+ConstraintsFix.swift"; sourceTree = "<group>"; };
 		A16570842517E6A700C22EAD /* ProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
+		A18E47382534BB330096D1B3 /* GCDDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDDataManager.swift; sourceTree = "<group>"; };
+		A18E473B2534BB430096D1B3 /* OperationDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationDataManager.swift; sourceTree = "<group>"; };
+		A18E47422534C4BA0096D1B3 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		A1C7439A251E386B005B5195 /* ConversationsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListViewController.swift; sourceTree = "<group>"; };
 		A1C7439F251E395D005B5195 /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
 		A1C743A2251E39BF005B5195 /* ConversationCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCellModel.swift; sourceTree = "<group>"; };
@@ -116,6 +122,8 @@
 			isa = PBXGroup;
 			children = (
 				A12320842529CB7B005F8249 /* ThemeManager */,
+				A18E473E2534BB480096D1B3 /* GCDDataManager */,
+				A18E47402534BB520096D1B3 /* OperationDataManager */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -198,6 +206,7 @@
 				A16570812517600300C22EAD /* UIAlertController+ConstraintsFix.swift */,
 				A1C743AA251E3C6B005B5195 /* UITableViewCell+reuseIdentifier.swift */,
 				A10A887C251F30CC006B3017 /* UIColor+Random.swift */,
+				A18E47422534C4BA0096D1B3 /* UIViewController+Alert.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -209,6 +218,22 @@
 				A16570842517E6A700C22EAD /* ProfileViewController.xib */,
 			);
 			path = ProfileViewController;
+			sourceTree = "<group>";
+		};
+		A18E473E2534BB480096D1B3 /* GCDDataManager */ = {
+			isa = PBXGroup;
+			children = (
+				A18E47382534BB330096D1B3 /* GCDDataManager.swift */,
+			);
+			path = GCDDataManager;
+			sourceTree = "<group>";
+		};
+		A18E47402534BB520096D1B3 /* OperationDataManager */ = {
+			isa = PBXGroup;
+			children = (
+				A18E473B2534BB430096D1B3 /* OperationDataManager.swift */,
+			);
+			path = OperationDataManager;
 			sourceTree = "<group>";
 		};
 		A1C7439D251E3872005B5195 /* ConversationsList */ = {
@@ -296,6 +321,7 @@
 			files = (
 				A16570822517600300C22EAD /* UIAlertController+ConstraintsFix.swift in Sources */,
 				A1475861250F5FA2004DFCAA /* ProfileViewController.swift in Sources */,
+				A18E47392534BB330096D1B3 /* GCDDataManager.swift in Sources */,
 				A1C743A3251E39BF005B5195 /* ConversationCellModel.swift in Sources */,
 				A10A8880251F3C60006B3017 /* ConversationViewController.swift in Sources */,
 				A139ED93251741A000DA947B /* AvatarImageView.swift in Sources */,
@@ -308,8 +334,10 @@
 				A10A883C251E8BF8006B3017 /* OnlineBadgeView.swift in Sources */,
 				A147585D250F5FA2004DFCAA /* AppDelegate.swift in Sources */,
 				A12320862529CB87005F8249 /* Theme.swift in Sources */,
+				A18E47432534C4BA0096D1B3 /* UIViewController+Alert.swift in Sources */,
 				A12320742528C30B005F8249 /* ThemeSettingsViewController.swift in Sources */,
 				A10A8889251F3CC2006B3017 /* MessageCell.swift in Sources */,
+				A18E473C2534BB430096D1B3 /* OperationDataManager.swift in Sources */,
 				A1C743A0251E395D005B5195 /* TestData.swift in Sources */,
 				A1C7439B251E386B005B5195 /* ConversationsListViewController.swift in Sources */,
 				A1C743AB251E3C6B005B5195 /* UITableViewCell+reuseIdentifier.swift in Sources */,
