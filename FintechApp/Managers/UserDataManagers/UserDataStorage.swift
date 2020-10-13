@@ -31,15 +31,12 @@ struct UserDataStorage {
         do {
             if let fullName = fullName {
                 try saveFullName(fullName)
-                print("saved name")
             }
             if let about = about {
                 try saveAbout(about)
-                print("saved about")
             }
             if let avatarImage = avatarImage {
                 try saveAvatarImage(avatarImage)
-                print("saved avatar")
             }
             completion(true)
         } catch {

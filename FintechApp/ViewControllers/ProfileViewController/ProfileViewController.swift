@@ -139,7 +139,6 @@ class ProfileViewController: UIViewController {
 
         dataManager?.saveUserData(fullName: fullNameTextField.text, about: aboutTextView.text, avatarImage: avatarView.image) { (success) in
             if success {
-                print("finished")
                 self.showOkAlert("Done ✓", nil)
                 self.fetchAndSetUserData()
                 self.enableUI()
