@@ -125,20 +125,18 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction private func saveViaGCDTouched(_ sender: UIButton) {
-        disableUI()
-        
         dataManager = GCDDataManager()
         save()
     }
     
     @IBAction private func saveViaOperationTouched(_ sender: UIButton) {
-        disableUI()
-        
         dataManager = OperationDataManager()
         save()
     }
     
     private func save() {
+        disableUI()
+
         dataManager?.saveUserData(fullName: fullNameTextField.text, about: aboutTextView.text, avatarImage: avatarView.image) { (success) in
             if success {
                 print("finished")
@@ -147,7 +145,14 @@ class ProfileViewController: UIViewController {
                 self.enableUI()
                 self.disableSaveButtons()
             } else {
-                
+                let alertController = UIAlertController(title: "Error while saving data", message: nil, preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
+                    alertController.dismiss(animated: true, completion: nil)
+                })
+                alertController.addAction(UIAlertAction(title: NSLocalizedString("Retry", comment: ""), style: .default) { _ in
+                    self.save()
+                })
+                self.present(alertController, animated: true)
             }
         }
     }
