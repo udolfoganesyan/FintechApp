@@ -26,6 +26,14 @@ class ProfileViewController: UIViewController {
     
     private lazy var avatarView = AvatarImageView(style: .circle)
     private var inEditingMode = false
+    private var didChangeAvatar = false
+    private var dataManager: AsyncDataManager?
+    private let userDataStorage = UserDataStorage()
+    
+    private enum ManagerType {
+        case gcd
+        case operation
+    }
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -39,6 +47,7 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         
         setupSubviews()
+        fetchAndSetUserData()
     }
     
     private func setupSubviews() {
@@ -85,39 +94,82 @@ class ProfileViewController: UIViewController {
         }
     }
     
+    private func fetchAndSetUserData() {
+        nameLabel.text = userDataStorage.getFullName()
+        fullNameTextField.text = nameLabel.text
+        
+        aboutLabel.text = userDataStorage.getAbout()
+        aboutTextView.text = aboutLabel.text
+        if let avatarImage = userDataStorage.getAvatar() {
+            avatarView.setupWith(image: avatarImage)
+        }
+    }
+    
     @IBAction private func fullNameDidChange(_ sender: UITextField) {
         checkChangesAndSetSaveButtons()
         
     }
     
     private func checkChangesAndSetSaveButtons() {
-        if aboutTextView.text != aboutLabel.text || nameLabel.text != fullNameTextField.text {
+        if aboutTextView.text != aboutLabel.text || nameLabel.text != fullNameTextField.text || didChangeAvatar {
             gcdSaveButton.isEnabled = true
             operationSaveButton.isEnabled = true
         } else {
-            gcdSaveButton.isEnabled = false
-            operationSaveButton.isEnabled = false
+            disableSaveButtons()
         }
+    }
+    
+    private func disableSaveButtons() {
+        gcdSaveButton.isEnabled = false
+        operationSaveButton.isEnabled = false
     }
     
     @IBAction private func saveViaGCDTouched(_ sender: UIButton) {
         disableUI()
         
+        dataManager = GCDDataManager()
+        save()
     }
     
     @IBAction private func saveViaOperationTouched(_ sender: UIButton) {
         disableUI()
         
+        dataManager = OperationDataManager()
+        save()
+    }
+    
+    private func save() {
+        dataManager?.saveUserData(fullName: fullNameTextField.text, about: aboutTextView.text, avatarImage: avatarView.image) { (success) in
+            if success {
+                print("finished")
+                self.showOkAlert("Done ✓", nil)
+                self.fetchAndSetUserData()
+                self.enableUI()
+                self.disableSaveButtons()
+            } else {
+                
+            }
+        }
     }
     
     private func disableUI() {
         activityIndicator.startAnimating()
-        closeButton.isEnabled = false
-        editButton.isEnabled = false
-        gcdSaveButton.isEnabled = false
-        operationSaveButton.isEnabled = false
-        fullNameTextField.isEnabled = false
-        aboutTextView.isEditable = false
+        setUIAvailability(enabled: false)
+    }
+    
+    private func enableUI() {
+        activityIndicator.stopAnimating()
+        setUIAvailability(enabled: true)
+    }
+    
+    private func setUIAvailability(enabled: Bool) {
+        closeButton.isEnabled = enabled
+        editButton.isEnabled = enabled
+        gcdSaveButton.isEnabled = enabled
+        operationSaveButton.isEnabled = enabled
+        fullNameTextField.isEnabled = enabled
+        aboutTextView.isEditable = enabled
+        avatarView.isUserInteractionEnabled = enabled
     }
     
     @IBAction private func editButtonTouched(_ sender: UIButton) {
@@ -193,6 +245,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         guard let image = info[.editedImage] as? UIImage else { return }
         
         avatarView.setupWith(image: image)
+        didChangeAvatar = true
         
         dismiss(animated: true)
     }
