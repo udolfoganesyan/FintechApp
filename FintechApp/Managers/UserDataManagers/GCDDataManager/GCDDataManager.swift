@@ -18,7 +18,7 @@ protocol AsyncDataManager {
 struct GCDDataManager: AsyncDataManager {
     
     private let userDataStorage = UserDataStorage()
-    private let storageQueue = DispatchQueue(label: "com.rudolf.FintechApp.storage", attributes: .concurrent)
+    private let storageQueue = DispatchQueue(label: "com.rudolf.FintechApp.storage")
     
     func saveUserData(user: User, completion: @escaping DataManagerCompletion) {
         storageQueue.async {

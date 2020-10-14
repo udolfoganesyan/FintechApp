@@ -72,11 +72,12 @@ class ThemeSettingsViewController: UIViewController {
     
     private func changeThemeTo(_ theme: Theme) {
         if ThemeManager.currentTheme != theme {
-            ThemeManager.updateThemeWith(theme)
-            delegate?.didChangeTheme()
-            changeThemeClosure?()
-            
-            updateThemeAnimated(theme)
+            ThemeManager.updateThemeWith(theme) {
+                self.delegate?.didChangeTheme()
+                self.changeThemeClosure?()
+                
+                self.updateThemeAnimated(theme)
+            }
         }
     }
     
