@@ -152,8 +152,9 @@ class ProfileViewController: UIViewController {
                 self.enableUI()
                 self.disableSaveButtons()
             } else {
-                let alertController = UIAlertController(title: "Error while saving data", message: nil, preferredStyle: .alert)
+                let alertController = UIAlertController(title: "Error while saving data :(", message: nil, preferredStyle: .alert)
                 alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
+                    self.enableUI()
                     alertController.dismiss(animated: true, completion: nil)
                 })
                 alertController.addAction(UIAlertAction(title: NSLocalizedString("Retry", comment: ""), style: .default) { _ in
