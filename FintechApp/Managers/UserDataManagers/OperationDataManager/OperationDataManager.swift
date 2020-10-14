@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OperationDataManager: AsyncDataManager {
+struct OperationDataManager: AsyncDataManager {
     
     private let operationQueue = OperationQueue()
     
