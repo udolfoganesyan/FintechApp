@@ -28,7 +28,6 @@ class ProfileViewController: UIViewController {
     private var inEditingMode = false
     private var didChangeAvatar = false
     private var dataManager: AsyncDataManager?
-    private let userDataStorage = UserDataStorage()
     
     private enum ManagerType {
         case gcd
@@ -61,6 +60,8 @@ class ProfileViewController: UIViewController {
         fullNameTextField.attributedPlaceholder =
             NSAttributedString(string: "Full name",
                                attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.currentTheme.secondaryTextColor])
+        let padding = aboutTextView.textContainer.lineFragmentPadding
+        aboutTextView.textContainerInset =  UIEdgeInsets(top: 0, left: -padding, bottom: 0, right: -padding)
         aboutTextView.delegate = self
         aboutTextView.backgroundColor = ThemeManager.currentTheme.incomingCellColor
         aboutTextView.textColor = ThemeManager.currentTheme.primaryTextColor
@@ -96,19 +97,21 @@ class ProfileViewController: UIViewController {
     }
     
     private func fetchAndSetUserData() {
-        nameLabel.text = userDataStorage.getFullName()
-        fullNameTextField.text = nameLabel.text
-        
-        aboutLabel.text = userDataStorage.getAbout()
-        aboutTextView.text = aboutLabel.text
-        if let avatarImage = userDataStorage.getAvatar() {
-            avatarView.setupWith(image: avatarImage)
-        }
+        dataManager = OperationDataManager()
+        dataManager?.fetchUserData(completion: { (user) in
+            self.nameLabel.text = user.fullName
+            self.fullNameTextField.text = self.nameLabel.text
+            
+            self.aboutLabel.text = user.about
+            self.aboutTextView.text = self.aboutLabel.text
+            if let avatarImage = user.image {
+                self.avatarView.setupWith(image: avatarImage)
+            }
+        })
     }
     
     @IBAction private func fullNameDidChange(_ sender: UITextField) {
         checkChangesAndSetSaveButtons()
-        
     }
     
     private func checkChangesAndSetSaveButtons() {
@@ -137,8 +140,12 @@ class ProfileViewController: UIViewController {
     
     private func save() {
         disableUI()
-
-        dataManager?.saveUserData(fullName: fullNameTextField.text, about: aboutTextView.text, avatarImage: avatarView.image) { (success) in
+        
+        let user = User(fullName: fullNameTextField.text,
+                        about: aboutTextView.text,
+                        image: avatarView.image)
+        
+        dataManager?.saveUserData(user: user) { (success) in
             if success {
                 self.showOkAlert("Done ✓", nil)
                 self.fetchAndSetUserData()
@@ -238,7 +245,6 @@ extension ProfileViewController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         checkChangesAndSetSaveButtons()
-        
     }
 }
 

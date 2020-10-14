@@ -8,19 +8,21 @@
 
 import UIKit
 
+typealias FetchUserCompletion = (User) -> Void
+
 protocol AsyncDataManager {
-    func saveUserData(fullName: String?, about: String?, avatarImage: UIImage?, completion: @escaping DataManagerCompletion)
-    func fetchUserData()
+    func saveUserData(user: User, completion: @escaping DataManagerCompletion)
+    func fetchUserData(completion: @escaping FetchUserCompletion)
 }
 
 struct GCDDataManager: AsyncDataManager {
     
     private let userDataStorage = UserDataStorage()
+    private let storageQueue = DispatchQueue(label: "com.rudolf.FintechApp.storage", attributes: .concurrent)
     
-    func saveUserData(fullName: String?, about: String?, avatarImage: UIImage?, completion: @escaping DataManagerCompletion) {
-        let storageQueue = DispatchQueue(label: "com.rudolf.FintechApp.storage", attributes: .concurrent)
+    func saveUserData(user: User, completion: @escaping DataManagerCompletion) {
         storageQueue.async {
-            userDataStorage.saveUserData(fullName: fullName, about: about, avatarImage: avatarImage) { (success) in
+            userDataStorage.saveUserData(user: user) { (success) in
                 DispatchQueue.main.async {
                     completion(success)
                 }
@@ -28,7 +30,15 @@ struct GCDDataManager: AsyncDataManager {
         }
     }
     
-    func fetchUserData() {
-        
+    func fetchUserData(completion: @escaping FetchUserCompletion) {
+        storageQueue.async {
+            let fullName = userDataStorage.getFullName()
+            let about = userDataStorage.getAbout()
+            let image = userDataStorage.getAvatar()
+            let user = User(fullName: fullName, about: about, image: image)
+            DispatchQueue.main.async {
+                completion(user)
+            }
+        }
     }
 }

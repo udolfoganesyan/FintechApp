@@ -26,16 +26,16 @@ struct UserDataStorage {
         getDocumentsDirectory().appendingPathComponent("avatar.jpeg")
     }
     
-    func saveUserData(fullName: String?, about: String?, avatarImage: UIImage?, completion: @escaping DataManagerCompletion) {
+    func saveUserData(user: User, completion: @escaping DataManagerCompletion) {
         
         do {
-            if let fullName = fullName {
+            if let fullName = user.fullName {
                 try saveFullName(fullName)
             }
-            if let about = about {
+            if let about = user.about {
                 try saveAbout(about)
             }
-            if let avatarImage = avatarImage {
+            if let avatarImage = user.image {
                 try saveAvatarImage(avatarImage)
             }
             completion(true)

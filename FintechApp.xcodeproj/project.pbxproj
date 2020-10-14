@@ -16,6 +16,7 @@
 		A1202F89253648A60056BFCE /* SaveUserDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1202F88253648A60056BFCE /* SaveUserDataOperation.swift */; };
 		A1202FCC2537049E0056BFCE /* UIViewController+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1202FCB2537049E0056BFCE /* UIViewController+Keyboard.swift */; };
 		A1202FCF2537059D0056BFCE /* FetchUserDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1202FCE2537059D0056BFCE /* FetchUserDataOperation.swift */; };
+		A120301225375EB10056BFCE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A120301125375EB10056BFCE /* User.swift */; };
 		A12320742528C30B005F8249 /* ThemeSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12320722528C30B005F8249 /* ThemeSettingsViewController.swift */; };
 		A12320752528C30B005F8249 /* ThemeSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A12320732528C30B005F8249 /* ThemeSettingsViewController.xib */; };
 		A123207E2529C845005F8249 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A123207D2529C845005F8249 /* ThemeManager.swift */; };
@@ -51,6 +52,7 @@
 		A1202F88253648A60056BFCE /* SaveUserDataOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveUserDataOperation.swift; sourceTree = "<group>"; };
 		A1202FCB2537049E0056BFCE /* UIViewController+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Keyboard.swift"; sourceTree = "<group>"; };
 		A1202FCE2537059D0056BFCE /* FetchUserDataOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUserDataOperation.swift; sourceTree = "<group>"; };
+		A120301125375EB10056BFCE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A12320722528C30B005F8249 /* ThemeSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSettingsViewController.swift; sourceTree = "<group>"; };
 		A12320732528C30B005F8249 /* ThemeSettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeSettingsViewController.xib; sourceTree = "<group>"; };
 		A123207D2529C845005F8249 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 				A18E473E2534BB480096D1B3 /* GCDDataManager */,
 				A18E47402534BB520096D1B3 /* OperationDataManager */,
 				A1F1F4682536318A002388AB /* UserDataStorage.swift */,
+				A120301125375EB10056BFCE /* User.swift */,
 			);
 			path = UserDataManagers;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 				A18E47392534BB330096D1B3 /* GCDDataManager.swift in Sources */,
 				A1C743A3251E39BF005B5195 /* ConversationCellModel.swift in Sources */,
 				A10A8880251F3C60006B3017 /* ConversationViewController.swift in Sources */,
+				A120301225375EB10056BFCE /* User.swift in Sources */,
 				A1202FCC2537049E0056BFCE /* UIViewController+Keyboard.swift in Sources */,
 				A139ED93251741A000DA947B /* AvatarImageView.swift in Sources */,
 				A123207E2529C845005F8249 /* ThemeManager.swift in Sources */,

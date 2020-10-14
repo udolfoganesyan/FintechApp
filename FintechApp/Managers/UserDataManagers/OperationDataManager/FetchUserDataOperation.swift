@@ -10,24 +10,13 @@ import UIKit
 
 class FetchUserDataOperation: Operation {
     
-    private let userDataStorage = UserDataStorage()
-    private var fullName: String?
-    private var about: String?
-    private var avatarImage: UIImage?
-    private var completion: DataManagerCompletion
+    var fetchedUser = User(fullName: nil, about: nil, image: nil)
     
-    init(fullName: String?, about: String?, avatarImage: UIImage?, completion: @escaping DataManagerCompletion) {
-        self.fullName = fullName
-        self.about = about
-        self.avatarImage = avatarImage
-        self.completion = completion
-    }
+    private let userDataStorage = UserDataStorage()
     
     override func main() {
-        userDataStorage.saveUserData(fullName: fullName, about: about, avatarImage: avatarImage) { (success) in
-            OperationQueue.main.addOperation {
-                self.completion(success)
-            }
-        }
+        fetchedUser = User(fullName: userDataStorage.getFullName(),
+                           about: userDataStorage.getAbout(),
+                           image: userDataStorage.getAvatar())
     }
 }

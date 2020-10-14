@@ -10,14 +10,22 @@ import UIKit
 
 class OperationDataManager: AsyncDataManager {
     
-    func saveUserData(fullName: String?, about: String?, avatarImage: UIImage?, completion: @escaping DataManagerCompletion) {
+    private let operationQueue = OperationQueue()
+    
+    func saveUserData(user: User, completion: @escaping DataManagerCompletion) {
         
-        let saveUserDataOperation = SaveUserDataOperation(fullName: fullName, about: about, avatarImage: avatarImage, completion: completion)
-        let operationQueue = OperationQueue()
+        let saveUserDataOperation = SaveUserDataOperation(user: user, completion: completion)
         operationQueue.addOperation(saveUserDataOperation)
     }
     
-    func fetchUserData() {
+    func fetchUserData(completion: @escaping FetchUserCompletion) {
         
+        let fetchUserDataOperation = FetchUserDataOperation()
+        fetchUserDataOperation.completionBlock = {
+            OperationQueue.main.addOperation {
+                completion(fetchUserDataOperation.fetchedUser)
+            }
+        }
+        operationQueue.addOperation(fetchUserDataOperation)
     }
 }
