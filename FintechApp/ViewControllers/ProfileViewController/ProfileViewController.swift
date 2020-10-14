@@ -48,6 +48,7 @@ class ProfileViewController: UIViewController {
         
         setupSubviews()
         fetchAndSetUserData()
+        hideKeyboardWhenTappedAround()
     }
     
     private func setupSubviews() {

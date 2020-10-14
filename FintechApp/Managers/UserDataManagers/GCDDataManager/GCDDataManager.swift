@@ -10,6 +10,7 @@ import UIKit
 
 protocol AsyncDataManager {
     func saveUserData(fullName: String?, about: String?, avatarImage: UIImage?, completion: @escaping DataManagerCompletion)
+    func fetchUserData()
 }
 
 struct GCDDataManager: AsyncDataManager {
@@ -25,5 +26,9 @@ struct GCDDataManager: AsyncDataManager {
                 }
             }
         }
+    }
+    
+    func fetchUserData() {
+        
     }
 }

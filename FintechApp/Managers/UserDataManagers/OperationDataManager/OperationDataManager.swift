@@ -12,14 +12,12 @@ class OperationDataManager: AsyncDataManager {
     
     func saveUserData(fullName: String?, about: String?, avatarImage: UIImage?, completion: @escaping DataManagerCompletion) {
         
-        startOperation(fullName: fullName, about: about, avatarImage: avatarImage) { (success) in
-            completion(success)
-        }
-    }
-    
-    private func startOperation(fullName: String?, about: String?, avatarImage: UIImage?, completion: @escaping DataManagerCompletion) {
         let saveUserDataOperation = SaveUserDataOperation(fullName: fullName, about: about, avatarImage: avatarImage, completion: completion)
         let operationQueue = OperationQueue()
         operationQueue.addOperation(saveUserDataOperation)
+    }
+    
+    func fetchUserData() {
+        
     }
 }
