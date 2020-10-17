@@ -61,7 +61,7 @@ class ProfileViewController: UIViewController {
             NSAttributedString(string: "Full name",
                                attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.currentTheme.secondaryTextColor])
         let padding = aboutTextView.textContainer.lineFragmentPadding
-        aboutTextView.textContainerInset =  UIEdgeInsets(top: 0, left: -padding, bottom: 0, right: -padding)
+        aboutTextView.textContainerInset = UIEdgeInsets(top: 0, left: -padding, bottom: 0, right: -padding)
         aboutTextView.delegate = self
         aboutTextView.backgroundColor = ThemeManager.currentTheme.incomingCellColor
         aboutTextView.textColor = ThemeManager.currentTheme.primaryTextColor
@@ -200,12 +200,10 @@ class ProfileViewController: UIViewController {
     private func presentaActionSheet() {
         let alertController = UIAlertController(title: "Choose Image from", message: nil, preferredStyle: .actionSheet)
         
-        let cameraAction = UIAlertAction(title: "Camera", style: .default) {
-            action in
+        let cameraAction = UIAlertAction(title: "Camera", style: .default) { _ in
             self.showImagePicker(for: .camera)
         }
-        let galleryAction = UIAlertAction(title: "Gallery", style: .default) {
-            action in
+        let galleryAction = UIAlertAction(title: "Gallery", style: .default) { _ in
             self.showImagePicker(for: .photoLibrary)
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)

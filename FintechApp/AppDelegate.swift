@@ -6,7 +6,7 @@
 //  Copyright © 2020 Рудольф О. All rights reserved.
 //
 
-import UIKit
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         ThemeManager.setupNavigationBarAppearance()
+        
+        FirebaseApp.configure()
                 
         return true
     }
