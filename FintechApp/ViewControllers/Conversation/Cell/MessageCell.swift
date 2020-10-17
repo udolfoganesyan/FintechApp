@@ -17,7 +17,10 @@ final class MessageCell: UITableViewCell {
     
     private var isIncoming: Bool = false {
         didSet {
-            messageBackgroundView.backgroundColor = isIncoming ? Constants.Colors.incomingMessage : Constants.Colors.outgoingMessage
+            messageBackgroundView.backgroundColor = isIncoming ? ThemeManager.currentTheme.incomingCellColor : ThemeManager.currentTheme.outgoingCellColor
+            messageLabel.textColor = isIncoming ? ThemeManager.currentTheme.incomingCellTextColor : ThemeManager.currentTheme.outgoingCellTextColor
+            backgroundColor = ThemeManager.currentTheme.backgroundColor
+            
             if isIncoming {
                 leadingMessageConstraint?.isActive = true
                 trailingMessageConstraint?.isActive = false

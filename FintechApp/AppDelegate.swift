@@ -20,6 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = navController
         window?.makeKeyAndVisible()
         
+        ThemeManager.setupNavigationBarAppearance()
+                
         return true
     }
 }

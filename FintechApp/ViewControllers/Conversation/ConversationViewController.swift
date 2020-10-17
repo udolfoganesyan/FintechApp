@@ -17,14 +17,13 @@ class ConversationViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.dataSource = self
+        tableView.backgroundColor = ThemeManager.currentTheme.backgroundColor
         return tableView
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationItem.largeTitleDisplayMode = .never
-        
+                
         setupTableView()
     }
     

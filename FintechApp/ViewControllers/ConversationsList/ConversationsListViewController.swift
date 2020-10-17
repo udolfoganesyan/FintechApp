@@ -27,13 +27,13 @@ class ConversationsListViewController: UIViewController {
         
         setupNavigationBar()
         setupTableView()
+        updateTheme()
     }
     
     private func setupNavigationBar() {
         title = "Tinkoff Chat"
-        navigationController?.navigationBar.prefersLargeTitles = true
         
-        let settingsButton = UIBarButtonItem(image: #imageLiteral(resourceName: "settings"), style: .plain, target: nil, action: nil)
+        let settingsButton = UIBarButtonItem(image: #imageLiteral(resourceName: "settings"), style: .plain, target: self, action: #selector(handleSettings))
         settingsButton.tintColor = Constants.Colors.settingsGray
         navigationItem.setLeftBarButton(settingsButton, animated: true)
         
@@ -48,6 +48,13 @@ class ConversationsListViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleProfileTap))
         avatarViewContainer.addGestureRecognizer(tapGesture)
         navigationItem.setRightBarButton(profileButton, animated: true)
+    }
+    
+    @objc private func handleSettings() {
+        let settingsViewController = ThemeSettingsViewController()
+//        settingsViewController.delegate = self
+        settingsViewController.changeThemeClosure = updateTheme
+        navigationController?.pushViewController(settingsViewController, animated: true)
     }
     
     @objc private func handleProfileTap() {
@@ -73,6 +80,12 @@ extension ConversationsListViewController: UITableViewDelegate {
         conversationsViewController.title = conversationsTestData[indexPath.section][indexPath.row].name
         navigationController?.pushViewController(conversationsViewController, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let view = view as? UITableViewHeaderFooterView else { return }
+        view.contentView.backgroundColor = ThemeManager.currentTheme.backgroundColor.withAlphaComponent(0.85)
+        view.textLabel?.textColor = ThemeManager.currentTheme.primaryTextColor
     }
 }
 
@@ -106,5 +119,22 @@ extension ConversationsListViewController: UITableViewDataSource {
         cell.configure(with: model)
         
         return cell
+    }
+}
+
+// MARK: - SettingsDelegate
+
+extension ConversationsListViewController: SettingsDelegate {
+    
+    func didChangeTheme() {
+        updateTheme()
+    }
+    
+    private func updateTheme() {
+        tableView.backgroundColor = ThemeManager.currentTheme.backgroundColor
+        tableView.reloadData()
+        
+        navigationController?.navigationBar.barTintColor = ThemeManager.currentTheme.backgroundColor
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: ThemeManager.currentTheme.primaryTextColor]
     }
 }
