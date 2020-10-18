@@ -15,16 +15,11 @@ struct ConversationCellModel {
     let name: String
     let message: String
     let date: String
-    let isOnline: Bool
-    let hasUnreadMessages: Bool
     
     init(channel: Channel) {
         self.name = channel.name
-        self.message = channel.lastMessage ?? "No messages yet"
+        self.message = channel.lastMessage ?? ""
         self.date = ConversationCellModel.getFormattedDateStringFrom(channel.lastActivity ?? Date())
-        
-        self.isOnline = false
-        self.hasUnreadMessages = false
     }
     
     static private func getFormattedDateStringFrom(_ date: Date) -> String {

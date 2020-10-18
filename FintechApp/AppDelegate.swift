@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ThemeManager.setupNavigationBarAppearance()
         
         FirebaseApp.configure()
-                
+        
         return true
     }
 }

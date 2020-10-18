@@ -51,18 +51,32 @@ class ConversationViewController: UIViewController {
         return button
     }()
     
+    private let channelId: String
+    private var messages = [Message]() {
+        didSet {
+            tableView.reloadData()
+            if !messages.isEmpty {
+                tableView.scrollToRow(at: IndexPath(row: messages.count - 1, section: 0), at: .top, animated: true)
+            }
+        }
+    }
+    
+    init(channelId: String) {
+        self.channelId = channelId
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        fetchMessages()
+        
         setupKeyboardObservers()
-        
         setupTableView()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        tableView.scrollToRow(at: IndexPath(row: messagesTestData.count - 1, section: 0), at: .top, animated: false)
     }
     
     override var inputAccessoryView: UIView? {
@@ -71,6 +85,12 @@ class ConversationViewController: UIViewController {
     
     override var canBecomeFirstResponder: Bool {
         return true
+    }
+    
+    private func fetchMessages() {
+        FirebaseManager.fetchMessagesFor(channelId) { (messages) in
+            self.messages = messages
+        }
     }
     
     private func setupKeyboardObservers() {
@@ -107,9 +127,19 @@ class ConversationViewController: UIViewController {
     }
     
     @objc private func handleSend() {
-        guard let text = inputTextField.text else { return }
-
-        print(text)
+        guard let text = inputTextField.text,
+              !text.isEmpty else { return }
+        
+        self.sendButton.isEnabled = false
+        
+        FirebaseManager.sendMessage(text, to: channelId) { (success) in
+            if success {
+                self.inputTextField.text = nil
+            } else {
+                self.showOkAlert("Error", "Could not send message :(")
+                self.sendButton.isEnabled = true
+            }
+        }
     }
 }
 
@@ -118,7 +148,7 @@ class ConversationViewController: UIViewController {
 extension ConversationViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        messagesTestData.count
+        messages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -126,7 +156,7 @@ extension ConversationViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let model = messagesTestData[indexPath.row]
+        let model = MessageCellModel(message: messages[indexPath.row])
         
         cell.configure(with: model)
         return cell

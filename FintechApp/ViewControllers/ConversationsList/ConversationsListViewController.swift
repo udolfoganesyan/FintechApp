@@ -41,16 +41,12 @@ class ConversationsListViewController: UIViewController {
         
         view.backgroundColor = .white
         
+        fetchChannels()
+
         setupNavigationBar()
         setupTableView()
         setupAddButton()
         updateTheme()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        fetchChannels()
     }
     
     private func fetchChannels() {
@@ -100,7 +96,7 @@ class ConversationsListViewController: UIViewController {
     
     private func setupAddButton() {
         view.addSubview(addButton)
-        addButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        addButton.widthAnchor.constraint(equalToConstant: 56).isActive = true
         addButton.heightAnchor.constraint(equalTo: addButton.widthAnchor).isActive = true
         addButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24).isActive = true
         addButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24).isActive = true
@@ -121,10 +117,8 @@ class ConversationsListViewController: UIViewController {
             }
             
             FirebaseManager.createChannelWith(name) { (success) in
-                if success {
-                    self.fetchChannels()
-                } else {
-                    self.showOkAlert("Error", "Could not create channel")
+                if !success {
+                    self.showOkAlert("Error", "Could not create channel :(")
                 }
             }
         })
@@ -147,8 +141,9 @@ class ConversationsListViewController: UIViewController {
 extension ConversationsListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let conversationsViewController = ConversationViewController()
-        conversationsViewController.title = channels[indexPath.row].name
+        let selectedChannel = channels[indexPath.row]
+        let conversationsViewController = ConversationViewController(channelId: selectedChannel.identifier)
+        conversationsViewController.title = selectedChannel.name
         navigationController?.pushViewController(conversationsViewController, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
     }

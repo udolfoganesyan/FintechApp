@@ -58,7 +58,7 @@ enum FirebaseManager {
     private static let channelsReference = database.collection("channels")
     
     static func fetchChannels(completion: @escaping ([Channel]) -> Void) {
-        channelsReference.getDocuments { (snapshot, error) in
+        channelsReference.addSnapshotListener { (snapshot, error) in
             guard error == nil else {
                 return
             }
@@ -74,8 +74,7 @@ enum FirebaseManager {
         var channels = [Channel]()
         for document in documents {
             guard let keyedData = document.keyedData() else { continue }
-            guard let name = keyedData[.name] as? String,
-                  let identifier = keyedData[.identifier] as? String else { continue }
+            guard let name = keyedData[.name] as? String else { continue }
             var lastMessage: String?
             if let message = keyedData[.lastMessage] as? String {
                 lastMessage = message
@@ -84,7 +83,7 @@ enum FirebaseManager {
             if let date = keyedData[.lastActivityty] as? Timestamp {
                 lastActivity = date.dateValue()
             }
-            let channel = Channel(identifier: identifier,
+            let channel = Channel(identifier: document.documentID,
                                   name: name,
                                   lastMessage: lastMessage,
                                   lastActivity: lastActivity)
@@ -97,10 +96,52 @@ enum FirebaseManager {
     static func createChannelWith(_ name: String, completion: @escaping SuccessCompletion) {
         let data: [FirebaseKeys: Any?] = [
             FirebaseKeys.name: name,
-            FirebaseKeys.identifier: UUID().uuidString,
             FirebaseKeys.lastMessage: nil,
-            FirebaseKeys.lastActivityty: Timestamp(date: Date())
+            FirebaseKeys.lastActivityty: Timestamp()
         ]
         channelsReference.addDocument(data: data, completion: completion)
+    }
+    
+    static func fetchMessagesFor(_ channelId: String, completion: @escaping ([Message]) -> Void) {
+        channelsReference.document(channelId).collection("messages").addSnapshotListener { (snapshot, error) in
+            guard error == nil else {
+                return
+            }
+            guard let snapshot = snapshot else { return }
+            
+            let documents = snapshot.documents
+            let messages = parseMessagesFrom(documents)
+            completion(messages)
+        }
+    }
+    
+    private static func parseMessagesFrom(_ documents: [QueryDocumentSnapshot]) -> [Message] {
+        var messages = [Message]()
+        for document in documents {
+            guard let keyedData = document.keyedData() else { continue }
+            guard let content = keyedData[.content] as? String,
+                  let created = keyedData[.created] as? Timestamp,
+                  let senderId = keyedData[.senderId] as? String,
+                  let senderName = keyedData[.senderName] as? String else { continue }
+            
+            let message = Message(content: content,
+                                  created: created.dateValue(),
+                                  senderId: senderId,
+                                  senderName: senderName)
+            messages.append(message)
+        }
+        messages.sort { $0.created < $1.created }
+        return messages
+    }
+    
+    static func sendMessage(_ message: String, to channelId: String, completion: @escaping SuccessCompletion) {
+        let data: [FirebaseKeys: Any?] = [
+            FirebaseKeys.content: message,
+            FirebaseKeys.created: Timestamp(),
+            FirebaseKeys.senderId: myId,
+            FirebaseKeys.senderName: "Rudolf"
+        ]
+        
+        channelsReference.document(channelId).collection("messages").addDocument(data: data, completion: completion)
     }
 }

@@ -29,6 +29,7 @@ final class ConversationCell: UITableViewCell {
         avatarView.install(on: avatarContainer)
         onlineBadge.install(on: avatarContainer)
         
+        backgroundColor = .clear
         let backgroundColorView = UIView()
         backgroundColorView.backgroundColor = UIColor.darkGray.withAlphaComponent(0.3)
         self.selectedBackgroundView = backgroundColorView
@@ -46,8 +47,7 @@ extension ConversationCell: ConfigurableView {
         
         nameLabel.text = model.name
         avatarView.setupWith(firstName: model.name, color: .randomLightColor)
-        onlineBadge.isHidden = !model.isOnline
-        backgroundColor = model.isOnline ? #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 0.07) : .clear
+        onlineBadge.isHidden = false
         messageLabel.text = model.message
         messageLabel.font = .systemFont(ofSize: 16)
         dateLabel.text = model.date
@@ -56,8 +56,6 @@ extension ConversationCell: ConfigurableView {
             messageLabel.text = "No messages yet"
             messageLabel.font = .italicSystemFont(ofSize: 16)
             dateLabel.text = " "
-        } else if model.hasUnreadMessages {
-            messageLabel.font = .boldSystemFont(ofSize: 16)
         }
     }
 }
