@@ -54,6 +54,8 @@ public extension CollectionReference {
 
 enum FirebaseManager {
     
+    static let myId = UIDevice.current.identifierForVendor?.uuidString
+    
     private static let database = Firestore.firestore()
     private static let channelsReference = database.collection("channels")
     

@@ -8,14 +8,12 @@
 
 import UIKit
 
-let myId = "123754"
-
 struct MessageCellModel {
     let attributedText: NSMutableAttributedString
     let isIncoming: Bool
     
     init(message: Message) {
-        let isIncoming = message.senderId != myId
+        let isIncoming = message.senderId != FirebaseManager.myId
         self.isIncoming = isIncoming
         
         let attributedText = NSMutableAttributedString(string: message.content, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17)])
