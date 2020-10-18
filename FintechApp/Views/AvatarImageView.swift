@@ -54,7 +54,7 @@ final class AvatarImageView: UIImageView {
         nameLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
     
-    func setupWith(firstName: String, lastName: String, color: UIColor) {
+    func setupWith(firstName: String, lastName: String = "", color: UIColor) {
         nameLabel.text = String(firstName.prefix(1)).uppercased()
         nameLabel.text?.append(contentsOf: lastName.prefix(1).uppercased())
         backgroundColor = color

@@ -12,7 +12,7 @@ struct OperationDataManager: AsyncDataManager {
     
     private let operationQueue = OperationQueue()
     
-    func saveUserData(user: User, completion: @escaping DataManagerCompletion) {
+    func saveUserData(user: User, completion: @escaping SuccessCompletion) {
         
         let saveUserDataOperation = SaveUserDataOperation(user: user, completion: completion)
         operationQueue.addOperation(saveUserDataOperation)

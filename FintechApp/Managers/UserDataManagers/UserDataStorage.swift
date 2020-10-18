@@ -8,7 +8,7 @@
 
 import UIKit
 
-typealias DataManagerCompletion = (_ success: Bool) -> Void
+typealias SuccessCompletion = (_ success: Bool) -> Void
 
 enum UserDataStorageError: Error {
     case writingError
@@ -26,7 +26,7 @@ struct UserDataStorage {
         getDocumentsDirectory().appendingPathComponent("avatar.jpeg")
     }
     
-    func saveUserData(user: User, completion: @escaping DataManagerCompletion) {
+    func saveUserData(user: User, completion: @escaping SuccessCompletion) {
         
         do {
             if let fullName = user.fullName {

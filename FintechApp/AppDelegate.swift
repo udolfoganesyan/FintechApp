@@ -6,7 +6,8 @@
 //  Copyright © 2020 Рудольф О. All rights reserved.
 //
 
-import Firebase
+import UIKit
+import FirebaseCore
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

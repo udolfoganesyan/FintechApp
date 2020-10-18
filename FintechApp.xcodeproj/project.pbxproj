@@ -31,6 +31,8 @@
 		A16570822517600300C22EAD /* UIAlertController+ConstraintsFix.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16570812517600300C22EAD /* UIAlertController+ConstraintsFix.swift */; };
 		A16570852517E6A700C22EAD /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A16570842517E6A700C22EAD /* ProfileViewController.xib */; };
 		A187D11A253B9391008AAE86 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = A187D119253B9391008AAE86 /* .swiftlint.yml */; };
+		A187D11D253C4AD4008AAE86 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A187D11C253C4AD4008AAE86 /* FirebaseManager.swift */; };
+		A187D126253C5230008AAE86 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A187D125253C5230008AAE86 /* Channel.swift */; };
 		A18E47392534BB330096D1B3 /* GCDDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18E47382534BB330096D1B3 /* GCDDataManager.swift */; };
 		A18E473C2534BB430096D1B3 /* OperationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18E473B2534BB430096D1B3 /* OperationDataManager.swift */; };
 		A18E47432534C4BA0096D1B3 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18E47422534C4BA0096D1B3 /* UIViewController+Alert.swift */; };
@@ -75,6 +77,8 @@
 		A16570812517600300C22EAD /* UIAlertController+ConstraintsFix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+ConstraintsFix.swift"; sourceTree = "<group>"; };
 		A16570842517E6A700C22EAD /* ProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
 		A187D119253B9391008AAE86 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		A187D11C253C4AD4008AAE86 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		A187D125253C5230008AAE86 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		A18E47382534BB330096D1B3 /* GCDDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDDataManager.swift; sourceTree = "<group>"; };
 		A18E473B2534BB430096D1B3 /* OperationDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationDataManager.swift; sourceTree = "<group>"; };
 		A18E47422534C4BA0096D1B3 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
@@ -159,6 +163,7 @@
 			children = (
 				A12320842529CB7B005F8249 /* ThemeManager */,
 				A1F1F46725363139002388AB /* UserDataManagers */,
+				A187D11F253C4AD8008AAE86 /* NetworkManagers */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -258,6 +263,23 @@
 				A16570842517E6A700C22EAD /* ProfileViewController.xib */,
 			);
 			path = ProfileViewController;
+			sourceTree = "<group>";
+		};
+		A187D11F253C4AD8008AAE86 /* NetworkManagers */ = {
+			isa = PBXGroup;
+			children = (
+				A187D123253C4AFD008AAE86 /* Firebase */,
+			);
+			path = NetworkManagers;
+			sourceTree = "<group>";
+		};
+		A187D123253C4AFD008AAE86 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				A187D11C253C4AD4008AAE86 /* FirebaseManager.swift */,
+				A187D125253C5230008AAE86 /* Channel.swift */,
+			);
+			path = Firebase;
 			sourceTree = "<group>";
 		};
 		A18E473E2534BB480096D1B3 /* GCDDataManager */ = {
@@ -453,6 +475,8 @@
 				A1475871250F5FEA004DFCAA /* Logger.swift in Sources */,
 				A1C743A7251E3ABA005B5195 /* ConversationCell.swift in Sources */,
 				A10A883C251E8BF8006B3017 /* OnlineBadgeView.swift in Sources */,
+				A187D126253C5230008AAE86 /* Channel.swift in Sources */,
+				A187D11D253C4AD4008AAE86 /* FirebaseManager.swift in Sources */,
 				A147585D250F5FA2004DFCAA /* AppDelegate.swift in Sources */,
 				A12320862529CB87005F8249 /* Theme.swift in Sources */,
 				A18E47432534C4BA0096D1B3 /* UIViewController+Alert.swift in Sources */,

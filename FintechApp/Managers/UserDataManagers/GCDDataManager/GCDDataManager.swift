@@ -11,7 +11,7 @@ import UIKit
 typealias FetchUserCompletion = (User) -> Void
 
 protocol AsyncDataManager {
-    func saveUserData(user: User, completion: @escaping DataManagerCompletion)
+    func saveUserData(user: User, completion: @escaping SuccessCompletion)
     func fetchUserData(completion: @escaping FetchUserCompletion)
 }
 
@@ -20,7 +20,7 @@ struct GCDDataManager: AsyncDataManager {
     private let userDataStorage = UserDataStorage()
     private let storageQueue = DispatchQueue(label: "com.rudolf.FintechApp.storage")
     
-    func saveUserData(user: User, completion: @escaping DataManagerCompletion) {
+    func saveUserData(user: User, completion: @escaping SuccessCompletion) {
         storageQueue.async {
             userDataStorage.saveUserData(user: user) { (success) in
                 DispatchQueue.main.async {
