@@ -55,9 +55,7 @@ class ConversationViewController: UIViewController {
     private var messages = [Message]() {
         didSet {
             tableView.reloadData()
-            if !messages.isEmpty {
-                tableView.scrollToRow(at: IndexPath(row: messages.count - 1, section: 0), at: .top, animated: true)
-            }
+            scrollToTheBottom()
         }
     }
     
@@ -93,6 +91,12 @@ class ConversationViewController: UIViewController {
         }
     }
     
+    private func scrollToTheBottom() {
+        if !messages.isEmpty {
+            tableView.scrollToRow(at: IndexPath(row: messages.count - 1, section: 0), at: .bottom, animated: true)
+        }
+    }
+    
     private func setupKeyboardObservers() {
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(handleKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -111,6 +115,8 @@ class ConversationViewController: UIViewController {
             tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom, right: 0)
         }
         
+        scrollToTheBottom()
+        
         tableView.scrollIndicatorInsets = tableView.contentInset
     }
     
@@ -121,7 +127,7 @@ class ConversationViewController: UIViewController {
     private func setupTableView() {
         view.addSubview(tableView)
         tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -12).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
