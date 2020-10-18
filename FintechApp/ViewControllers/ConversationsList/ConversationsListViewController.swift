@@ -147,12 +147,6 @@ extension ConversationsListViewController: UITableViewDelegate {
         navigationController?.pushViewController(conversationsViewController, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        guard let view = view as? UITableViewHeaderFooterView else { return }
-        view.contentView.backgroundColor = ThemeManager.currentTheme.backgroundColor.withAlphaComponent(0.85)
-        view.textLabel?.textColor = ThemeManager.currentTheme.primaryTextColor
-    }
 }
 
 // MARK: - UITableViewDataSource

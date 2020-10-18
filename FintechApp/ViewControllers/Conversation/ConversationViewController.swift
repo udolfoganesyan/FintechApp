@@ -22,7 +22,7 @@ class ConversationViewController: UIViewController {
         return tableView
     }()
     
-    lazy var inputContainerView: UIView = {
+    private lazy var inputContainerView: UIView = {
         let containerView = InputAccessoryContainerView()
         containerView.fillWithTextField(inputTextField, sendButton: sendButton)
         return containerView

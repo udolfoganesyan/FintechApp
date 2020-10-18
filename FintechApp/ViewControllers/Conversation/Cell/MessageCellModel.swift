@@ -9,6 +9,7 @@
 import UIKit
 
 struct MessageCellModel {
+    
     let attributedText: NSMutableAttributedString
     let isIncoming: Bool
     
