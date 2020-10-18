@@ -9,5 +9,5 @@ Developing app for educational purposes
 
 ### Dependencies
 
-- Firebase
+- Firebase/Firestore
 - SwiftLint
