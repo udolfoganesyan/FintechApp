@@ -23,6 +23,7 @@ public enum FirebaseKeys: String {
 typealias KeyedData = [FirebaseKeys: Any]
 
 public extension DocumentSnapshot {
+    
     internal func keyedData() -> KeyedData? {
         guard let documentData: [String: Any] = self.data() else {
             return nil
@@ -61,9 +62,7 @@ enum FirebaseManager {
     
     static func fetchChannels(completion: @escaping ([Channel]) -> Void) {
         channelsReference.addSnapshotListener { (snapshot, error) in
-            guard error == nil else {
-                return
-            }
+            guard error == nil else { return }
             guard let snapshot = snapshot else { return }
             
             let documents = snapshot.documents
@@ -73,24 +72,7 @@ enum FirebaseManager {
     }
     
     private static func parseChannelsFrom(_ documents: [QueryDocumentSnapshot]) -> [Channel] {
-        var channels = [Channel]()
-        for document in documents {
-            guard let keyedData = document.keyedData() else { continue }
-            guard let name = keyedData[.name] as? String else { continue }
-            var lastMessage: String?
-            if let message = keyedData[.lastMessage] as? String {
-                lastMessage = message
-            }
-            var lastActivity: Date?
-            if let date = keyedData[.lastActivityty] as? Timestamp {
-                lastActivity = date.dateValue()
-            }
-            let channel = Channel(identifier: document.documentID,
-                                  name: name,
-                                  lastMessage: lastMessage,
-                                  lastActivity: lastActivity)
-            channels.append(channel)
-        }
+        var channels = documents.compactMap { Channel($0) }
         channels.sort { $0.lastActivity ?? Date() > $1.lastActivity ?? Date() }
         return channels
     }
@@ -106,9 +88,7 @@ enum FirebaseManager {
     
     static func fetchMessagesFor(_ channelId: String, completion: @escaping ([Message]) -> Void) {
         channelsReference.document(channelId).collection("messages").addSnapshotListener { (snapshot, error) in
-            guard error == nil else {
-                return
-            }
+            guard error == nil else { return }
             guard let snapshot = snapshot else { return }
             
             let documents = snapshot.documents
@@ -118,20 +98,7 @@ enum FirebaseManager {
     }
     
     private static func parseMessagesFrom(_ documents: [QueryDocumentSnapshot]) -> [Message] {
-        var messages = [Message]()
-        for document in documents {
-            guard let keyedData = document.keyedData() else { continue }
-            guard let content = keyedData[.content] as? String,
-                  let created = keyedData[.created] as? Timestamp,
-                  let senderId = keyedData[.senderId] as? String,
-                  let senderName = keyedData[.senderName] as? String else { continue }
-            
-            let message = Message(content: content,
-                                  created: created.dateValue(),
-                                  senderId: senderId,
-                                  senderName: senderName)
-            messages.append(message)
-        }
+        var messages = documents.compactMap { Message($0) }
         messages.sort { $0.created < $1.created }
         return messages
     }
