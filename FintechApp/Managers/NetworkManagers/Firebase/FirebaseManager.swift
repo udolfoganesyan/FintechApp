@@ -9,6 +9,9 @@
 import FirebaseFirestore
 
 public enum FirebaseKeys: String {
+    case channels
+    case messages
+    
     case identifier
     case name
     case lastMessage
@@ -58,7 +61,7 @@ enum FirebaseManager {
     static let myId = UIDevice.current.identifierForVendor?.uuidString
     
     private static let database = Firestore.firestore()
-    private static let channelsReference = database.collection("channels")
+    private static let channelsReference = database.collection(FirebaseKeys.channels.rawValue)
     
     static func fetchChannels(completion: @escaping ([Channel]) -> Void) {
         channelsReference.addSnapshotListener { (snapshot, error) in
@@ -87,7 +90,7 @@ enum FirebaseManager {
     }
     
     static func fetchMessagesFor(_ channelId: String, completion: @escaping ([Message]) -> Void) {
-        channelsReference.document(channelId).collection("messages").addSnapshotListener { (snapshot, error) in
+        channelsReference.document(channelId).collection(FirebaseKeys.messages.rawValue).addSnapshotListener { (snapshot, error) in
             guard error == nil else { return }
             guard let snapshot = snapshot else { return }
             
@@ -111,6 +114,6 @@ enum FirebaseManager {
             FirebaseKeys.senderName: "Rudolf"
         ]
         
-        channelsReference.document(channelId).collection("messages").addDocument(data: data, completion: completion)
+        channelsReference.document(channelId).collection(FirebaseKeys.messages.rawValue).addDocument(data: data, completion: completion)
     }
 }
