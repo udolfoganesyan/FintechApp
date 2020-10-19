@@ -12,7 +12,7 @@ protocol SettingsDelegate: class {
     func didChangeTheme()
 }
 
-class ThemeSettingsViewController: UIViewController {
+final class ThemeSettingsViewController: UIViewController {
     
     @IBOutlet private weak var classicThemeContainer: UIView!
     @IBOutlet private weak var dayThemeContainer: UIView!

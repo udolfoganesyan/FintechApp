@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ConversationViewController: UIViewController {
+final class ConversationViewController: UIViewController {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()

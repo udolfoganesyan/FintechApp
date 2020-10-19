@@ -9,6 +9,7 @@
 import FirebaseFirestore
 
 struct Channel {
+    
     let identifier: String
     let name: String
     let lastMessage: String?

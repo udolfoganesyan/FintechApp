@@ -9,7 +9,7 @@
 import UIKit
 import MobileCoreServices
 
-class ProfileViewController: UIViewController {
+final class ProfileViewController: UIViewController {
     
     @IBOutlet private weak var avatarContainerView: UIView!
     @IBOutlet private weak var nameLabel: UILabel!

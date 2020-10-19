@@ -12,7 +12,7 @@ protocol InputDelegate: class {
     func handleSend(text: String, completion: @escaping SuccessCompletion)
 }
 
-class InputAccessoryContainerView: UIView {
+final class InputAccessoryContainerView: UIView {
     
     weak var delegate: InputDelegate?
     

@@ -9,6 +9,7 @@
 import FirebaseFirestore
 
 struct Message {
+    
     let content: String
     let created: Date
     let senderId: String
