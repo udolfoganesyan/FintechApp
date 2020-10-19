@@ -23,32 +23,9 @@ class ConversationViewController: UIViewController {
     }()
     
     private lazy var inputContainerView: UIView = {
-        let containerView = InputAccessoryContainerView()
-        containerView.fillWithTextField(inputTextField, sendButton: sendButton)
-        return containerView
-    }()
-    
-    private lazy var inputTextField: UITextField = {
-        let textField = UITextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.borderStyle = .roundedRect
-        textField.backgroundColor = ThemeManager.currentTheme.incomingCellColor
-        textField.textColor = ThemeManager.currentTheme.primaryTextColor
-        textField.attributedPlaceholder =
-            NSAttributedString(string: "Message",
-                               attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.currentTheme.secondaryTextColor])
-        textField.addTarget(self, action: #selector(self.textChanged(_:)), for: .editingChanged)
-        return textField
-    }()
-    
-    private lazy var sendButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Send", for: .normal)
-        button.titleLabel?.font = .boldSystemFont(ofSize: 18)
-        button.addTarget(self, action: #selector(handleSend), for: .touchUpInside)
-        button.isEnabled = false
-        return button
+        let inputContainerView = InputAccessoryContainerView()
+        inputContainerView.delegate = self
+        return inputContainerView
     }()
     
     private let channelId: String
@@ -86,8 +63,8 @@ class ConversationViewController: UIViewController {
     }
     
     private func fetchMessages() {
-        FirebaseManager.fetchMessagesFor(channelId) { (messages) in
-            self.messages = messages
+        FirebaseManager.fetchMessagesFor(channelId) { [weak self] (messages) in
+            self?.messages = messages
         }
     }
     
@@ -120,10 +97,6 @@ class ConversationViewController: UIViewController {
         tableView.scrollIndicatorInsets = tableView.contentInset
     }
     
-    @objc private func textChanged(_ sender: UITextField) {
-        self.sendButton.isEnabled = !(sender.text?.isEmpty ?? true)
-    }
-    
     private func setupTableView() {
         view.addSubview(tableView)
         tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
@@ -131,20 +104,18 @@ class ConversationViewController: UIViewController {
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
+}
+
+// MARK: - InputDelegate
+
+extension ConversationViewController: InputDelegate {
     
-    @objc private func handleSend() {
-        guard let text = inputTextField.text,
-              !text.isEmpty else { return }
-        
-        self.sendButton.isEnabled = false
-        
+    func handleSend(text: String, completion: @escaping SuccessCompletion) {
         FirebaseManager.sendMessage(text, to: channelId) { (success) in
-            if success {
-                self.inputTextField.text = nil
-            } else {
+            if !success {
                 self.showOkAlert("Error", "Could not send message :(")
-                self.sendButton.isEnabled = true
             }
+            completion(success)
         }
     }
 }
