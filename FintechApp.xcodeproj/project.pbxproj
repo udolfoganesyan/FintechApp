@@ -35,6 +35,7 @@
 		A187D11A253B9391008AAE86 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = A187D119253B9391008AAE86 /* .swiftlint.yml */; };
 		A187D11D253C4AD4008AAE86 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A187D11C253C4AD4008AAE86 /* FirebaseManager.swift */; };
 		A187D126253C5230008AAE86 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A187D125253C5230008AAE86 /* Channel.swift */; };
+		A18A6865253EF9B400E1B4D7 /* FirebaseExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18A6864253EF9B400E1B4D7 /* FirebaseExtensions.swift */; };
 		A18E47392534BB330096D1B3 /* GCDDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18E47382534BB330096D1B3 /* GCDDataManager.swift */; };
 		A18E473C2534BB430096D1B3 /* OperationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18E473B2534BB430096D1B3 /* OperationDataManager.swift */; };
 		A18E47432534C4BA0096D1B3 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18E47422534C4BA0096D1B3 /* UIViewController+Alert.swift */; };
@@ -82,6 +83,7 @@
 		A187D119253B9391008AAE86 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		A187D11C253C4AD4008AAE86 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		A187D125253C5230008AAE86 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
+		A18A6864253EF9B400E1B4D7 /* FirebaseExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseExtensions.swift; sourceTree = "<group>"; };
 		A18E47382534BB330096D1B3 /* GCDDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDDataManager.swift; sourceTree = "<group>"; };
 		A18E473B2534BB430096D1B3 /* OperationDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationDataManager.swift; sourceTree = "<group>"; };
 		A18E47422534C4BA0096D1B3 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
@@ -297,6 +299,7 @@
 			children = (
 				A128E903253C718D000ED358 /* Entities */,
 				A187D11C253C4AD4008AAE86 /* FirebaseManager.swift */,
+				A18A6864253EF9B400E1B4D7 /* FirebaseExtensions.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -489,6 +492,7 @@
 				A123207E2529C845005F8249 /* ThemeManager.swift in Sources */,
 				A1202F89253648A60056BFCE /* SaveUserDataOperation.swift in Sources */,
 				A10A8891251F58C6006B3017 /* Constants.swift in Sources */,
+				A18A6865253EF9B400E1B4D7 /* FirebaseExtensions.swift in Sources */,
 				A10A887D251F30CC006B3017 /* UIColor+Random.swift in Sources */,
 				A128E913253C81D0000ED358 /* InputAccessoryContainerView.swift in Sources */,
 				A10A8894251F6238006B3017 /* MessageCellModel.swift in Sources */,

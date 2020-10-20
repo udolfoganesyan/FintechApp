@@ -21,6 +21,6 @@ struct Channel {
         self.identifier = document.documentID
         self.name = name
         self.lastMessage = keyedData[.lastMessage] as? String
-        self.lastActivity = (keyedData[.lastActivityty] as? Timestamp)?.dateValue()
+        self.lastActivity = (keyedData[.lastActivity] as? Timestamp)?.dateValue()
     }
 }
