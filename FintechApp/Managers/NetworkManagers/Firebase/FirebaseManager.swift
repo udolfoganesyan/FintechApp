@@ -51,7 +51,7 @@ enum FirebaseManager {
         let data: [FirebaseKeys: Any?] = [
             FirebaseKeys.name: name,
             FirebaseKeys.lastMessage: nil,
-            FirebaseKeys.lastActivity: Timestamp()
+            FirebaseKeys.lastActivity: nil
         ]
         channelsReference.addDocument(data: data, completion: completion)
     }

@@ -47,7 +47,6 @@ extension ConversationCell: ConfigurableView {
         
         nameLabel.text = model.name
         avatarView.setupWith(firstName: model.name, color: .randomLightColor)
-        onlineBadge.isHidden = false
         messageLabel.text = model.message
         messageLabel.font = .systemFont(ofSize: 16)
         dateLabel.text = model.date

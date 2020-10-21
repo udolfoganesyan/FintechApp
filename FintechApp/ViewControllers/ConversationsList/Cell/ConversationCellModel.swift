@@ -19,10 +19,11 @@ struct ConversationCellModel {
     init(channel: Channel) {
         self.name = channel.name
         self.message = channel.lastMessage ?? ""
-        self.date = ConversationCellModel.getFormattedDateStringFrom(channel.lastActivity ?? Date())
+        self.date = ConversationCellModel.getFormattedDateStringFrom(channel.lastActivity)
     }
     
-    static private func getFormattedDateStringFrom(_ date: Date) -> String {
+    static private func getFormattedDateStringFrom(_ date: Date?) -> String {
+        guard let date = date else { return "" }
         let calendar = Calendar.current
         if calendar.isDateInToday(date) {
             ConversationCellModel.dateFormatter.dateFormat = "HH:mm"
