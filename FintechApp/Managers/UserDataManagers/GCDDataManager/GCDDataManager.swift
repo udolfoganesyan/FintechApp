@@ -22,7 +22,7 @@ struct GCDDataManager: AsyncDataManager {
     
     func saveUserData(user: User, completion: @escaping SuccessCompletion) {
         storageQueue.async {
-            userDataStorage.saveUserData(user: user) { (success) in
+            self.userDataStorage.saveUserData(user: user) { (success) in
                 DispatchQueue.main.async {
                     completion(success)
                 }
@@ -32,9 +32,9 @@ struct GCDDataManager: AsyncDataManager {
     
     func fetchUserData(completion: @escaping FetchUserCompletion) {
         storageQueue.async {
-            let fullName = userDataStorage.getFullName()
-            let about = userDataStorage.getAbout()
-            let image = userDataStorage.getAvatar()
+            let fullName = self.userDataStorage.getFullName()
+            let about = self.userDataStorage.getAbout()
+            let image = self.userDataStorage.getAvatar()
             let user = User(fullName: fullName, about: about, image: image)
             DispatchQueue.main.async {
                 completion(user)

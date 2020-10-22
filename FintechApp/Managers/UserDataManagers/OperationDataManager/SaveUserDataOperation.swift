@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SaveUserDataOperation: Operation {
+final class SaveUserDataOperation: Operation {
     
     private let userDataStorage = UserDataStorage()
     private var user: User
