@@ -13,11 +13,26 @@ class ProfileViewController: UIViewController {
     
     @IBOutlet private weak var avatarContainerView: UIView!
     @IBOutlet private weak var nameLabel: UILabel!
+    @IBOutlet private weak var fullNameTextField: UITextField!
     @IBOutlet private weak var aboutLabel: UILabel!
-    @IBOutlet private weak var saveButton: UIButton!
+    @IBOutlet private weak var aboutTextView: UITextView!
+    @IBOutlet private weak var aboutLabelContainer: UIView!
+    @IBOutlet private weak var aboutInfoLabel: UILabel!
+    @IBOutlet private weak var gcdSaveButton: UIButton!
+    @IBOutlet private weak var operationSaveButton: UIButton!
     @IBOutlet private weak var editButton: UIButton!
+    @IBOutlet private weak var closeButton: UIButton!
+    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     
     private lazy var avatarView = AvatarImageView(style: .circle)
+    private var inEditingMode = false
+    private var didChangeAvatar = false
+    private var dataManager: AsyncDataManager?
+    
+    private enum ManagerType {
+        case gcd
+        case operation
+    }
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -29,33 +44,157 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
         setupSubviews()
+        fetchAndSetUserData()
+        hideKeyboardWhenTappedAround()
     }
     
     private func setupSubviews() {
         view.backgroundColor = ThemeManager.currentTheme.backgroundColor
         nameLabel.textColor = ThemeManager.currentTheme.primaryTextColor
         aboutLabel.textColor = ThemeManager.currentTheme.primaryTextColor
-        setupSaveButton()
+        aboutInfoLabel.textColor = ThemeManager.currentTheme.secondaryTextColor
+        fullNameTextField.backgroundColor = ThemeManager.currentTheme.incomingCellColor
+        fullNameTextField.textColor = ThemeManager.currentTheme.primaryTextColor
+        fullNameTextField.attributedPlaceholder =
+            NSAttributedString(string: "Full name",
+                               attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.currentTheme.secondaryTextColor])
+        let padding = aboutTextView.textContainer.lineFragmentPadding
+        aboutTextView.textContainerInset =  UIEdgeInsets(top: 0, left: -padding, bottom: 0, right: -padding)
+        aboutTextView.delegate = self
+        aboutTextView.backgroundColor = ThemeManager.currentTheme.incomingCellColor
+        aboutTextView.textColor = ThemeManager.currentTheme.primaryTextColor
+        activityIndicator.color = ThemeManager.currentTheme.secondaryTextColor
+        setupSaveButtons()
         setupAvatarView()
     }
     
-    private func setupSaveButton() {
-        saveButton.layer.cornerRadius = 14
-        saveButton.layer.masksToBounds = true
-        saveButton.backgroundColor = ThemeManager.currentTheme.buttonBackgroundColor
+    private func setupSaveButtons() {
+        gcdSaveButton.layer.cornerRadius = 14
+        gcdSaveButton.layer.masksToBounds = true
+        gcdSaveButton.backgroundColor = ThemeManager.currentTheme.buttonBackgroundColor
+        
+        operationSaveButton.layer.cornerRadius = 14
+        operationSaveButton.layer.masksToBounds = true
+        operationSaveButton.backgroundColor = ThemeManager.currentTheme.buttonBackgroundColor
     }
     
     private func setupAvatarView() {
         avatarView.install(on: avatarContainerView)
         avatarView.setupWith(firstName: "Rudolf", lastName: "Oganesyan", color: #colorLiteral(red: 0.8941176471, green: 0.9098039216, blue: 0.168627451, alpha: 1))
+        let avatarTap = UITapGestureRecognizer(target: self, action: #selector(handleAvatar))
+        avatarView.addGestureRecognizer(avatarTap)
+        avatarView.isUserInteractionEnabled = true
         
         avatarContainerView.bringSubviewToFront(editButton)
     }
     
+    @objc private func handleAvatar() {
+        if inEditingMode {
+            presentaActionSheet()
+        }
+    }
+    
+    private func fetchAndSetUserData() {
+        dataManager = OperationDataManager()
+        dataManager?.fetchUserData(completion: { (user) in
+            self.nameLabel.text = user.fullName
+            self.fullNameTextField.text = self.nameLabel.text
+            
+            self.aboutLabel.text = user.about
+            self.aboutTextView.text = self.aboutLabel.text
+            if let avatarImage = user.image {
+                self.avatarView.setupWith(image: avatarImage)
+            }
+        })
+    }
+    
+    @IBAction private func fullNameDidChange(_ sender: UITextField) {
+        checkChangesAndSetSaveButtons()
+    }
+    
+    private func checkChangesAndSetSaveButtons() {
+        if aboutTextView.text != aboutLabel.text || nameLabel.text != fullNameTextField.text || didChangeAvatar {
+            gcdSaveButton.isEnabled = true
+            operationSaveButton.isEnabled = true
+        } else {
+            disableSaveButtons()
+        }
+    }
+    
+    private func disableSaveButtons() {
+        gcdSaveButton.isEnabled = false
+        operationSaveButton.isEnabled = false
+    }
+    
+    @IBAction private func saveViaGCDTouched(_ sender: UIButton) {
+        dataManager = GCDDataManager()
+        save()
+    }
+    
+    @IBAction private func saveViaOperationTouched(_ sender: UIButton) {
+        dataManager = OperationDataManager()
+        save()
+    }
+    
+    private func save() {
+        disableUI()
+        
+        let user = User(fullName: fullNameTextField.text,
+                        about: aboutTextView.text,
+                        image: avatarView.image)
+        
+        dataManager?.saveUserData(user: user) { (success) in
+            if success {
+                self.showOkAlert("Done ✓", nil)
+                self.fetchAndSetUserData()
+                self.enableUI()
+                self.disableSaveButtons()
+            } else {
+                let alertController = UIAlertController(title: "Error while saving data :(", message: nil, preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
+                    self.enableUI()
+                    alertController.dismiss(animated: true, completion: nil)
+                })
+                alertController.addAction(UIAlertAction(title: NSLocalizedString("Retry", comment: ""), style: .default) { _ in
+                    self.save()
+                })
+                self.present(alertController, animated: true)
+            }
+        }
+    }
+    
+    private func disableUI() {
+        activityIndicator.startAnimating()
+        setUIAvailability(enabled: false)
+    }
+    
+    private func enableUI() {
+        activityIndicator.stopAnimating()
+        setUIAvailability(enabled: true)
+    }
+    
+    private func setUIAvailability(enabled: Bool) {
+        closeButton.isEnabled = enabled
+        editButton.isEnabled = enabled
+        gcdSaveButton.isEnabled = enabled
+        operationSaveButton.isEnabled = enabled
+        fullNameTextField.isEnabled = enabled
+        aboutTextView.isEditable = enabled
+        avatarView.isUserInteractionEnabled = enabled
+    }
+    
     @IBAction private func editButtonTouched(_ sender: UIButton) {
-        presentaActionSheet()
+        inEditingMode.toggle()
+        UIView.animate(withDuration: 0.1) {
+            self.fullNameTextField.isHidden.toggle()
+            self.nameLabel.isHidden.toggle()
+            self.aboutTextView.isHidden.toggle()
+            self.aboutLabelContainer.isHidden.toggle()
+            self.gcdSaveButton.isHidden.toggle()
+            self.operationSaveButton.isHidden.toggle()
+        }
     }
     
     private func presentaActionSheet() {
@@ -101,6 +240,15 @@ class ProfileViewController: UIViewController {
     }
 }
 
+// MARK: - UITextViewDelegate
+
+extension ProfileViewController: UITextViewDelegate {
+    
+    func textViewDidChange(_ textView: UITextView) {
+        checkChangesAndSetSaveButtons()
+    }
+}
+
 // MARK: - UIImagePickerControllerDelegate
 
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -109,6 +257,8 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         guard let image = info[.editedImage] as? UIImage else { return }
         
         avatarView.setupWith(image: image)
+        didChangeAvatar = true
+        checkChangesAndSetSaveButtons()
         
         dismiss(animated: true)
     }

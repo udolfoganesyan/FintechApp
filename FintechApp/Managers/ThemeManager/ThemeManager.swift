@@ -20,10 +20,15 @@ enum ThemeManager {
         }
     }
     
-    static func updateThemeWith(_ theme: Theme) {
-        UserDefaults.standard.setValue(theme.rawValue, forKey: selectedThemeKey)
-        
-        setupNavigationBarAppearance()
+    static func updateThemeWith(_ theme: Theme, completion: @escaping () -> Void) {
+        DispatchQueue.global().async {
+            UserDefaults.standard.setValue(theme.rawValue, forKey: selectedThemeKey)
+            
+            setupNavigationBarAppearance()
+            DispatchQueue.main.async {
+                completion()
+            }
+        }
     }
     
     static func setupNavigationBarAppearance() {
