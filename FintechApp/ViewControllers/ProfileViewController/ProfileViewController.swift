@@ -29,11 +29,6 @@ final class ProfileViewController: UIViewController {
     private var didChangeAvatar = false
     private var dataManager: AsyncDataManager?
     
-    private enum ManagerType {
-        case gcd
-        case operation
-    }
-    
     init() {
         super.init(nibName: nil, bundle: nil)
     }
