@@ -35,6 +35,16 @@ final class ConversationsListViewController: UIViewController {
             self.tableView.reloadData()
         }
     }
+    private let coreDataManager: CoreDataManager
+    
+    init(coreDataManager: CoreDataManager) {
+        self.coreDataManager = coreDataManager
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +62,15 @@ final class ConversationsListViewController: UIViewController {
     private func fetchChannels() {
         FirebaseManager.fetchChannels { (channels) in
             self.channels = channels
+            
+            self.coreDataManager.enableObservers()
+            self.coreDataManager.didUpdateDataBase = { manager in
+                _ = manager.fetchChannels()
+                _ = manager.fetchMessages()
+            }
+            self.coreDataManager.performSave { (context) in
+                channels.forEach { _ = ChannelDB(channel: $0, context: context) }
+            }
         }
     }
     
@@ -142,7 +161,7 @@ extension ConversationsListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedChannel = channels[indexPath.row]
-        let conversationsViewController = ConversationViewController(channelId: selectedChannel.identifier)
+        let conversationsViewController = ConversationViewController(channelId: selectedChannel.identifier, coreDataManager: coreDataManager)
         conversationsViewController.title = selectedChannel.name
         navigationController?.pushViewController(conversationsViewController, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
