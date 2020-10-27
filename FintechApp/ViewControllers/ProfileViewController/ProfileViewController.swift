@@ -256,6 +256,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         
         avatarView.setupWith(image: image)
         didChangeAvatar = true
+        checkChangesAndSetSaveButtons()
         
         dismiss(animated: true)
     }
