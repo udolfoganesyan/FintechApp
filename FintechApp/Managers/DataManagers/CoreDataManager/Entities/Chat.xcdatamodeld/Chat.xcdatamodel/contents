@@ -18,7 +18,7 @@
         <attribute name="identifier" attributeType="String"/>
         <attribute name="senderId" attributeType="String"/>
         <attribute name="senderName" attributeType="String"/>
-        <relationship name="channel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ChannelDB" inverseName="messages" inverseEntity="ChannelDB"/>
+        <relationship name="channel" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="ChannelDB" inverseName="messages" inverseEntity="ChannelDB"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="identifier"/>

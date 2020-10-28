@@ -126,7 +126,7 @@ final class CoreDataManager {
     
     @objc private func handleMOCdidChange(notification: Notification) {
         guard let userInfo = notification.userInfo else { return }
-
+        
         Logger.log("something changed in database")
         
         didUpdateDataBase?(self)

@@ -59,7 +59,7 @@ final class ConversationsListViewController: UIViewController {
         view.backgroundColor = .white
         
         fetchChannels()
-
+        
         setupNavigationBar()
         setupTableView()
         setupAddButton()
@@ -153,7 +153,7 @@ final class ConversationsListViewController: UIViewController {
         
         self.present(alert, animated: true, completion: nil)
     }
-        
+    
     @objc private func textChanged(_ sender: UITextField) {
         self.actionToEnable?.isEnabled = !(sender.text?.isEmpty ?? true)
     }

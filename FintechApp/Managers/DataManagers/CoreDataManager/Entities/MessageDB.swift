@@ -11,7 +11,7 @@ import CoreData
 
 @objc(MessageDB)
 public class MessageDB: NSManagedObject {
-
+    
     @NSManaged public var identifier: String
     @NSManaged public var content: String
     @NSManaged public var created: Date
