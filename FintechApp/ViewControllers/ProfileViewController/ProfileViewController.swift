@@ -87,7 +87,7 @@ final class ProfileViewController: UIViewController {
     
     @objc private func handleAvatar() {
         if inEditingMode {
-            presentaActionSheet()
+            presentActionSheet()
         }
     }
     
@@ -192,7 +192,7 @@ final class ProfileViewController: UIViewController {
         }
     }
     
-    private func presentaActionSheet() {
+    private func presentActionSheet() {
         let alertController = UIAlertController(title: "Choose Image from", message: nil, preferredStyle: .actionSheet)
         
         let cameraAction = UIAlertAction(title: "Camera", style: .default) { _ in
