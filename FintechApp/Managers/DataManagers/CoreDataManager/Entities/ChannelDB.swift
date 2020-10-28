@@ -16,7 +16,7 @@ public class ChannelDB: NSManagedObject {
     @NSManaged public var lastActivity: Date?
     @NSManaged public var lastMessage: String?
     @NSManaged public var name: String
-    @NSManaged public var messages: NSSet?
+    @NSManaged public var messages: NSOrderedSet?
     
     var about: String {
         let description = "id: \(identifier)\nname: \(name)\nlast activity: \(String(describing: lastActivity))\nlast message: \(String(describing: lastMessage))"
