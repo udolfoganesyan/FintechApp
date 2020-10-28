@@ -43,7 +43,7 @@ enum FirebaseManager {
     
     private static func parseChannelsFrom(_ documents: [QueryDocumentSnapshot]) -> [Channel] {
         var channels = documents.compactMap { Channel($0) }
-        channels.sort { $0.lastActivity ?? Date() > $1.lastActivity ?? Date() }
+        channels.sort { $0.lastActivity ?? Date(timeIntervalSince1970: 0) > $1.lastActivity ?? Date(timeIntervalSince1970: 0) }
         return channels
     }
     
