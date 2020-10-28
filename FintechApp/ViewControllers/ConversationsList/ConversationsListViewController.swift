@@ -33,6 +33,7 @@ final class ConversationsListViewController: UIViewController {
     private var channels = [Channel]() {
         didSet {
             self.tableView.reloadData()
+            saveChannels()
         }
     }
     private let coreDataManager: CoreDataManager
@@ -40,6 +41,12 @@ final class ConversationsListViewController: UIViewController {
     init(coreDataManager: CoreDataManager) {
         self.coreDataManager = coreDataManager
         super.init(nibName: nil, bundle: nil)
+        
+        self.coreDataManager.enableObservers()
+        self.coreDataManager.didUpdateDataBase = { manager in
+            _ = manager.fetchChannels()
+            _ = manager.fetchMessages()
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -62,15 +69,12 @@ final class ConversationsListViewController: UIViewController {
     private func fetchChannels() {
         FirebaseManager.fetchChannels { (channels) in
             self.channels = channels
-            
-            self.coreDataManager.enableObservers()
-            self.coreDataManager.didUpdateDataBase = { manager in
-                _ = manager.fetchChannels()
-                _ = manager.fetchMessages()
-            }
-            self.coreDataManager.performSave { (context) in
-                channels.forEach { _ = ChannelDB(channel: $0, context: context) }
-            }
+        }
+    }
+    
+    private func saveChannels() {
+        coreDataManager.performSave { (context) in
+            channels.forEach { _ = ChannelDB(channel: $0, context: context) }
         }
     }
     
