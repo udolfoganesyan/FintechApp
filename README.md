@@ -8,4 +8,6 @@ Rudolf Oganesyan
 Developing app for educational purposes
 
 ### Dependencies
-Not a single one yet
+
+- Firebase/Firestore
+- SwiftLint

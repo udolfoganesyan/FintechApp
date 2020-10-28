@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FetchUserDataOperation: Operation {
+final class FetchUserDataOperation: Operation {
     
     var fetchedUser = User(fullName: nil, about: nil, image: nil)
     

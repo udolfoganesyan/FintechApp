@@ -9,7 +9,6 @@
 import UIKit
 
 struct User {
-    
     let fullName: String?
     let about: String?
     let image: UIImage?

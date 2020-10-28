@@ -8,13 +8,13 @@
 
 import UIKit
 
-class SaveUserDataOperation: Operation {
+final class SaveUserDataOperation: Operation {
     
     private let userDataStorage = UserDataStorage()
     private var user: User
-    private var completion: DataManagerCompletion
+    private var completion: SuccessCompletion
     
-    init(user: User, completion: @escaping DataManagerCompletion) {
+    init(user: User, completion: @escaping SuccessCompletion) {
         self.user = user
         self.completion = completion
     }

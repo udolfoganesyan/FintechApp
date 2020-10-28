@@ -22,15 +22,14 @@ final class ConversationCell: UITableViewCell {
     
     private lazy var onlineBadge = OnlineBadgeView()
     private lazy var avatarView = AvatarImageView(style: .circle)
-    
-    private static let dateFormatter = DateFormatter()
-    
+        
     override func awakeFromNib() {
         super.awakeFromNib()
         
         avatarView.install(on: avatarContainer)
         onlineBadge.install(on: avatarContainer)
         
+        backgroundColor = .clear
         let backgroundColorView = UIView()
         backgroundColorView.backgroundColor = UIColor.darkGray.withAlphaComponent(0.3)
         self.selectedBackgroundView = backgroundColorView
@@ -47,30 +46,15 @@ extension ConversationCell: ConfigurableView {
         dateLabel.textColor = ThemeManager.currentTheme.secondaryTextColor
         
         nameLabel.text = model.name
-        avatarView.setupWith(firstName: model.name, lastName: "", color: .randomLightColor)
-        onlineBadge.isHidden = !model.isOnline
-        backgroundColor = model.isOnline ? #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 0.07) : .clear
+        avatarView.setupWith(firstName: model.name, color: .randomLightColor)
         messageLabel.text = model.message
         messageLabel.font = .systemFont(ofSize: 16)
-        setDate(model.date)
+        dateLabel.text = model.date
 
         if model.message.isEmpty {
             messageLabel.text = "No messages yet"
             messageLabel.font = .italicSystemFont(ofSize: 16)
-            dateLabel.text = " "
-        } else if model.hasUnreadMessages {
-            messageLabel.font = .boldSystemFont(ofSize: 16)
+            dateLabel.text = ""
         }
-    }
-    
-    private func setDate(_ date: Date) {
-        let calendar = Calendar.current
-        if calendar.isDateInToday(date) {
-            ConversationCell.dateFormatter.dateFormat = "HH:mm"
-        } else {
-            ConversationCell.dateFormatter.dateFormat = "dd MMM"
-        }
-        let dateString = ConversationCell.dateFormatter.string(from: date)
-        dateLabel.text = dateString
     }
 }

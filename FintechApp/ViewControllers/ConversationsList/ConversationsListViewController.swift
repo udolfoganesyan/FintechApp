@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ConversationsListViewController: UIViewController {
+final class ConversationsListViewController: UIViewController {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -20,18 +20,43 @@ class ConversationsListViewController: UIViewController {
         return tableView
     }()
     
+    private lazy var addButton: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "add"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.imageView?.contentMode = .scaleAspectFit
+        button.addTarget(self, action: #selector(handleAddChannel), for: .touchUpInside)
+        return button
+    }()
+    
+    private var actionToEnable: UIAlertAction?
+    private var channels = [Channel]() {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
         
+        fetchChannels()
+
         setupNavigationBar()
         setupTableView()
+        setupAddButton()
         updateTheme()
     }
     
+    private func fetchChannels() {
+        FirebaseManager.fetchChannels { (channels) in
+            self.channels = channels
+        }
+    }
+    
     private func setupNavigationBar() {
-        title = "Tinkoff Chat"
+        title = "Channels"
         
         let settingsButton = UIBarButtonItem(image: #imageLiteral(resourceName: "settings"), style: .plain, target: self, action: #selector(handleSettings))
         settingsButton.tintColor = Constants.Colors.settingsGray
@@ -52,8 +77,7 @@ class ConversationsListViewController: UIViewController {
     
     @objc private func handleSettings() {
         let settingsViewController = ThemeSettingsViewController()
-//        settingsViewController.delegate = self
-        settingsViewController.changeThemeClosure = updateTheme
+        settingsViewController.delegate = self
         navigationController?.pushViewController(settingsViewController, animated: true)
     }
     
@@ -69,6 +93,47 @@ class ConversationsListViewController: UIViewController {
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
+    
+    private func setupAddButton() {
+        view.addSubview(addButton)
+        addButton.widthAnchor.constraint(equalToConstant: 56).isActive = true
+        addButton.heightAnchor.constraint(equalTo: addButton.widthAnchor).isActive = true
+        addButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24).isActive = true
+        addButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24).isActive = true
+    }
+    
+    @objc private func handleAddChannel() {
+        let alert = UIAlertController(title: "Create new channel", message: nil, preferredStyle: .alert)
+        
+        alert.addTextField { (textField: UITextField) in
+            textField.placeholder = "Channel name here..."
+            textField.addTarget(self, action: #selector(self.textChanged(_:)), for: .editingChanged)
+        }
+        
+        let createAction = UIAlertAction(title: "Create", style: .default, handler: { _ in
+            guard let textField = alert.textFields?.first,
+                  let name: String = textField.text else {
+                return
+            }
+            
+            FirebaseManager.createChannelWith(name) { (success) in
+                if !success {
+                    self.showOkAlert("Error", "Could not create channel :(")
+                }
+            }
+        })
+        self.actionToEnable = createAction
+        createAction.isEnabled = false
+        alert.addAction(createAction)
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+        
+    @objc private func textChanged(_ sender: UITextField) {
+        self.actionToEnable?.isEnabled = !(sender.text?.isEmpty ?? true)
+    }
 }
 
 // MARK: - UITableViewDelegate
@@ -76,16 +141,11 @@ class ConversationsListViewController: UIViewController {
 extension ConversationsListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let conversationsViewController = ConversationViewController()
-        conversationsViewController.title = conversationsTestData[indexPath.section][indexPath.row].name
+        let selectedChannel = channels[indexPath.row]
+        let conversationsViewController = ConversationViewController(channelId: selectedChannel.identifier)
+        conversationsViewController.title = selectedChannel.name
         navigationController?.pushViewController(conversationsViewController, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        guard let view = view as? UITableViewHeaderFooterView else { return }
-        view.contentView.backgroundColor = ThemeManager.currentTheme.backgroundColor.withAlphaComponent(0.85)
-        view.textLabel?.textColor = ThemeManager.currentTheme.primaryTextColor
     }
 }
 
@@ -93,20 +153,8 @@ extension ConversationsListViewController: UITableViewDelegate {
 
 extension ConversationsListViewController: UITableViewDataSource {
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        conversationsTestData.count
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
-            return "Online"
-        } else {
-            return "History"
-        }
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        conversationsTestData[section].count
+        channels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -114,7 +162,7 @@ extension ConversationsListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let model = conversationsTestData[indexPath.section][indexPath.row]
+        let model = ConversationCellModel(channel: channels[indexPath.row])
         
         cell.configure(with: model)
         
