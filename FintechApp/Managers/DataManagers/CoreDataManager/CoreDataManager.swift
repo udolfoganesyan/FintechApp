@@ -10,7 +10,7 @@ import CoreData
 
 final class CoreDataManager {
     
-    var didUpdateDataBase: ((CoreDataManager) -> Void)?
+    var didUpdateDataBase: ((CoreDataManager) -> Void)
     
     private var storeUrl: URL = {
         guard let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last else {
@@ -22,6 +22,14 @@ final class CoreDataManager {
     
     private let dataModelName = "Chat"
     private let dataModelExtension = "momd"
+    
+    init() {
+        didUpdateDataBase = { manager in
+            _ = manager.fetchChannels()
+            _ = manager.fetchMessages()
+        }
+        enableObservers()
+    }
     
     private(set) lazy var managedObjectModel: NSManagedObjectModel = {
         guard let modelUrl = Bundle.main.url(forResource: self.dataModelName, withExtension: self.dataModelExtension) else {
@@ -91,7 +99,7 @@ final class CoreDataManager {
         }
     }
     
-    func fetchChannels(withPredicate predicate: NSPredicate? = nil, context: NSManagedObjectContext? = nil) -> [ChannelDB]? {
+    func fetchChannels(withPredicate predicate: NSPredicate? = nil, in context: NSManagedObjectContext? = nil) -> [ChannelDB]? {
         do {
             let fetchContext = context ?? mainContext
             let request: NSFetchRequest<ChannelDB> = ChannelDB.fetchRequest()
@@ -129,7 +137,7 @@ final class CoreDataManager {
         
         Logger.log("something changed in database")
         
-        didUpdateDataBase?(self)
+        didUpdateDataBase(self)
         
         if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject> {
             Logger.log("Added: \(inserts.count)")

@@ -41,12 +41,6 @@ final class ConversationsListViewController: UIViewController {
     init(coreDataManager: CoreDataManager) {
         self.coreDataManager = coreDataManager
         super.init(nibName: nil, bundle: nil)
-        
-        self.coreDataManager.enableObservers()
-        self.coreDataManager.didUpdateDataBase = { manager in
-            _ = manager.fetchChannels()
-            _ = manager.fetchMessages()
-        }
     }
     
     required init?(coder: NSCoder) {

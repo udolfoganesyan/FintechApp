@@ -75,7 +75,7 @@ final class ConversationViewController: UIViewController {
         if !messages.isEmpty {
             coreDataManager.performSave { (context) in
                 let predicate = NSPredicate(format: "identifier == %@", self.channelId)
-                let channel = self.coreDataManager.fetchChannels(withPredicate: predicate, context: context)
+                let channel = self.coreDataManager.fetchChannels(withPredicate: predicate, in: context)
                 let messagesDB = self.messages.map { MessageDB(message: $0, context: context) }
                 let setOfMessagesToAdd = NSSet(array: messagesDB)
                 channel?.first?.addToMessages(setOfMessagesToAdd)
