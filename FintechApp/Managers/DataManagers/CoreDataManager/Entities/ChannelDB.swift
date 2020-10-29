@@ -9,13 +9,13 @@
 import CoreData
 
 @objc(ChannelDB)
-public class ChannelDB: NSManagedObject {
+final class ChannelDB: NSManagedObject {
     
-    @NSManaged public var identifier: String
-    @NSManaged public var lastActivity: Date?
-    @NSManaged public var lastMessage: String?
-    @NSManaged public var name: String
-    @NSManaged public var messages: NSOrderedSet?
+    @NSManaged var identifier: String
+    @NSManaged var lastActivity: Date?
+    @NSManaged var lastMessage: String?
+    @NSManaged var name: String
+    @NSManaged var messages: NSOrderedSet?
     
     var about: String {
         let description = "id: \(identifier)\nname: \(name)\nlast activity: \(String(describing: lastActivity))\nlast message: \(String(describing: lastMessage))"
@@ -30,19 +30,19 @@ public class ChannelDB: NSManagedObject {
         self.name = channel.name
     }
     
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<ChannelDB> {
+    @nonobjc class func fetchRequest() -> NSFetchRequest<ChannelDB> {
         return NSFetchRequest<ChannelDB>(entityName: "ChannelDB")
     }
     
     @objc(addMessagesObject:)
-    @NSManaged public func addToMessages(_ value: MessageDB)
+    @NSManaged func addToMessages(_ value: MessageDB)
     
     @objc(removeMessagesObject:)
-    @NSManaged public func removeFromMessages(_ value: MessageDB)
+    @NSManaged func removeFromMessages(_ value: MessageDB)
     
     @objc(addMessages:)
-    @NSManaged public func addToMessages(_ values: NSSet)
+    @NSManaged func addToMessages(_ values: NSSet)
     
     @objc(removeMessages:)
-    @NSManaged public func removeFromMessages(_ values: NSSet)
+    @NSManaged func removeFromMessages(_ values: NSSet)
 }
