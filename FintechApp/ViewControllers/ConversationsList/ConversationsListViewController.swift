@@ -74,7 +74,7 @@ final class ConversationsListViewController: UIViewController {
     
     private func saveChannels() {
         coreDataManager.performSave { (context) in
-            channels.forEach { _ = ChannelDB(channel: $0, context: context) }
+            self.channels.forEach { _ = ChannelDB(channel: $0, context: context) }
         }
     }
     

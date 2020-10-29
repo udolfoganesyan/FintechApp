@@ -72,13 +72,13 @@ final class CoreDataManager {
         return context
     }
     
-    func performSave(_ block: (NSManagedObjectContext) -> Void) {
+    func performSave(_ block: @escaping (NSManagedObjectContext) -> Void) {
         let context = saveContext()
-        context.performAndWait {
+        context.perform {
             block(context)
             if context.hasChanges {
                 do {
-                    try performSave(in: context)
+                    try self.performSave(in: context)
                 } catch { assertionFailure(error.localizedDescription) }
             }
         }
