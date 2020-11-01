@@ -16,10 +16,10 @@ struct ConversationCellModel {
     let message: String
     let date: String
     
-    init(channel: Channel) {
-        self.name = channel.name
-        self.message = channel.lastMessage ?? ""
-        self.date = ConversationCellModel.getFormattedDateStringFrom(channel.lastActivity)
+    init(channelDB: ChannelDB) {
+        self.name = channelDB.name
+        self.message = channelDB.lastMessage ?? ""
+        self.date = ConversationCellModel.getFormattedDateStringFrom(channelDB.lastActivity)
     }
     
     static private func getFormattedDateStringFrom(_ date: Date?) -> String {

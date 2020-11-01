@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 final class ConversationViewController: UIViewController {
     
@@ -28,15 +29,32 @@ final class ConversationViewController: UIViewController {
         return inputContainerView
     }()
     
+    private lazy var fetchedResultsController: NSFetchedResultsController<MessageDB> = {
+        let fetchRequest: NSFetchRequest<MessageDB> = MessageDB.fetchRequest()
+        
+        let sortDescriptor = NSSortDescriptor(key: "created", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        fetchRequest.fetchBatchSize = 50
+        
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                             managedObjectContext: coreDataManager.mainContext,
+                                             sectionNameKeyPath: nil,
+                                             cacheName: nil)
+        frc.delegate = self
+        return frc
+    }()
+    
     private let channelId: String
-    private var messages = [Message]() {
-        didSet {
-            tableView.reloadData()
-            scrollToTheBottom()
-            saveMessages()
-        }
-    }
     private let coreDataManager: CoreDataManager
+    
+    override var inputAccessoryView: UIView? {
+        return inputContainerView
+    }
+    
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
     
     init(channelId: String, coreDataManager: CoreDataManager) {
         self.channelId = channelId
@@ -51,41 +69,40 @@ final class ConversationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        fetchMessages()
-        
         setupKeyboardObservers()
         setupTableView()
+        
+        fetchSavedMessages()
+        fetchNewMessagesAndSaveToDB()
     }
     
-    override var inputAccessoryView: UIView? {
-        return inputContainerView
-    }
-    
-    override var canBecomeFirstResponder: Bool {
-        return true
-    }
-    
-    private func fetchMessages() {
-        FirebaseManager.fetchMessagesFor(channelId) { [weak self] (messages) in
-            self?.messages = messages
+    private func fetchSavedMessages() {
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            Logger.log(error.localizedDescription)
         }
     }
     
-    private func saveMessages() {
-        if !messages.isEmpty {
-            coreDataManager.performSave { (context) in
-                let predicate = NSPredicate(format: "identifier == %@", self.channelId)
-                let channel = self.coreDataManager.fetchChannels(withPredicate: predicate, in: context)
-                let messagesDB = self.messages.map { MessageDB(message: $0, context: context) }
-                let setOfMessagesToAdd = NSSet(array: messagesDB)
-                channel?.first?.addToMessages(setOfMessagesToAdd)
+    private func fetchNewMessagesAndSaveToDB() {
+        FirebaseManager.fetchMessagesFor(channelId) { [weak self] (messages) in
+            guard let self = self else { return }
+            if !messages.isEmpty {
+                self.coreDataManager.performSave { (context) in
+                    let predicate = NSPredicate(format: "identifier == %@", self.channelId)
+                    let channel = self.coreDataManager.fetchChannels(withPredicate: predicate, in: context)
+                    let messagesDB = messages.map { MessageDB(message: $0, context: context) }
+                    let setOfMessagesToAdd = NSSet(array: messagesDB)
+                    channel?.first?.addToMessages(setOfMessagesToAdd)
+                }
             }
         }
     }
     
     private func scrollToTheBottom() {
-        if !messages.isEmpty {
-            tableView.scrollToRow(at: IndexPath(row: messages.count - 1, section: 0), at: .bottom, animated: true)
+        guard let fetchedObjects = fetchedResultsController.fetchedObjects else { return }
+        if !fetchedObjects.isEmpty {
+            tableView.scrollToRow(at: IndexPath(row: fetchedObjects.count - 1, section: 0), at: .bottom, animated: true)
         }
     }
     
@@ -121,6 +138,44 @@ final class ConversationViewController: UIViewController {
     }
 }
 
+// MARK: - NSFetchedResultsControllerDelegate
+
+extension ConversationViewController: NSFetchedResultsControllerDelegate {
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        guard let messageDB = anObject as? MessageDB else { return }
+        
+        switch type {
+        case .insert:
+            guard let newIndexPath = newIndexPath else { return }
+            tableView.insertRows(at: [newIndexPath], with: .fade)
+        case .delete:
+            guard let indexPath = indexPath else { return }
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        case .update:
+            guard let indexPath = indexPath,
+                  let cell = tableView.cellForRow(at: indexPath) as? MessageCell else { return }
+            let model = MessageCellModel(messageDB: messageDB)
+            cell.configure(with: model)
+        case .move:
+            guard let indexPath = indexPath,
+                  let newIndexPath = newIndexPath else { return }
+            tableView.moveRow(at: indexPath, to: newIndexPath)
+        default: return
+        }
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+        scrollToTheBottom()
+    }
+}
+
 // MARK: - InputDelegate
 
 extension ConversationViewController: InputDelegate {
@@ -140,7 +195,8 @@ extension ConversationViewController: InputDelegate {
 extension ConversationViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        messages.count
+        guard let sectionInfo = fetchedResultsController.sections?[section] else { return 0 }
+        return sectionInfo.numberOfObjects
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -148,7 +204,8 @@ extension ConversationViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let model = MessageCellModel(message: messages[indexPath.row])
+        let messageDB = fetchedResultsController.object(at: indexPath)
+        let model = MessageCellModel(messageDB: messageDB)
         
         cell.configure(with: model)
         return cell

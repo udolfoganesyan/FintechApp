@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 final class ConversationsListViewController: UIViewController {
     
@@ -29,13 +30,23 @@ final class ConversationsListViewController: UIViewController {
         return button
     }()
     
+    private lazy var fetchedResultsController: NSFetchedResultsController<ChannelDB> = {
+        let fetchRequest: NSFetchRequest<ChannelDB> = ChannelDB.fetchRequest()
+
+        let sortDescriptor = NSSortDescriptor(key: "lastActivity", ascending: false)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        fetchRequest.fetchBatchSize = 22
+        
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                             managedObjectContext: coreDataManager.mainContext,
+                                             sectionNameKeyPath: nil,
+                                             cacheName: nil)
+        frc.delegate = self
+        return frc
+    }()
+    
     private var actionToEnable: UIAlertAction?
-    private var channels = [Channel]() {
-        didSet {
-            self.tableView.reloadData()
-            saveChannels()
-        }
-    }
     private let coreDataManager: CoreDataManager
     
     init(coreDataManager: CoreDataManager) {
@@ -49,26 +60,29 @@ final class ConversationsListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .white
-        
-        fetchChannels()
-        
+                
         setupNavigationBar()
         setupTableView()
         setupAddButton()
         updateTheme()
+        
+        fetchSavedChannels()
+        fetchNewChannelsAndSaveToDB()
     }
     
-    private func fetchChannels() {
-        FirebaseManager.fetchChannels { (channels) in
-            self.channels = channels
+    private func fetchSavedChannels() {
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            Logger.log(error.localizedDescription)
         }
     }
     
-    private func saveChannels() {
-        coreDataManager.performSave { (context) in
-            self.channels.forEach { _ = ChannelDB(channel: $0, context: context) }
+    private func fetchNewChannelsAndSaveToDB() {
+        FirebaseManager.fetchChannels { (channels) in
+            self.coreDataManager.performSave { (context) in
+                channels.forEach { _ = ChannelDB(channel: $0, context: context) }
+            }
         }
     }
     
@@ -158,7 +172,7 @@ final class ConversationsListViewController: UIViewController {
 extension ConversationsListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedChannel = channels[indexPath.row]
+        let selectedChannel = fetchedResultsController.object(at: indexPath)
         let conversationsViewController = ConversationViewController(channelId: selectedChannel.identifier, coreDataManager: coreDataManager)
         conversationsViewController.title = selectedChannel.name
         navigationController?.pushViewController(conversationsViewController, animated: true)
@@ -171,7 +185,8 @@ extension ConversationsListViewController: UITableViewDelegate {
 extension ConversationsListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        channels.count
+        guard let sectionInfo = fetchedResultsController.sections?[section] else { return 0 }
+        return sectionInfo.numberOfObjects
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -179,11 +194,59 @@ extension ConversationsListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let model = ConversationCellModel(channel: channels[indexPath.row])
+        let channelDB = fetchedResultsController.object(at: indexPath)
+        let model = ConversationCellModel(channelDB: channelDB)
         
         cell.configure(with: model)
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // 
+        }
+    }
+}
+
+// MARK: - NSFetchedResultsControllerDelegate
+
+extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        guard let channelDB = anObject as? ChannelDB else { return }
+        
+        switch type {
+        case .insert:
+            guard let newIndexPath = newIndexPath else { return }
+            tableView.insertRows(at: [newIndexPath], with: .fade)
+        case .delete:
+            guard let indexPath = indexPath else { return }
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        case .update:
+            guard let indexPath = indexPath,
+                  let cell = tableView.cellForRow(at: indexPath) as? ConversationCell else { return }
+            let model = ConversationCellModel(channelDB: channelDB)
+            cell.configure(with: model)
+        case .move:
+            guard let indexPath = indexPath,
+                  let newIndexPath = newIndexPath else { return }
+            tableView.moveRow(at: indexPath, to: newIndexPath)
+        default: return
+        }
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
     }
 }
 
