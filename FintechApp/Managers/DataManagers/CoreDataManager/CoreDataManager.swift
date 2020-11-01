@@ -76,7 +76,6 @@ final class CoreDataManager {
         context.parent = mainContext
         context.automaticallyMergesChangesFromParent = true
         context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-        
         return context
     }
     
@@ -86,6 +85,7 @@ final class CoreDataManager {
             block(context)
             if context.hasChanges {
                 do {
+                    try context.obtainPermanentIDs(for: Array(context.insertedObjects))
                     try self.performSave(in: context)
                 } catch { assertionFailure(error.localizedDescription) }
             }
@@ -96,6 +96,13 @@ final class CoreDataManager {
         try context.save()
         if let parent = context.parent {
             try performSave(in: parent)
+        }
+    }
+    
+    func deleteChannelWith(objectID: NSManagedObjectID) {
+        performSave { (context) in
+            let channelToDelete = context.object(with: objectID)
+            context.delete(channelToDelete)
         }
     }
     

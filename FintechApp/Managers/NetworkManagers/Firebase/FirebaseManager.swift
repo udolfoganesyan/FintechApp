@@ -56,6 +56,13 @@ enum FirebaseManager {
         channelsReference.addDocument(data: data, completion: completion)
     }
     
+    static func deleteChannelWith(channelId: String, completion: @escaping SuccessCompletion) {
+        channelsReference.document(channelId).delete { (error) in
+            let success = error == nil
+            completion(success)
+        }
+    }
+    
     static func fetchMessagesFor(_ channelId: String, completion: @escaping ([Message]) -> Void) {
         channelsReference.document(channelId).collection(FirebaseKeys.messages.rawValue).addSnapshotListener { (snapshot, error) in
             guard error == nil else { return }

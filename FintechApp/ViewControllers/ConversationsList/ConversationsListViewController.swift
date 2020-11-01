@@ -32,7 +32,7 @@ final class ConversationsListViewController: UIViewController {
     
     private lazy var fetchedResultsController: NSFetchedResultsController<ChannelDB> = {
         let fetchRequest: NSFetchRequest<ChannelDB> = ChannelDB.fetchRequest()
-
+        
         let sortDescriptor = NSSortDescriptor(key: "lastActivity", ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
         
@@ -60,7 +60,7 @@ final class ConversationsListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
         setupNavigationBar()
         setupTableView()
         setupAddButton()
@@ -208,7 +208,12 @@ extension ConversationsListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // 
+            let channel = fetchedResultsController.object(at: indexPath)
+            FirebaseManager.deleteChannelWith(channelId: channel.identifier) { (success) in
+                if success {
+                    self.coreDataManager.deleteChannelWith(objectID: channel.objectID)
+                }
+            }
         }
     }
 }
