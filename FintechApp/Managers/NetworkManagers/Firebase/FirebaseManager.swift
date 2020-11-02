@@ -68,12 +68,6 @@ enum FirebaseManager {
         }
     }
     
-    private static func parseMessagesFrom(_ documents: [QueryDocumentSnapshot]) -> [Message] {
-        var messages = documents.compactMap { Message($0) }
-        messages.sort { $0.created < $1.created }
-        return messages
-    }
-    
     static func sendMessage(_ message: String, to channelId: String, completion: @escaping SuccessCompletion) {
         let data: [FirebaseKeys: Any?] = [
             FirebaseKeys.content: message,
