@@ -38,7 +38,7 @@ final class ConversationViewController: UIViewController {
         let sortDescriptor = NSSortDescriptor(key: "created", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         
-        fetchRequest.fetchBatchSize = 50
+        fetchRequest.fetchBatchSize = 45
         
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                              managedObjectContext: coreDataManager.mainContext,
