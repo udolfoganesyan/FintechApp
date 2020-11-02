@@ -18,6 +18,7 @@ final class ConversationsListViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
+        tableView.rowHeight = 80
         return tableView
     }()
     
@@ -228,7 +229,7 @@ extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
                     didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        guard let channelDB = anObject as? ChannelDB else { return }
+        guard anObject is ChannelDB else { return }
         
         switch type {
         case .insert:
@@ -238,10 +239,8 @@ extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
             guard let indexPath = indexPath else { return }
             tableView.deleteRows(at: [indexPath], with: .fade)
         case .update:
-            guard let indexPath = indexPath,
-                  let cell = tableView.cellForRow(at: indexPath) as? ConversationCell else { return }
-            let model = ConversationCellModel(channelDB: channelDB)
-            cell.configure(with: model)
+            guard let indexPath = indexPath else { return }
+            tableView.reloadRows(at: [indexPath], with: .fade)
         case .move:
             guard let indexPath = indexPath,
                   let newIndexPath = newIndexPath else { return }

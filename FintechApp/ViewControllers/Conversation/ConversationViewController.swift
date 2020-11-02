@@ -148,7 +148,7 @@ extension ConversationViewController: NSFetchedResultsControllerDelegate {
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
                     didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        guard let messageDB = anObject as? MessageDB else { return }
+        guard anObject is MessageDB else { return }
         
         switch type {
         case .insert:
@@ -158,10 +158,8 @@ extension ConversationViewController: NSFetchedResultsControllerDelegate {
             guard let indexPath = indexPath else { return }
             tableView.deleteRows(at: [indexPath], with: .fade)
         case .update:
-            guard let indexPath = indexPath,
-                  let cell = tableView.cellForRow(at: indexPath) as? MessageCell else { return }
-            let model = MessageCellModel(messageDB: messageDB)
-            cell.configure(with: model)
+            guard let indexPath = indexPath else { return }
+            tableView.reloadRows(at: [indexPath], with: .fade)
         case .move:
             guard let indexPath = indexPath,
                   let newIndexPath = newIndexPath else { return }
