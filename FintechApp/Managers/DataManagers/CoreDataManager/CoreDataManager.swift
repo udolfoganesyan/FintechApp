@@ -10,7 +10,7 @@ import CoreData
 
 final class CoreDataManager {
     
-    var didUpdateDataBase: ((CoreDataManager) -> Void)
+    var didUpdateDataBase: ((CoreDataManager) -> Void)?
     
     private var storeUrl: URL = {
         guard let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last else {
@@ -24,10 +24,6 @@ final class CoreDataManager {
     private let dataModelExtension = "momd"
     
     init() {
-        didUpdateDataBase = { manager in
-            _ = manager.fetchChannels()
-            _ = manager.fetchMessages()
-        }
         enableObservers()
     }
     
@@ -38,7 +34,6 @@ final class CoreDataManager {
         guard let managedObjectModel = NSManagedObjectModel(contentsOf: modelUrl) else {
             fatalError("could not create mom")
         }
-        
         return managedObjectModel
     }()
     
@@ -99,35 +94,55 @@ final class CoreDataManager {
         }
     }
     
-    func deleteChannelWith(objectID: NSManagedObjectID) {
+    func addChannels(_ channels: [Channel]) {
         performSave { (context) in
-            let channelToDelete = context.object(with: objectID)
-            context.delete(channelToDelete)
+            channels.forEach { _ = ChannelDB(channel: $0, context: context) }
         }
     }
     
-    func fetchChannels(withPredicate predicate: NSPredicate? = nil, in context: NSManagedObjectContext? = nil) -> [ChannelDB]? {
-        do {
-            let fetchContext = context ?? mainContext
-            let request: NSFetchRequest<ChannelDB> = ChannelDB.fetchRequest()
-            request.predicate = predicate
-            let channels = try fetchContext.fetch(request)
-            channels.forEach { Logger.log($0.about) }
-            return channels
-        } catch {
-            Logger.log(error.localizedDescription)
-            return nil
+    func updateChannels(_ channels: [Channel]) {
+        performSave { (context) in
+            channels.forEach {
+                let fetchRequest: NSFetchRequest<ChannelDB> = ChannelDB.fetchRequest()
+                let predicate = NSPredicate(format: "identifier = %@", $0.identifier)
+                fetchRequest.predicate = predicate
+                do {
+                    let channelsDB = try context.fetch(fetchRequest)
+                    guard let channel = channelsDB.first else { return }
+                    channel.setValue($0.lastActivity, forKey: "lastActivity")
+                    channel.setValue($0.lastMessage, forKey: "lastMessage")
+                    channel.setValue($0.name, forKey: "name")
+                } catch {
+                    Logger.log(error.localizedDescription)
+                }
+            }
         }
     }
     
-    func fetchMessages() -> [MessageDB]? {
-        do {
-            let messages = try mainContext.fetch(MessageDB.fetchRequest()) as? [MessageDB] ?? []
-            messages.forEach { Logger.log($0.about) }
-            return messages
-        } catch {
-            Logger.log(error.localizedDescription)
-            return nil
+    func deleteChannels(_ channels: [Channel]) {
+        performSave { (context) in
+            channels.forEach {
+                let fetchRequest: NSFetchRequest<ChannelDB> = ChannelDB.fetchRequest()
+                let predicate = NSPredicate(format: "identifier = %@", $0.identifier)
+                fetchRequest.predicate = predicate
+                do {
+                    let channelsDB = try context.fetch(fetchRequest)
+                    guard let channelToDelete = channelsDB.first else { return }
+                    context.delete(channelToDelete)
+                } catch {
+                    Logger.log(error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    func addMessages(_ messages: [Message], forChannelWith objectID: NSManagedObjectID) {
+        performSave { (context) in
+            guard let channelToAddMessages = context.object(with: objectID) as? ChannelDB else { return }
+            
+            let messagesDB = messages.map { MessageDB(message: $0, context: context) }
+            let setOfMessagesToAdd = NSOrderedSet(array: messagesDB)
+            channelToAddMessages.addToMessages(setOfMessagesToAdd)
         }
     }
     
@@ -144,7 +159,7 @@ final class CoreDataManager {
         
         Logger.log("something changed in database")
         
-        didUpdateDataBase(self)
+        didUpdateDataBase?(self)
         
         if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject> {
             Logger.log("Added: \(inserts.count)")

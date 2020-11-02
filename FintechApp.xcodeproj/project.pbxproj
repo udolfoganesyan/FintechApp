@@ -50,6 +50,7 @@
 		A1CF7B2D2538B5BC00190B95 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A1CF7B2C2538B5BC00190B95 /* GoogleService-Info.plist */; };
 		A1DE22C425484519008F05FA /* Chat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A1DE22C225484519008F05FA /* Chat.xcdatamodeld */; };
 		A1F1F4692536318A002388AB /* UserDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F1F4682536318A002388AB /* UserDataStorage.swift */; };
+		A1FADAE02550B8DE00B230BD /* FirestoreUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FADADF2550B8DE00B230BD /* FirestoreUpdate.swift */; };
 		E13F402D7F8E5D55C174C660 /* Pods_FintechApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C7E1EEFBFD98FAA5EFDF703 /* Pods_FintechApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -102,6 +103,7 @@
 		A1CF7B2C2538B5BC00190B95 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A1DE22C325484519008F05FA /* Chat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Chat.xcdatamodel; sourceTree = "<group>"; };
 		A1F1F4682536318A002388AB /* UserDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataStorage.swift; sourceTree = "<group>"; };
+		A1FADADF2550B8DE00B230BD /* FirestoreUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreUpdate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +206,7 @@
 			children = (
 				A187D125253C5230008AAE86 /* Channel.swift */,
 				A128E905253C719C000ED358 /* Message.swift */,
+				A1FADADF2550B8DE00B230BD /* FirestoreUpdate.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -539,6 +542,7 @@
 				A1475871250F5FEA004DFCAA /* Logger.swift in Sources */,
 				A1C743A7251E3ABA005B5195 /* ConversationCell.swift in Sources */,
 				A10A883C251E8BF8006B3017 /* OnlineBadgeView.swift in Sources */,
+				A1FADAE02550B8DE00B230BD /* FirestoreUpdate.swift in Sources */,
 				A187D126253C5230008AAE86 /* Channel.swift in Sources */,
 				A187D11D253C4AD4008AAE86 /* FirebaseManager.swift in Sources */,
 				A147585D250F5FA2004DFCAA /* AppDelegate.swift in Sources */,

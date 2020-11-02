@@ -8,7 +8,7 @@
 
 import FirebaseFirestore
 
-struct Message {
+struct Message: FirestoreSnapshotInitializable {
     
     let identifier: String
     let content: String

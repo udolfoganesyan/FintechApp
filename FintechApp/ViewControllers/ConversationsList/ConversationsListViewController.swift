@@ -80,10 +80,10 @@ final class ConversationsListViewController: UIViewController {
     }
     
     private func fetchNewChannelsAndSaveToDB() {
-        FirebaseManager.fetchChannels { (channels) in
-            self.coreDataManager.performSave { (context) in
-                channels.forEach { _ = ChannelDB(channel: $0, context: context) }
-            }
+        FirebaseManager.fetchChannels { (channelUpdates) in
+            self.coreDataManager.addChannels(channelUpdates.added)
+            self.coreDataManager.updateChannels(channelUpdates.modified)
+            self.coreDataManager.deleteChannels(channelUpdates.removed)
         }
     }
     
@@ -174,8 +174,7 @@ extension ConversationsListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedChannel = fetchedResultsController.object(at: indexPath)
-        let conversationsViewController = ConversationViewController(channelId: selectedChannel.identifier, coreDataManager: coreDataManager)
-        conversationsViewController.title = selectedChannel.name
+        let conversationsViewController = ConversationViewController(channel: selectedChannel, coreDataManager: coreDataManager)
         navigationController?.pushViewController(conversationsViewController, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -211,8 +210,8 @@ extension ConversationsListViewController: UITableViewDataSource {
         if editingStyle == .delete {
             let channel = fetchedResultsController.object(at: indexPath)
             FirebaseManager.deleteChannelWith(channelId: channel.identifier) { (success) in
-                if success {
-                    self.coreDataManager.deleteChannelWith(objectID: channel.objectID)
+                if !success {
+                    self.showOkAlert("Error", "Could not delete channel :(")
                 }
             }
         }

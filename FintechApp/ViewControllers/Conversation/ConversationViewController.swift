@@ -32,6 +32,9 @@ final class ConversationViewController: UIViewController {
     private lazy var fetchedResultsController: NSFetchedResultsController<MessageDB> = {
         let fetchRequest: NSFetchRequest<MessageDB> = MessageDB.fetchRequest()
         
+        let predicate = NSPredicate(format: "channel == %@", channel)
+        fetchRequest.predicate = predicate
+        
         let sortDescriptor = NSSortDescriptor(key: "created", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         
@@ -45,6 +48,7 @@ final class ConversationViewController: UIViewController {
         return frc
     }()
     
+    private let channel: ChannelDB
     private let channelId: String
     private let coreDataManager: CoreDataManager
     
@@ -56,10 +60,12 @@ final class ConversationViewController: UIViewController {
         return true
     }
     
-    init(channelId: String, coreDataManager: CoreDataManager) {
-        self.channelId = channelId
+    init(channel: ChannelDB, coreDataManager: CoreDataManager) {
+        self.channel = channel
+        self.channelId = channel.identifier
         self.coreDataManager = coreDataManager
         super.init(nibName: nil, bundle: nil)
+        title = channel.name
     }
     
     required init?(coder: NSCoder) {
@@ -85,17 +91,10 @@ final class ConversationViewController: UIViewController {
     }
     
     private func fetchNewMessagesAndSaveToDB() {
-        FirebaseManager.fetchMessagesFor(channelId) { [weak self] (messages) in
+        FirebaseManager.fetchMessagesFor(channelId) { [weak self] (messageUpdates) in
             guard let self = self else { return }
-            if !messages.isEmpty {
-                self.coreDataManager.performSave { (context) in
-                    let predicate = NSPredicate(format: "identifier == %@", self.channelId)
-                    let channel = self.coreDataManager.fetchChannels(withPredicate: predicate, in: context)
-                    let messagesDB = messages.map { MessageDB(message: $0, context: context) }
-                    let setOfMessagesToAdd = NSSet(array: messagesDB)
-                    channel?.first?.addToMessages(setOfMessagesToAdd)
-                }
-            }
+            
+            self.coreDataManager.addMessages(messageUpdates.added, forChannelWith: self.channel.objectID)
         }
     }
     
