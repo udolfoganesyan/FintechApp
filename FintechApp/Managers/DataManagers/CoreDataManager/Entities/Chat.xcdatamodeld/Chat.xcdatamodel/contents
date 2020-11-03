@@ -15,6 +15,7 @@
     <entity name="MessageDB" representedClassName="MessageDB" syncable="YES">
         <attribute name="content" optional="YES" attributeType="String"/>
         <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="dateForSection" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="identifier" optional="YES" attributeType="String"/>
         <attribute name="senderId" optional="YES" attributeType="String"/>
         <attribute name="senderName" optional="YES" attributeType="String"/>
@@ -27,6 +28,6 @@
     </entity>
     <elements>
         <element name="ChannelDB" positionX="-83.93359375" positionY="3.79296875" width="131.83203125" height="118"/>
-        <element name="MessageDB" positionX="240.546875" positionY="-5.89453125" width="128" height="133"/>
+        <element name="MessageDB" positionX="240.546875" positionY="-5.89453125" width="128" height="148"/>
     </elements>
 </model>

@@ -16,6 +16,7 @@ final class MessageDB: NSManagedObject {
     @NSManaged var created: Date
     @NSManaged var senderId: String
     @NSManaged var senderName: String
+    @NSManaged var dateForSection: Date
     @NSManaged var channel: ChannelDB?
     
     var about: String {
@@ -30,6 +31,14 @@ final class MessageDB: NSManagedObject {
         self.created = message.created
         self.senderId = message.senderId
         self.senderName = message.senderName
+        self.dateForSection = getDateWithoutTimeFrom(message.created)
+    }
+    
+    private func getDateWithoutTimeFrom(_ date: Date) -> Date {
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone(identifier: "UTC") ?? .autoupdatingCurrent
+        let dateForSection = calendar.date(from: calendar.dateComponents([.year, .month, .day], from: date))
+        return dateForSection ?? Date()
     }
     
     @nonobjc class func fetchRequest() -> NSFetchRequest<MessageDB> {

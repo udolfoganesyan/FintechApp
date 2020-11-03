@@ -18,6 +18,7 @@ final class ConversationViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.backgroundColor = ThemeManager.currentTheme.backgroundColor
         tableView.keyboardDismissMode = .interactive
         return tableView
@@ -35,14 +36,15 @@ final class ConversationViewController: UIViewController {
         let predicate = NSPredicate(format: "channel == %@", channel)
         fetchRequest.predicate = predicate
         
-        let sortDescriptor = NSSortDescriptor(key: "created", ascending: true)
-        fetchRequest.sortDescriptors = [sortDescriptor]
+        let sectionsSort = NSSortDescriptor(key: "dateForSection", ascending: true)
+        let rowsSort = NSSortDescriptor(key: "created", ascending: true)
+        fetchRequest.sortDescriptors = [sectionsSort, rowsSort]
         
         fetchRequest.fetchBatchSize = 45
         
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                              managedObjectContext: coreDataManager.mainContext,
-                                             sectionNameKeyPath: nil,
+                                             sectionNameKeyPath: "dateForSection",
                                              cacheName: nil)
         frc.delegate = self
         return frc
@@ -99,10 +101,12 @@ final class ConversationViewController: UIViewController {
     }
     
     private func scrollToTheBottom() {
-        guard let fetchedObjects = fetchedResultsController.fetchedObjects else { return }
-        if !fetchedObjects.isEmpty {
-            tableView.scrollToRow(at: IndexPath(row: fetchedObjects.count - 1, section: 0), at: .bottom, animated: true)
-        }
+        guard let numberOfSections = fetchedResultsController.sections?.count,
+              numberOfSections > 0 else { return }
+        guard let numberOfObjectsInTheLastSection = fetchedResultsController.sections?[numberOfSections - 1].numberOfObjects,
+              numberOfObjectsInTheLastSection > 0 else { return }
+        
+        tableView.scrollToRow(at: IndexPath(row: numberOfObjectsInTheLastSection - 1, section: numberOfSections - 1), at: .bottom, animated: true)
     }
     
     private func setupKeyboardObservers() {
@@ -146,7 +150,10 @@ extension ConversationViewController: NSFetchedResultsControllerDelegate {
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                    didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath: IndexPath?) {
         guard anObject is MessageDB else { return }
         
         switch type {
@@ -163,6 +170,22 @@ extension ConversationViewController: NSFetchedResultsControllerDelegate {
             guard let indexPath = indexPath,
                   let newIndexPath = newIndexPath else { return }
             tableView.moveRow(at: indexPath, to: newIndexPath)
+        default: return
+        }
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange sectionInfo: NSFetchedResultsSectionInfo,
+                    atSectionIndex sectionIndex: Int,
+                    for type: NSFetchedResultsChangeType) {
+        
+        let indexSet = IndexSet(integer: sectionIndex)
+        
+        switch type {
+        case .insert:
+            tableView.insertSections(indexSet, with: .automatic)
+        case .delete:
+            tableView.deleteSections(indexSet, with: .automatic)
         default: return
         }
     }
@@ -187,9 +210,25 @@ extension ConversationViewController: InputDelegate {
     }
 }
 
+// MARK: - UITableViewDelegate
+
+extension ConversationViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let sectionDate = fetchedResultsController.sections?[section].name else { return nil }
+        
+        let headerView = ConversationDateHeader(dateString: sectionDate)
+        return headerView
+    }
+}
+
 // MARK: - UITableViewDataSource
 
 extension ConversationViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        fetchedResultsController.sections?.count ?? 1
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let sectionInfo = fetchedResultsController.sections?[section] else { return 0 }
