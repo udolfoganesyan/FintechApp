@@ -28,6 +28,10 @@ final class ConversationsListViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.imageView?.contentMode = .scaleAspectFit
         button.addTarget(self, action: #selector(handleAddChannel), for: .touchUpInside)
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.6
+        button.layer.shadowOffset = .zero
+        button.layer.shadowRadius = 4
         return button
     }()
     
