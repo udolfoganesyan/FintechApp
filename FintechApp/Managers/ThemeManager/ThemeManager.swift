@@ -24,8 +24,8 @@ enum ThemeManager {
         DispatchQueue.global().async {
             UserDefaults.standard.setValue(theme.rawValue, forKey: selectedThemeKey)
             
-            setupNavigationBarAppearance()
             DispatchQueue.main.async {
+                setupNavigationBarAppearance()
                 completion()
             }
         }
@@ -34,7 +34,7 @@ enum ThemeManager {
     static func setupNavigationBarAppearance() {
         let navigationBarAppearace = UINavigationBar.appearance()
         
-        navigationBarAppearace.barTintColor = ThemeManager.currentTheme.backgroundColor
-        navigationBarAppearace.titleTextAttributes = [NSAttributedString.Key.foregroundColor: ThemeManager.currentTheme.primaryTextColor]
+        navigationBarAppearace.barTintColor = currentTheme.backgroundColor
+        navigationBarAppearace.titleTextAttributes = [NSAttributedString.Key.foregroundColor: currentTheme.primaryTextColor]
     }
 }
