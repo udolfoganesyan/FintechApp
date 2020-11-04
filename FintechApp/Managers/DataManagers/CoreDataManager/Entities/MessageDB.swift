@@ -35,8 +35,7 @@ final class MessageDB: NSManagedObject {
     }
     
     private func getDateWithoutTimeFrom(_ date: Date) -> Date {
-        var calendar = Calendar.current
-        calendar.timeZone = TimeZone(identifier: "UTC") ?? .autoupdatingCurrent
+        let calendar = Calendar.current
         let dateForSection = calendar.date(from: calendar.dateComponents([.year, .month, .day], from: date))
         return dateForSection ?? Date()
     }

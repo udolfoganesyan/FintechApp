@@ -26,11 +26,11 @@ struct ConversationCellModel {
         guard let date = date else { return "" }
         let calendar = Calendar.current
         if calendar.isDateInToday(date) {
-            ConversationCellModel.dateFormatter.dateFormat = "HH:mm"
+            dateFormatter.dateFormat = "HH:mm"
         } else {
-            ConversationCellModel.dateFormatter.dateFormat = "dd MMM"
+            dateFormatter.dateFormat = "dd MMM"
         }
-        let dateString = ConversationCellModel.dateFormatter.string(from: date)
+        let dateString = dateFormatter.string(from: date)
         return dateString
     }
 }
