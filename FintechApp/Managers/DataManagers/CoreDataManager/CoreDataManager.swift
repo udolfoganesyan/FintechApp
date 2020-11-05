@@ -94,13 +94,7 @@ final class CoreDataManager {
         }
     }
     
-    func addChannels(_ channels: [Channel]) {
-        performSave { (context) in
-            channels.forEach { _ = ChannelDB(channel: $0, context: context) }
-        }
-    }
-    
-    func updateChannels(_ channels: [Channel]) {
+    func addOrUpdateChannels(_ channels: [Channel]) {
         performSave { (context) in
             channels.forEach {
                 let fetchRequest: NSFetchRequest<ChannelDB> = ChannelDB.fetchRequest()
@@ -108,10 +102,12 @@ final class CoreDataManager {
                 fetchRequest.predicate = predicate
                 do {
                     let channelsDB = try context.fetch(fetchRequest)
-                    guard let channel = channelsDB.first else { return }
-                    channel.setValue($0.lastActivity, forKey: "lastActivity")
-                    channel.setValue($0.lastMessage, forKey: "lastMessage")
-                    channel.setValue($0.name, forKey: "name")
+                    if let channel = channelsDB.first {                    channel.setValue($0.lastActivity, forKey: "lastActivity")
+                        channel.setValue($0.lastMessage, forKey: "lastMessage")
+                        channel.setValue($0.name, forKey: "name")
+                    } else {
+                        _ = ChannelDB(channel: $0, context: context)
+                    }
                 } catch {
                     Logger.log(error.localizedDescription)
                 }

@@ -85,8 +85,8 @@ final class ConversationsListViewController: UIViewController {
     
     private func fetchNewChannelsAndSaveToDB() {
         FirebaseManager.fetchChannels { (channelUpdates) in
-            self.coreDataManager.addChannels(channelUpdates.added)
-            self.coreDataManager.updateChannels(channelUpdates.modified)
+            self.coreDataManager.addOrUpdateChannels(channelUpdates.added)
+            self.coreDataManager.addOrUpdateChannels(channelUpdates.modified)
             self.coreDataManager.deleteChannels(channelUpdates.removed)
         }
     }

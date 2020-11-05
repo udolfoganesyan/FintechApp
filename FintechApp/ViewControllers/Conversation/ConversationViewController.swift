@@ -183,9 +183,9 @@ extension ConversationViewController: NSFetchedResultsControllerDelegate {
         
         switch type {
         case .insert:
-            tableView.insertSections(indexSet, with: .automatic)
+            tableView.insertSections(indexSet, with: .fade)
         case .delete:
-            tableView.deleteSections(indexSet, with: .automatic)
+            tableView.deleteSections(indexSet, with: .fade)
         default: return
         }
     }
