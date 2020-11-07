@@ -38,12 +38,14 @@ final class CoreDataManager {
     
     func performSave(_ block: @escaping (NSManagedObjectContext) -> Void) {
         storeContainer.performBackgroundTask { (context) in
+            context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
             block(context)
             if context.hasChanges {
                 do {
-                    try context.obtainPermanentIDs(for: Array(context.insertedObjects))
                     try self.performSave(in: context)
-                } catch { assertionFailure(error.localizedDescription) }
+                } catch {
+                    assertionFailure(error.localizedDescription)
+                }
             }
         }
     }
