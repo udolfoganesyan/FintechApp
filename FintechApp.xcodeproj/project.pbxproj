@@ -35,6 +35,7 @@
 		A1475874250F6036004DFCAA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A1475873250F6036004DFCAA /* README.md */; };
 		A16570822517600300C22EAD /* UIAlertController+ConstraintsFix.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16570812517600300C22EAD /* UIAlertController+ConstraintsFix.swift */; };
 		A16570852517E6A700C22EAD /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A16570842517E6A700C22EAD /* ProfileViewController.xib */; };
+		A169F0C825573A6C001F0EDB /* Managed.swift in Sources */ = {isa = PBXBuildFile; fileRef = A169F0C725573A6C001F0EDB /* Managed.swift */; };
 		A187D11A253B9391008AAE86 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = A187D119253B9391008AAE86 /* .swiftlint.yml */; };
 		A187D11D253C4AD4008AAE86 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A187D11C253C4AD4008AAE86 /* FirebaseManager.swift */; };
 		A187D126253C5230008AAE86 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A187D125253C5230008AAE86 /* Channel.swift */; };
@@ -90,6 +91,7 @@
 		A1475873250F6036004DFCAA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A16570812517600300C22EAD /* UIAlertController+ConstraintsFix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+ConstraintsFix.swift"; sourceTree = "<group>"; };
 		A16570842517E6A700C22EAD /* ProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
+		A169F0C725573A6C001F0EDB /* Managed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Managed.swift; sourceTree = "<group>"; };
 		A187D119253B9391008AAE86 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		A187D11C253C4AD4008AAE86 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		A187D125253C5230008AAE86 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
@@ -360,6 +362,7 @@
 		A1DE22C625484522008F05FA /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				A169F0C725573A6C001F0EDB /* Managed.swift */,
 				A137AD05254869B700E50037 /* ChannelDB.swift */,
 				A137AD07254869B700E50037 /* MessageDB.swift */,
 				A1DE22C225484519008F05FA /* Chat.xcdatamodeld */,
@@ -539,6 +542,7 @@
 				A123207E2529C845005F8249 /* ThemeManager.swift in Sources */,
 				A137AD0B254869B700E50037 /* MessageDB.swift in Sources */,
 				A1202F89253648A60056BFCE /* SaveUserDataOperation.swift in Sources */,
+				A169F0C825573A6C001F0EDB /* Managed.swift in Sources */,
 				A10A8891251F58C6006B3017 /* Constants.swift in Sources */,
 				A18A6865253EF9B400E1B4D7 /* FirebaseExtensions.swift in Sources */,
 				A10A887D251F30CC006B3017 /* UIColor+Random.swift in Sources */,

@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ThemeManager.setupNavigationBarAppearance()
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        let coreDataManager = CoreDataManager()
+        let coreDataManager = CoreDataManager(dataModelName: CoreDataManager.chatDataModelName)
         let rootVC = ConversationsListViewController(coreDataManager: coreDataManager)
         let navController = UINavigationController(rootViewController: rootVC)
         window?.rootViewController = navController

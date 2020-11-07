@@ -10,73 +10,34 @@ import CoreData
 
 final class CoreDataManager {
     
+    static let chatDataModelName = "Chat"
+    
     var didUpdateDataBase: ((CoreDataManager) -> Void)?
     
-    private var storeUrl: URL = {
-        guard let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last else {
-            fatalError("Documents path not found")
+    private let dataModelName: String
+    
+    private lazy var storeContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: dataModelName)
+        container.loadPersistentStores { (_, error) in
+            if let error = error as NSError? {
+                Logger.log("Unresolved error \(error), \(error.userInfo)")
+            }
         }
-        Logger.log(documentsUrl.appendingPathComponent("Chat.sqlite").absoluteString)
-        return documentsUrl.appendingPathComponent("Chat.sqlite")
+        container.viewContext.automaticallyMergesChangesFromParent = true
+        return container
     }()
     
-    private let dataModelName = "Chat"
-    private let dataModelExtension = "momd"
+    lazy var mainContext: NSManagedObjectContext = {
+        return self.storeContainer.viewContext
+    }()
     
-    init() {
+    init(dataModelName: String) {
+        self.dataModelName = dataModelName
         enableObservers()
     }
     
-    private(set) lazy var managedObjectModel: NSManagedObjectModel = {
-        guard let modelUrl = Bundle.main.url(forResource: self.dataModelName, withExtension: self.dataModelExtension) else {
-            fatalError("model not found")
-        }
-        guard let managedObjectModel = NSManagedObjectModel(contentsOf: modelUrl) else {
-            fatalError("could not create mom")
-        }
-        return managedObjectModel
-    }()
-    
-    private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
-        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        
-        do {
-            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType,
-                                               configurationName: nil,
-                                               at: self.storeUrl,
-                                               options: nil)
-        } catch {
-            fatalError(error.localizedDescription)
-        }
-        return coordinator
-    }()
-    
-    private lazy var writerContext: NSManagedObjectContext = {
-        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        context.persistentStoreCoordinator = persistentStoreCoordinator
-        context.mergePolicy = NSOverwriteMergePolicy
-        return context
-    }()
-    
-    private(set) lazy var mainContext: NSManagedObjectContext = {
-        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        context.parent = writerContext
-        context.automaticallyMergesChangesFromParent = true
-        context.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
-        return context
-    }()
-    
-    private func saveContext() -> NSManagedObjectContext {
-        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        context.parent = mainContext
-        context.automaticallyMergesChangesFromParent = true
-        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-        return context
-    }
-    
     func performSave(_ block: @escaping (NSManagedObjectContext) -> Void) {
-        let context = saveContext()
-        context.perform {
+        storeContainer.performBackgroundTask { (context) in
             block(context)
             if context.hasChanges {
                 do {

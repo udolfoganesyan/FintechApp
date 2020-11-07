@@ -31,15 +31,13 @@ final class ConversationViewController: UIViewController {
     }()
     
     private lazy var fetchedResultsController: NSFetchedResultsController<MessageDB> = {
-        let fetchRequest: NSFetchRequest<MessageDB> = MessageDB.fetchRequest()
+        let fetchRequest = MessageDB.defaultSortedFetchRequest
         
         let predicate = NSPredicate(format: "channel == %@", channel)
         fetchRequest.predicate = predicate
         
-        let sectionsSort = NSSortDescriptor(key: "dateForSection", ascending: true)
-        let rowsSort = NSSortDescriptor(key: "created", ascending: true)
-        fetchRequest.sortDescriptors = [sectionsSort, rowsSort]
-        
+        fetchRequest.returnsObjectsAsFaults = false
+
         fetchRequest.fetchBatchSize = 45
         
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest,

@@ -46,3 +46,12 @@ final class ChannelDB: NSManagedObject {
     @objc(removeMessages:)
     @NSManaged func removeFromMessages(_ values: NSOrderedSet)
 }
+
+// MARK: - Managed
+
+extension ChannelDB: Managed {
+ 
+    static var defaultSortDescriptors: [NSSortDescriptor] {
+        return [NSSortDescriptor(key: "lastActivity", ascending: false)]
+    }
+}

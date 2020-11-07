@@ -36,17 +36,16 @@ final class ConversationsListViewController: UIViewController {
     }()
     
     private lazy var fetchedResultsController: NSFetchedResultsController<ChannelDB> = {
-        let fetchRequest: NSFetchRequest<ChannelDB> = ChannelDB.fetchRequest()
+        let fetchRequest = ChannelDB.defaultSortedFetchRequest
         
-        let sortDescriptor = NSSortDescriptor(key: "lastActivity", ascending: false)
-        fetchRequest.sortDescriptors = [sortDescriptor]
-        
+        fetchRequest.returnsObjectsAsFaults = false
+
         fetchRequest.fetchBatchSize = 22
         
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                              managedObjectContext: coreDataManager.mainContext,
                                              sectionNameKeyPath: nil,
-                                             cacheName: nil)
+                                             cacheName: "channelsCache")
         frc.delegate = self
         return frc
     }()

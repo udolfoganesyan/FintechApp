@@ -44,3 +44,14 @@ final class MessageDB: NSManagedObject {
         return NSFetchRequest<MessageDB>(entityName: "MessageDB")
     }
 }
+
+// MARK: - Managed
+
+extension MessageDB: Managed {
+    
+    static var defaultSortDescriptors: [NSSortDescriptor] {
+        let sectionsSort = NSSortDescriptor(key: "dateForSection", ascending: true)
+        let rowsSort = NSSortDescriptor(key: "created", ascending: true)
+        return [sectionsSort, rowsSort]
+    }
+}
