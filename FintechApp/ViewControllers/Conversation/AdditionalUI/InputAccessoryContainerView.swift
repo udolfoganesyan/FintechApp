@@ -77,6 +77,10 @@ final class InputAccessoryContainerView: UIView {
             }
         })
     }
+    
+    func endEditing() {
+        inputTextView.resignFirstResponder()
+    }
 }
 
 // MARK: - UITextViewDelegate

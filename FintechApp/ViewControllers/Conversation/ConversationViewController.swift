@@ -24,7 +24,7 @@ final class ConversationViewController: UIViewController {
         return tableView
     }()
     
-    private lazy var inputContainerView: UIView = {
+    private lazy var inputContainerView: InputAccessoryContainerView = {
         let inputContainerView = InputAccessoryContainerView()
         inputContainerView.delegate = self
         return inputContainerView
@@ -37,7 +37,7 @@ final class ConversationViewController: UIViewController {
         fetchRequest.predicate = predicate
         
         fetchRequest.returnsObjectsAsFaults = false
-
+        
         fetchRequest.fetchBatchSize = 45
         
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
@@ -76,7 +76,8 @@ final class ConversationViewController: UIViewController {
         super.viewDidLoad()
         
         setupKeyboardObservers()
-        setupTableView()
+        setupEndEditingTap()
+        layoutTableView()
         
         fetchSavedMessages()
         fetchNewMessagesAndSaveToDB()
@@ -130,7 +131,17 @@ final class ConversationViewController: UIViewController {
         tableView.scrollIndicatorInsets = tableView.contentInset
     }
     
-    private func setupTableView() {
+    private func setupEndEditingTap() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc private func handleTap() {
+        inputContainerView.endEditing()
+    }
+    
+    private func layoutTableView() {
         view.addSubview(tableView)
         tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
