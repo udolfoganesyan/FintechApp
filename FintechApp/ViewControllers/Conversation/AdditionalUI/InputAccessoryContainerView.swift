@@ -16,17 +16,11 @@ final class InputAccessoryContainerView: UIView {
     
     weak var delegate: InputDelegate?
     
-    private lazy var inputTextField: UITextField = {
-        let textField = UITextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.borderStyle = .roundedRect
-        textField.backgroundColor = ThemeManager.currentTheme.incomingCellColor
-        textField.textColor = ThemeManager.currentTheme.primaryTextColor
-        textField.attributedPlaceholder =
-            NSAttributedString(string: "Message",
-                               attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.currentTheme.secondaryTextColor])
-        textField.addTarget(self, action: #selector(self.textChanged(_:)), for: .editingChanged)
-        return textField
+    private lazy var inputTextView: TextViewWithPlaceholder = {
+        let textView = TextViewWithPlaceholder()
+        textView.setPlaceholderText("Message")
+        textView.delegate = self
+        return textView
     }()
     
     private lazy var sendButton: UIButton = {
@@ -49,17 +43,17 @@ final class InputAccessoryContainerView: UIView {
         autoresizingMask = .flexibleHeight
         
         addSubview(sendButton)
-        addSubview(inputTextField)
+        addSubview(inputTextView)
         
-        inputTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8).isActive = true
-        inputTextField.trailingAnchor.constraint(equalTo: sendButton.leadingAnchor, constant: 8).isActive = true
-        inputTextField.topAnchor.constraint(equalTo: topAnchor, constant: 8).isActive = true
-        inputTextField.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor, constant: -8).isActive = true
+        inputTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8).isActive = true
+        inputTextView.trailingAnchor.constraint(equalTo: sendButton.leadingAnchor, constant: 8).isActive = true
+        inputTextView.topAnchor.constraint(equalTo: topAnchor, constant: 8).isActive = true
+        inputTextView.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor, constant: -8).isActive = true
         
         sendButton.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        sendButton.centerYAnchor.constraint(equalTo: inputTextField.centerYAnchor).isActive = true
+        sendButton.centerYAnchor.constraint(equalTo: inputTextView.centerYAnchor).isActive = true
         sendButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
-        sendButton.heightAnchor.constraint(equalTo: inputTextField.heightAnchor).isActive = true
+        sendButton.heightAnchor.constraint(equalTo: inputTextView.heightAnchor).isActive = true
     }
     
     required init?(coder: NSCoder) {
@@ -67,7 +61,7 @@ final class InputAccessoryContainerView: UIView {
     }
     
     @objc private func handleSend() {
-        guard let text = inputTextField.text else { return }
+        guard let text = inputTextView.text else { return }
         
         let trimmedText = text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedText.isEmpty else { return }
@@ -76,14 +70,20 @@ final class InputAccessoryContainerView: UIView {
         
         delegate?.handleSend(text: trimmedText, completion: { (success) in
             if success {
-                self.inputTextField.text = nil
+                self.inputTextView.text = ""
+                self.inputTextView.showPlaceholder()
             } else {
                 self.sendButton.isEnabled = true
             }
         })
     }
+}
+
+// MARK: - UITextViewDelegate
+
+extension InputAccessoryContainerView: UITextViewDelegate {
     
-    @objc private func textChanged(_ sender: UITextField) {
-        self.sendButton.isEnabled = !(sender.text?.isEmpty ?? true)
+    func textViewDidChange(_ textView: UITextView) {
+        self.sendButton.isEnabled = !textView.text.isEmpty
     }
 }
