@@ -72,7 +72,7 @@ final class ConversationViewController: UIViewController {
     }
     
     private func fetchNewMessagesAndSaveToDB() {
-        FirebaseManager.fetchMessagesFor(conversationModel.channelId) { [weak self] (messageUpdates) in
+        conversationModel.fetchMessages() { [weak self] (messageUpdates) in
             guard let self = self else { return }
             
             self.conversationModel.addMessages(messageUpdates.added, forChannelWith: self.conversationModel.channelObjectID)
@@ -193,7 +193,7 @@ extension ConversationViewController: NSFetchedResultsControllerDelegate {
 extension ConversationViewController: InputDelegate {
     
     func handleSend(text: String, completion: @escaping SuccessCompletion) {
-        FirebaseManager.sendMessage(text, to: conversationModel.channelId) { (success) in
+        conversationModel.sendMessage(text) { (success) in
             if !success {
                 self.showOkAlert("Error", "Could not send message :(")
             }

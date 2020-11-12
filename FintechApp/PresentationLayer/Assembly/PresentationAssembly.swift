@@ -35,7 +35,10 @@ final class PresentationAssembly: PresentationAssemblyProtocol {
     // MARK: - ConversationsViewController
     
     func conversationsListViewController() -> ConversationsViewController {
-        let conversationsModel = ConversationsModel(themeService: serviceAssembly.themeService, coreDataService: serviceAssembly.coreDataService)
+        let conversationsModel =
+            ConversationsModel(themeService: serviceAssembly.themeService,
+                               firebaseService: serviceAssembly.firebaseService,
+                               coreDataService: serviceAssembly.coreDataService)
         let rootVC = ConversationsViewController(conversationsModel: conversationsModel, presentationAssembly: self)
         return rootVC
     }
@@ -43,7 +46,11 @@ final class PresentationAssembly: PresentationAssemblyProtocol {
     // MARK: - ConversationViewController
     
     func conversationViewController(forChannel channel: ChannelDB) -> ConversationViewController {
-        let conversationModel = ConversationModel(themeService: serviceAssembly.themeService, coreDataService: serviceAssembly.coreDataService, channel: channel)
+        let conversationModel =
+            ConversationModel(themeService: serviceAssembly.themeService,
+                              firebaseService: serviceAssembly.firebaseService,
+                              coreDataService: serviceAssembly.coreDataService,
+                              channel: channel)
         let conversationVC = ConversationViewController(conversationModel: conversationModel)
         return conversationVC
     }

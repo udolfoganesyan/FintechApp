@@ -43,7 +43,7 @@
 		A169F0C825573A6C001F0EDB /* Managed.swift in Sources */ = {isa = PBXBuildFile; fileRef = A169F0C725573A6C001F0EDB /* Managed.swift */; };
 		A169F0DD255961A9001F0EDB /* TextViewWithPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A169F0DC255961A9001F0EDB /* TextViewWithPlaceholder.swift */; };
 		A187D11A253B9391008AAE86 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = A187D119253B9391008AAE86 /* .swiftlint.yml */; };
-		A187D11D253C4AD4008AAE86 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A187D11C253C4AD4008AAE86 /* FirebaseManager.swift */; };
+		A187D11D253C4AD4008AAE86 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A187D11C253C4AD4008AAE86 /* FirebaseService.swift */; };
 		A187D126253C5230008AAE86 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A187D125253C5230008AAE86 /* Channel.swift */; };
 		A18A6865253EF9B400E1B4D7 /* FirebaseExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18A6864253EF9B400E1B4D7 /* FirebaseExtensions.swift */; };
 		A18E47392534BB330096D1B3 /* GCDDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18E47382534BB330096D1B3 /* GCDDataManager.swift */; };
@@ -107,7 +107,7 @@
 		A169F0C725573A6C001F0EDB /* Managed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Managed.swift; sourceTree = "<group>"; };
 		A169F0DC255961A9001F0EDB /* TextViewWithPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewWithPlaceholder.swift; sourceTree = "<group>"; };
 		A187D119253B9391008AAE86 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		A187D11C253C4AD4008AAE86 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		A187D11C253C4AD4008AAE86 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		A187D125253C5230008AAE86 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		A18A6864253EF9B400E1B4D7 /* FirebaseExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseExtensions.swift; sourceTree = "<group>"; };
 		A18E47382534BB330096D1B3 /* GCDDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDDataManager.swift; sourceTree = "<group>"; };
@@ -209,7 +209,6 @@
 		A12320802529C84B005F8249 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				A187D11F253C4AD8008AAE86 /* NetworkManagers */,
 				A1FE452425486F28003D1185 /* DataManagers */,
 			);
 			path = Managers;
@@ -343,6 +342,7 @@
 			children = (
 				A1635981255DE31D00D1888A /* Assembly */,
 				A12320842529CB7B005F8249 /* ThemeService */,
+				A187D123253C4AFD008AAE86 /* FirebaseService */,
 				A11D45562548417500A25815 /* CoreDataService */,
 			);
 			path = ServiceLayer;
@@ -386,22 +386,14 @@
 			path = ProfileViewController;
 			sourceTree = "<group>";
 		};
-		A187D11F253C4AD8008AAE86 /* NetworkManagers */ = {
-			isa = PBXGroup;
-			children = (
-				A187D123253C4AFD008AAE86 /* Firebase */,
-			);
-			path = NetworkManagers;
-			sourceTree = "<group>";
-		};
-		A187D123253C4AFD008AAE86 /* Firebase */ = {
+		A187D123253C4AFD008AAE86 /* FirebaseService */ = {
 			isa = PBXGroup;
 			children = (
 				A128E903253C718D000ED358 /* Entities */,
-				A187D11C253C4AD4008AAE86 /* FirebaseManager.swift */,
+				A187D11C253C4AD4008AAE86 /* FirebaseService.swift */,
 				A18A6864253EF9B400E1B4D7 /* FirebaseExtensions.swift */,
 			);
-			path = Firebase;
+			path = FirebaseService;
 			sourceTree = "<group>";
 		};
 		A18E473E2534BB480096D1B3 /* GCDDataManager */ = {
@@ -633,7 +625,7 @@
 				A10A883C251E8BF8006B3017 /* OnlineBadgeView.swift in Sources */,
 				A1FADAE02550B8DE00B230BD /* FirestoreUpdate.swift in Sources */,
 				A187D126253C5230008AAE86 /* Channel.swift in Sources */,
-				A187D11D253C4AD4008AAE86 /* FirebaseManager.swift in Sources */,
+				A187D11D253C4AD4008AAE86 /* FirebaseService.swift in Sources */,
 				A147585D250F5FA2004DFCAA /* AppDelegate.swift in Sources */,
 				A13A4558255DFA11007609A7 /* ConversationModel.swift in Sources */,
 				A12320862529CB87005F8249 /* Theme.swift in Sources */,

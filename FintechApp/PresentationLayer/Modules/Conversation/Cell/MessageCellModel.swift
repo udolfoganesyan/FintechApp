@@ -14,7 +14,7 @@ struct MessageCellModel {
     let isIncoming: Bool
     
     init(messageDB: MessageDB) {
-        let isIncoming = messageDB.senderId != FirebaseManager.myId
+        let isIncoming = messageDB.senderId != FirebaseService.myId
         self.isIncoming = isIncoming
         
         let attributedText = NSMutableAttributedString(string: messageDB.content, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17)])

@@ -72,7 +72,7 @@ final class ConversationsViewController: UIViewController {
     }
     
     private func fetchNewChannelsAndSaveToDB() {
-        FirebaseManager.fetchChannels { (channelUpdates) in
+        conversationsModel.fetchChannels { (channelUpdates) in
             self.conversationsModel.addOrUpdateChannels(channelUpdates.added)
             self.conversationsModel.addOrUpdateChannels(channelUpdates.modified)
             self.conversationsModel.deleteChannels(channelUpdates.removed)
@@ -140,7 +140,7 @@ final class ConversationsViewController: UIViewController {
                 return
             }
             
-            FirebaseManager.createChannelWith(name) { (success) in
+            self.conversationsModel.createChannelWith(name) { (success) in
                 if !success {
                     self.showOkAlert("Error", "Could not create channel :(")
                 }
@@ -201,7 +201,7 @@ extension ConversationsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let channel = fetchedResultsController.object(at: indexPath)
-            FirebaseManager.deleteChannelWith(channelId: channel.identifier) { (success) in
+            conversationsModel.deleteChannelWith(channelId: channel.identifier) { (success) in
                 if !success {
                     self.showOkAlert("Error", "Could not delete channel :(")
                 }

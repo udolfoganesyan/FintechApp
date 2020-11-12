@@ -1,5 +1,5 @@
 //
-//  FirebaseManager.swift
+//  FirebaseService.swift
 //  FintechApp
 //
 //  Created by Rudolf Oganesyan on 18.10.2020.
@@ -23,14 +23,22 @@ public enum FirebaseKeys: String {
     case senderName
 }
 
-enum FirebaseManager {
+protocol FirebaseServiceProtocol {
+    func fetchChannels(completion: @escaping (FirestoreUpdate<Channel>) -> Void)
+    func createChannelWith(_ name: String, completion: @escaping SuccessCompletion)
+    func deleteChannelWith(channelId: String, completion: @escaping SuccessCompletion)
+    func fetchMessagesFor(_ channelId: String, completion: @escaping (FirestoreUpdate<Message>) -> Void)
+    func sendMessage(_ message: String, to channelId: String, completion: @escaping SuccessCompletion)
+}
+
+final class FirebaseService: FirebaseServiceProtocol {
     
     static let myId = UIDevice.current.identifierForVendor?.uuidString
     
-    private static let database = Firestore.firestore()
-    private static let channelsReference = database.collection(FirebaseKeys.channels.rawValue)
+    private let database = Firestore.firestore()
+    private lazy var channelsReference = database.collection(FirebaseKeys.channels.rawValue)
     
-    static func fetchChannels(completion: @escaping (FirestoreUpdate<Channel>) -> Void) {
+    func fetchChannels(completion: @escaping (FirestoreUpdate<Channel>) -> Void) {
         channelsReference.addSnapshotListener { (snapshot, error) in
             guard error == nil else { return }
             guard let snapshot = snapshot else { return }
@@ -41,7 +49,7 @@ enum FirebaseManager {
         }
     }
     
-    static func createChannelWith(_ name: String, completion: @escaping SuccessCompletion) {
+    func createChannelWith(_ name: String, completion: @escaping SuccessCompletion) {
         let data: [FirebaseKeys: Any?] = [
             FirebaseKeys.name: name,
             FirebaseKeys.lastMessage: nil,
@@ -50,14 +58,14 @@ enum FirebaseManager {
         channelsReference.addDocument(data: data, completion: completion)
     }
     
-    static func deleteChannelWith(channelId: String, completion: @escaping SuccessCompletion) {
+    func deleteChannelWith(channelId: String, completion: @escaping SuccessCompletion) {
         channelsReference.document(channelId).delete { (error) in
             let success = error == nil
             completion(success)
         }
     }
     
-    static func fetchMessagesFor(_ channelId: String, completion: @escaping (FirestoreUpdate<Message>) -> Void) {
+    func fetchMessagesFor(_ channelId: String, completion: @escaping (FirestoreUpdate<Message>) -> Void) {
         channelsReference.document(channelId).collection(FirebaseKeys.messages.rawValue).addSnapshotListener { (snapshot, error) in
             guard error == nil else { return }
             guard let snapshot = snapshot else { return }
@@ -68,11 +76,11 @@ enum FirebaseManager {
         }
     }
     
-    static func sendMessage(_ message: String, to channelId: String, completion: @escaping SuccessCompletion) {
+    func sendMessage(_ message: String, to channelId: String, completion: @escaping SuccessCompletion) {
         let data: [FirebaseKeys: Any?] = [
             FirebaseKeys.content: message,
             FirebaseKeys.created: Timestamp(),
-            FirebaseKeys.senderId: myId,
+            FirebaseKeys.senderId: FirebaseService.myId,
             FirebaseKeys.senderName: "Rudolf"
         ]
         channelsReference.document(channelId).collection(FirebaseKeys.messages.rawValue).addDocument(data: data, completion: completion)

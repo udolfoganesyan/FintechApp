@@ -10,6 +10,11 @@ import CoreData
 
 protocol ConversationsModelProtocol {
     var currentTheme: Theme { get }
+    
+    func fetchChannels(completion: @escaping (FirestoreUpdate<Channel>) -> Void)
+    func createChannelWith(_ name: String, completion: @escaping SuccessCompletion)
+    func deleteChannelWith(channelId: String, completion: @escaping SuccessCompletion)
+    
     func addOrUpdateChannels(_ channels: [Channel])
     func deleteChannels(_ channels: [Channel])
     func fetchedResultsController(delegate: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController<ChannelDB>
@@ -17,16 +22,30 @@ protocol ConversationsModelProtocol {
 
 final class ConversationsModel: ConversationsModelProtocol {
     
-    let themeService: ThemeServiceProtocol
-    let coreDataService: CoreDataServiceProtocol
+    private let themeService: ThemeServiceProtocol
+    private let firebaseService: FirebaseServiceProtocol
+    private let coreDataService: CoreDataServiceProtocol
     
     var currentTheme: Theme {
         themeService.currentTheme
     }
     
-    init(themeService: ThemeServiceProtocol, coreDataService: CoreDataServiceProtocol) {
+    init(themeService: ThemeServiceProtocol, firebaseService: FirebaseServiceProtocol, coreDataService: CoreDataServiceProtocol) {
         self.themeService = themeService
+        self.firebaseService = firebaseService
         self.coreDataService = coreDataService
+    }
+    
+    func fetchChannels(completion: @escaping (FirestoreUpdate<Channel>) -> Void) {
+        firebaseService.fetchChannels(completion: completion)
+    }
+    
+    func createChannelWith(_ name: String, completion: @escaping SuccessCompletion) {
+        firebaseService.createChannelWith(name, completion: completion)
+    }
+    
+    func deleteChannelWith(channelId: String, completion: @escaping SuccessCompletion) {
+        firebaseService.deleteChannelWith(channelId: channelId, completion: completion)
     }
     
     func addOrUpdateChannels(_ channels: [Channel]) {

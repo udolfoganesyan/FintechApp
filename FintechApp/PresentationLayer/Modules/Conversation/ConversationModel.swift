@@ -10,6 +10,10 @@ import CoreData
 
 protocol ConversationModelProtocol {
     var currentTheme: Theme { get }
+    
+    func fetchMessages(completion: @escaping (FirestoreUpdate<Message>) -> Void)
+    func sendMessage(_ message: String, completion: @escaping SuccessCompletion)
+    
     var title: String { get }
     var channelId: String { get }
     var channelObjectID: NSManagedObjectID { get }
@@ -21,6 +25,7 @@ final class ConversationModel: ConversationModelProtocol {
     
     private let channel: ChannelDB
     private let themeService: ThemeServiceProtocol
+    private let firebaseService: FirebaseServiceProtocol
     private let coreDataService: CoreDataServiceProtocol
     
     let channelId: String
@@ -37,11 +42,20 @@ final class ConversationModel: ConversationModelProtocol {
         channel.objectID
     }
     
-    init(themeService: ThemeServiceProtocol, coreDataService: CoreDataServiceProtocol, channel: ChannelDB) {
+    init(themeService: ThemeServiceProtocol, firebaseService: FirebaseServiceProtocol, coreDataService: CoreDataServiceProtocol, channel: ChannelDB) {
         self.themeService = themeService
+        self.firebaseService = firebaseService
         self.coreDataService = coreDataService
         self.channel = channel
         self.channelId = channel.identifier
+    }
+    
+    func fetchMessages(completion: @escaping (FirestoreUpdate<Message>) -> Void) {
+        firebaseService.fetchMessagesFor(channelId, completion: completion)
+    }
+    
+    func sendMessage(_ message: String, completion: @escaping SuccessCompletion) {
+        firebaseService.sendMessage(message, to: channelId, completion: completion)
     }
     
     func addMessages(_ messages: [Message], forChannelWith objectID: NSManagedObjectID) {
