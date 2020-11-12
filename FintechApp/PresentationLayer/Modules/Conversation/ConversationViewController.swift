@@ -32,7 +32,6 @@ final class ConversationViewController: UIViewController {
     
     private lazy var fetchedResultsController: NSFetchedResultsController<MessageDB> = conversationModel.fetchedResultsController(delegate: self)
     
-    
     private let conversationModel: ConversationModelProtocol
     
     override var inputAccessoryView: UIView? {

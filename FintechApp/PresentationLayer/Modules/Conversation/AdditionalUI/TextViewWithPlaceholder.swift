@@ -23,7 +23,6 @@ final class TextViewWithPlaceholder: UITextView {
     init(theme: Theme) {
         self.theme = theme
         super.init(frame: CGRect.zero, textContainer: nil)
-
         
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = theme.incomingCellColor
