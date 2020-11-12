@@ -10,20 +10,24 @@ import UIKit
 
 final class TextViewWithPlaceholder: UITextView {
     
+    private let theme: Theme
+    
     private lazy var placeholderLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Placeholder text"
-        label.textColor = ThemeManager.currentTheme.secondaryTextColor
+        label.textColor = theme.secondaryTextColor
         return label
     }()
     
-    override init(frame: CGRect, textContainer: NSTextContainer?) {
-        super.init(frame: frame, textContainer: textContainer)
+    init(theme: Theme) {
+        self.theme = theme
+        super.init(frame: CGRect.zero, textContainer: nil)
+
         
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = ThemeManager.currentTheme.incomingCellColor
-        textColor = ThemeManager.currentTheme.primaryTextColor
+        backgroundColor = theme.incomingCellColor
+        textColor = theme.primaryTextColor
         isScrollEnabled = false
         font = .systemFont(ofSize: 18)
         layer.cornerRadius = 8

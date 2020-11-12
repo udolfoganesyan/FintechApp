@@ -1,5 +1,5 @@
 //
-//  ThemeManager.swift
+//  ThemeService.swift
 //  FintechApp
 //
 //  Created by Rudolf Oganesyan on 04.10.2020.
@@ -8,11 +8,17 @@
 
 import UIKit
 
-enum ThemeManager {
+protocol ThemeServiceProtocol {
+    var currentTheme: Theme { get }
+    func updateThemeWith(_ theme: Theme, completion: @escaping () -> Void)
+    func setupNavigationBarAppearance()
+}
+
+final class ThemeService: ThemeServiceProtocol {
     
-    static private let selectedThemeKey = "selectedTheme"
+    private let selectedThemeKey = "selectedTheme"
     
-    static var currentTheme: Theme {
+    var currentTheme: Theme {
         if let storedTheme = (UserDefaults.standard.value(forKey: selectedThemeKey) as AnyObject).integerValue {
             return Theme(rawValue: storedTheme)!
         } else {
@@ -20,18 +26,18 @@ enum ThemeManager {
         }
     }
     
-    static func updateThemeWith(_ theme: Theme, completion: @escaping () -> Void) {
+    func updateThemeWith(_ theme: Theme, completion: @escaping () -> Void) {
         DispatchQueue.global().async {
-            UserDefaults.standard.setValue(theme.rawValue, forKey: selectedThemeKey)
+            UserDefaults.standard.setValue(theme.rawValue, forKey: self.selectedThemeKey)
             
             DispatchQueue.main.async {
-                setupNavigationBarAppearance()
+                self.setupNavigationBarAppearance()
                 completion()
             }
         }
     }
     
-    static func setupNavigationBarAppearance() {
+    func setupNavigationBarAppearance() {
         let navigationBarAppearace = UINavigationBar.appearance()
         
         navigationBarAppearace.barTintColor = currentTheme.backgroundColor

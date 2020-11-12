@@ -17,10 +17,6 @@ final class MessageCell: UITableViewCell {
     
     private var isIncoming: Bool = false {
         didSet {
-            messageBackgroundView.backgroundColor = isIncoming ? ThemeManager.currentTheme.incomingCellColor : ThemeManager.currentTheme.outgoingCellColor
-            messageLabel.textColor = isIncoming ? ThemeManager.currentTheme.incomingCellTextColor : ThemeManager.currentTheme.outgoingCellTextColor
-            backgroundColor = ThemeManager.currentTheme.backgroundColor
-            
             if isIncoming {
                 leadingMessageConstraint?.isActive = true
                 trailingMessageConstraint?.isActive = false
@@ -75,8 +71,11 @@ final class MessageCell: UITableViewCell {
 
 extension MessageCell: ConfigurableView {
     
-    func configure(with model: MessageCellModel) {
+    func configure(with model: MessageCellModel, and theme: Theme) {
         messageLabel.attributedText = model.attributedText
         isIncoming = model.isIncoming
+        messageBackgroundView.backgroundColor = isIncoming ? theme.incomingCellColor : theme.outgoingCellColor
+        messageLabel.textColor = isIncoming ? theme.incomingCellTextColor : theme.outgoingCellTextColor
+        backgroundColor = theme.backgroundColor
     }
 }

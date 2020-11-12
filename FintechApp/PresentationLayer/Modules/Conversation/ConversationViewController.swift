@@ -19,38 +19,21 @@ final class ConversationViewController: UIViewController {
         tableView.allowsSelection = false
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.backgroundColor = ThemeManager.currentTheme.backgroundColor
+        tableView.backgroundColor = conversationModel.currentTheme.backgroundColor
         tableView.keyboardDismissMode = .interactive
         return tableView
     }()
     
     private lazy var inputContainerView: InputAccessoryContainerView = {
-        let inputContainerView = InputAccessoryContainerView()
+        let inputContainerView = InputAccessoryContainerView(theme: conversationModel.currentTheme)
         inputContainerView.delegate = self
         return inputContainerView
     }()
     
-    private lazy var fetchedResultsController: NSFetchedResultsController<MessageDB> = {
-        let fetchRequest = MessageDB.defaultSortedFetchRequest
-        
-        let predicate = NSPredicate(format: "channel == %@", channel)
-        fetchRequest.predicate = predicate
-        
-        fetchRequest.returnsObjectsAsFaults = false
-        
-        fetchRequest.fetchBatchSize = 45
-        
-        let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
-                                             managedObjectContext: coreDataManager.mainContext,
-                                             sectionNameKeyPath: "dateForSection",
-                                             cacheName: nil)
-        frc.delegate = self
-        return frc
-    }()
+    private lazy var fetchedResultsController: NSFetchedResultsController<MessageDB> = conversationModel.fetchedResultsController(delegate: self)
     
-    private let channel: ChannelDB
-    private let channelId: String
-    private let coreDataManager: CoreDataManager
+    
+    private let conversationModel: ConversationModelProtocol
     
     override var inputAccessoryView: UIView? {
         return inputContainerView
@@ -60,12 +43,10 @@ final class ConversationViewController: UIViewController {
         return true
     }
     
-    init(channel: ChannelDB, coreDataManager: CoreDataManager) {
-        self.channel = channel
-        self.channelId = channel.identifier
-        self.coreDataManager = coreDataManager
+    init(conversationModel: ConversationModelProtocol) {
+        self.conversationModel = conversationModel
         super.init(nibName: nil, bundle: nil)
-        title = channel.name
+        title = conversationModel.title
     }
     
     required init?(coder: NSCoder) {
@@ -92,10 +73,10 @@ final class ConversationViewController: UIViewController {
     }
     
     private func fetchNewMessagesAndSaveToDB() {
-        FirebaseManager.fetchMessagesFor(channelId) { [weak self] (messageUpdates) in
+        FirebaseManager.fetchMessagesFor(conversationModel.channelId) { [weak self] (messageUpdates) in
             guard let self = self else { return }
             
-            self.coreDataManager.addMessages(messageUpdates.added, forChannelWith: self.channel.objectID)
+            self.conversationModel.addMessages(messageUpdates.added, forChannelWith: self.conversationModel.channelObjectID)
         }
     }
     
@@ -167,6 +148,7 @@ extension ConversationViewController: NSFetchedResultsControllerDelegate {
         
         switch type {
         case .insert:
+            print("newIndexPath", newIndexPath)
             guard let newIndexPath = newIndexPath else { return }
             tableView.insertRows(at: [newIndexPath], with: .fade)
         case .delete:
@@ -176,6 +158,8 @@ extension ConversationViewController: NSFetchedResultsControllerDelegate {
             guard let indexPath = indexPath else { return }
             tableView.reloadRows(at: [indexPath], with: .fade)
         case .move:
+            print("indexPath", indexPath)
+            print("newIndexPath", newIndexPath)
             guard let indexPath = indexPath,
                   let newIndexPath = newIndexPath else { return }
             tableView.moveRow(at: indexPath, to: newIndexPath)
@@ -210,7 +194,7 @@ extension ConversationViewController: NSFetchedResultsControllerDelegate {
 extension ConversationViewController: InputDelegate {
     
     func handleSend(text: String, completion: @escaping SuccessCompletion) {
-        FirebaseManager.sendMessage(text, to: channelId) { (success) in
+        FirebaseManager.sendMessage(text, to: conversationModel.channelId) { (success) in
             if !success {
                 self.showOkAlert("Error", "Could not send message :(")
             }
@@ -226,7 +210,7 @@ extension ConversationViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let sectionDate = fetchedResultsController.sections?[section].name else { return nil }
         
-        let headerView = ConversationDateHeader(dateString: sectionDate)
+        let headerView = ConversationDateHeader(dateString: sectionDate, theme: conversationModel.currentTheme)
         return headerView
     }
 }
@@ -252,7 +236,7 @@ extension ConversationViewController: UITableViewDataSource {
         let messageDB = fetchedResultsController.object(at: indexPath)
         let model = MessageCellModel(messageDB: messageDB)
         
-        cell.configure(with: model)
+        cell.configure(with: model, and: conversationModel.currentTheme)
         return cell
     }
 }

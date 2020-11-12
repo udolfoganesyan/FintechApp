@@ -23,6 +23,17 @@ final class ThemeSettingsViewController: UIViewController {
     
     weak var delegate: SettingsDelegate?
     
+    private let themeSettingsModel: ThemeSettingsModelProtocol
+    
+    init(themeSettingsModel: ThemeSettingsModelProtocol) {
+        self.themeSettingsModel = themeSettingsModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,8 +51,8 @@ final class ThemeSettingsViewController: UIViewController {
         nightThemeContainer.layer.borderColor = UIColor.gray.cgColor
         nightThemeContainer.layer.cornerRadius = 8
         
-        updateButtonState(ThemeManager.currentTheme)
-        updateTheme(ThemeManager.currentTheme)
+        updateButtonState(themeSettingsModel.currentTheme)
+        updateTheme(themeSettingsModel.currentTheme)
     }
     
     private func setupGestures() {
@@ -68,8 +79,8 @@ final class ThemeSettingsViewController: UIViewController {
     }
     
     private func changeThemeTo(_ theme: Theme) {
-        if ThemeManager.currentTheme != theme {
-            ThemeManager.updateThemeWith(theme) {
+        if themeSettingsModel.currentTheme != theme {
+            themeSettingsModel.updateThemeWith(theme) {
                 self.delegate?.didChangeTheme()
                 
                 self.updateThemeAnimated(theme)
@@ -114,9 +125,9 @@ final class ThemeSettingsViewController: UIViewController {
     }
     
     private func updateTheme(_ theme: Theme) {
-        view.backgroundColor = ThemeManager.currentTheme.backgroundColor
-        classicLabel.textColor = ThemeManager.currentTheme.primaryTextColor
-        dayLabel.textColor = ThemeManager.currentTheme.primaryTextColor
-        nightLabel.textColor = ThemeManager.currentTheme.primaryTextColor
+        view.backgroundColor = themeSettingsModel.currentTheme.backgroundColor
+        classicLabel.textColor = themeSettingsModel.currentTheme.primaryTextColor
+        dayLabel.textColor = themeSettingsModel.currentTheme.primaryTextColor
+        nightLabel.textColor = themeSettingsModel.currentTheme.primaryTextColor
     }
 }

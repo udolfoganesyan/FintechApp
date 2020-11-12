@@ -1,5 +1,5 @@
 //
-//  CoreDataManager.swift
+//  CoreDataService.swift
 //  FintechApp
 //
 //  Created by Rudolf Oganesyan on 27.10.2020.
@@ -8,11 +8,18 @@
 
 import CoreData
 
-final class CoreDataManager {
+protocol CoreDataServiceProtocol {
+    var mainContext: NSManagedObjectContext { get }
+    func addOrUpdateChannels(_ channels: [Channel])
+    func deleteChannels(_ channels: [Channel])
+    func addMessages(_ messages: [Message], forChannelWith objectID: NSManagedObjectID)
+}
+
+final class CoreDataService: CoreDataServiceProtocol {
     
     static let chatDataModelName = "Chat"
     
-    var didUpdateDataBase: ((CoreDataManager) -> Void)?
+    var didUpdateDataBase: ((CoreDataService) -> Void)?
     
     private let dataModelName: String
     

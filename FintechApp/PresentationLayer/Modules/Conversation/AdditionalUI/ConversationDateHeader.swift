@@ -12,9 +12,11 @@ final class ConversationDateHeader: UIView {
     
     private static let dateFormatter = DateFormatter()
     
-    private lazy var dateLabel = HeaderDateLabel()
+    private let theme: Theme
+    private lazy var dateLabel = HeaderDateLabel(theme: theme)
     
-    init(dateString: String) {
+    init(dateString: String, theme: Theme) {
+        self.theme = theme
         super.init(frame: .zero)
         
         layoutLabel()

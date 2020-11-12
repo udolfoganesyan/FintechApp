@@ -12,16 +12,16 @@ import FirebaseCore
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    private let rootAssembly = RootAssembly()
+    
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         FirebaseApp.configure()
-        ThemeManager.setupNavigationBarAppearance()
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        let coreDataManager = CoreDataManager(dataModelName: CoreDataManager.chatDataModelName)
-        let rootVC = ConversationsListViewController(coreDataManager: coreDataManager)
+        let rootVC = rootAssembly.presentationAssembly.conversationsListViewController()
         let navController = UINavigationController(rootViewController: rootVC)
         window?.rootViewController = navController
         window?.makeKeyAndVisible()

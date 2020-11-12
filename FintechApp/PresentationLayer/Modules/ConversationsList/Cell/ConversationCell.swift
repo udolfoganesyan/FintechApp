@@ -10,7 +10,7 @@ import UIKit
 
 protocol ConfigurableView {
     associatedtype ConfigurationModel
-    func configure(with model: ConfigurationModel)
+    func configure(with model: ConfigurationModel, and theme: Theme)
 }
 
 final class ConversationCell: UITableViewCell {
@@ -40,10 +40,10 @@ final class ConversationCell: UITableViewCell {
 
 extension ConversationCell: ConfigurableView {
     
-    func configure(with model: ConversationCellModel) {
-        nameLabel.textColor = ThemeManager.currentTheme.primaryTextColor
-        messageLabel.textColor = ThemeManager.currentTheme.secondaryTextColor
-        dateLabel.textColor = ThemeManager.currentTheme.secondaryTextColor
+    func configure(with model: ConversationCellModel, and theme: Theme) {
+        nameLabel.textColor = theme.primaryTextColor
+        messageLabel.textColor = theme.secondaryTextColor
+        dateLabel.textColor = theme.secondaryTextColor
         
         nameLabel.text = model.name
         avatarView.setupWith(firstName: model.name, color: .randomLightColor)

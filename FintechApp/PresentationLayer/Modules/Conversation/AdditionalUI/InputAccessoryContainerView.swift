@@ -16,8 +16,10 @@ final class InputAccessoryContainerView: UIView {
     
     weak var delegate: InputDelegate?
     
+    private let theme: Theme
+    
     private lazy var inputTextView: TextViewWithPlaceholder = {
-        let textView = TextViewWithPlaceholder()
+        let textView = TextViewWithPlaceholder(theme: theme)
         textView.setPlaceholderText("Message")
         textView.delegate = self
         return textView
@@ -37,9 +39,10 @@ final class InputAccessoryContainerView: UIView {
         .zero
     }
     
-    init() {
+    init(theme: Theme) {
+        self.theme = theme
         super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
-        backgroundColor = ThemeManager.currentTheme.backgroundColor
+        backgroundColor = self.theme.backgroundColor
         autoresizingMask = .flexibleHeight
         
         addSubview(sendButton)

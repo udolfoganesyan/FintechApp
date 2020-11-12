@@ -10,18 +10,21 @@ import UIKit
 
 final class HeaderDateLabel: UILabel {
     
+    private let theme: Theme
+    
     override var intrinsicContentSize: CGSize {
         let originalSize = super.intrinsicContentSize
         return CGSize(width: originalSize.width + 12, height: originalSize.height + 6)
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(theme: Theme) {
+        self.theme = theme
+        super.init(frame: .zero)
         
         translatesAutoresizingMaskIntoConstraints = false
         textAlignment = .center
-        textColor = ThemeManager.currentTheme.secondaryTextColor
-        backgroundColor = ThemeManager.currentTheme.backgroundColor.withAlphaComponent(0.9)
+        textColor = theme.secondaryTextColor
+        backgroundColor = theme.backgroundColor.withAlphaComponent(0.9)
         
         layer.cornerRadius = 8
         layer.masksToBounds = true

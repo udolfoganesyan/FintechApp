@@ -1,5 +1,5 @@
 //
-//  ConversationsListViewController.swift
+//  ConversationsViewController.swift
 //  FintechApp
 //
 //  Created by Rudolf Oganesyan on 25.09.2020.
@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-final class ConversationsListViewController: UIViewController {
+final class ConversationsViewController: UIViewController {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -35,26 +35,15 @@ final class ConversationsListViewController: UIViewController {
         return button
     }()
     
-    private lazy var fetchedResultsController: NSFetchedResultsController<ChannelDB> = {
-        let fetchRequest = ChannelDB.defaultSortedFetchRequest
-        
-        fetchRequest.returnsObjectsAsFaults = false
-        
-        fetchRequest.fetchBatchSize = 22
-        
-        let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
-                                             managedObjectContext: coreDataManager.mainContext,
-                                             sectionNameKeyPath: nil,
-                                             cacheName: "channelsCache")
-        frc.delegate = self
-        return frc
-    }()
+    private lazy var fetchedResultsController: NSFetchedResultsController<ChannelDB> = conversationsModel.fetchedResultsController(delegate: self)
     
     private var actionToEnable: UIAlertAction?
-    private let coreDataManager: CoreDataManager
+    private let conversationsModel: ConversationsModelProtocol
+    private let presentationAssembly: PresentationAssemblyProtocol
     
-    init(coreDataManager: CoreDataManager) {
-        self.coreDataManager = coreDataManager
+    init(conversationsModel: ConversationsModelProtocol, presentationAssembly: PresentationAssemblyProtocol) {
+        self.presentationAssembly = presentationAssembly
+        self.conversationsModel = conversationsModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -84,9 +73,9 @@ final class ConversationsListViewController: UIViewController {
     
     private func fetchNewChannelsAndSaveToDB() {
         FirebaseManager.fetchChannels { (channelUpdates) in
-            self.coreDataManager.addOrUpdateChannels(channelUpdates.added)
-            self.coreDataManager.addOrUpdateChannels(channelUpdates.modified)
-            self.coreDataManager.deleteChannels(channelUpdates.removed)
+            self.conversationsModel.addOrUpdateChannels(channelUpdates.added)
+            self.conversationsModel.addOrUpdateChannels(channelUpdates.modified)
+            self.conversationsModel.deleteChannels(channelUpdates.removed)
         }
     }
     
@@ -111,13 +100,13 @@ final class ConversationsListViewController: UIViewController {
     }
     
     @objc private func handleSettings() {
-        let settingsViewController = ThemeSettingsViewController()
+        let settingsViewController = presentationAssembly.themeSettingsViewController()
         settingsViewController.delegate = self
         navigationController?.pushViewController(settingsViewController, animated: true)
     }
     
     @objc private func handleProfileTap() {
-        let profileViewController = ProfileViewController()
+        let profileViewController = presentationAssembly.profileViewController()
         present(profileViewController, animated: true)
     }
     
@@ -173,11 +162,11 @@ final class ConversationsListViewController: UIViewController {
 
 // MARK: - UITableViewDelegate
 
-extension ConversationsListViewController: UITableViewDelegate {
+extension ConversationsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedChannel = fetchedResultsController.object(at: indexPath)
-        let conversationsViewController = ConversationViewController(channel: selectedChannel, coreDataManager: coreDataManager)
+        let conversationsViewController = presentationAssembly.conversationViewController(forChannel: selectedChannel)
         navigationController?.pushViewController(conversationsViewController, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -185,7 +174,7 @@ extension ConversationsListViewController: UITableViewDelegate {
 
 // MARK: - UITableViewDataSource
 
-extension ConversationsListViewController: UITableViewDataSource {
+extension ConversationsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let sectionInfo = fetchedResultsController.sections?[section] else { return 0 }
@@ -200,7 +189,7 @@ extension ConversationsListViewController: UITableViewDataSource {
         let channelDB = fetchedResultsController.object(at: indexPath)
         let model = ConversationCellModel(channelDB: channelDB)
         
-        cell.configure(with: model)
+        cell.configure(with: model, and: conversationsModel.currentTheme)
         
         return cell
     }
@@ -223,7 +212,7 @@ extension ConversationsListViewController: UITableViewDataSource {
 
 // MARK: - NSFetchedResultsControllerDelegate
 
-extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
+extension ConversationsViewController: NSFetchedResultsControllerDelegate {
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()
@@ -258,17 +247,17 @@ extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
 
 // MARK: - SettingsDelegate
 
-extension ConversationsListViewController: SettingsDelegate {
+extension ConversationsViewController: SettingsDelegate {
     
     func didChangeTheme() {
         updateTheme()
     }
     
     private func updateTheme() {
-        tableView.backgroundColor = ThemeManager.currentTheme.backgroundColor
+        tableView.backgroundColor = conversationsModel.currentTheme.backgroundColor
         tableView.reloadData()
         
-        navigationController?.navigationBar.barTintColor = ThemeManager.currentTheme.backgroundColor
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: ThemeManager.currentTheme.primaryTextColor]
+        navigationController?.navigationBar.barTintColor = conversationsModel.currentTheme.backgroundColor
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: conversationsModel.currentTheme.primaryTextColor]
     }
 }
