@@ -10,6 +10,7 @@ import UIKit
 
 final class OnlineBadgeView: UIView {
     
+    private let onlineBadgeGreen = UIColor(red: 0.353, green: 0.831, blue: 0.224, alpha: 1)
     private lazy var innerBadge = UIView()
     
     override func layoutSubviews() {
@@ -37,7 +38,7 @@ final class OnlineBadgeView: UIView {
         innerBadge.translatesAutoresizingMaskIntoConstraints = false
         addSubview(innerBadge)
         
-        innerBadge.backgroundColor = Constants.Colors.onlineBadgeGreen
+        innerBadge.backgroundColor = onlineBadgeGreen
         innerBadge.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.65).isActive = true
         innerBadge.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.65).isActive = true
         innerBadge.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true

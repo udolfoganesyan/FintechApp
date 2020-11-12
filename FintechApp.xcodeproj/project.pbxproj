@@ -11,7 +11,6 @@
 		A10A887D251F30CC006B3017 /* UIColor+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A887C251F30CC006B3017 /* UIColor+Random.swift */; };
 		A10A8880251F3C60006B3017 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A887F251F3C60006B3017 /* ConversationViewController.swift */; };
 		A10A8889251F3CC2006B3017 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A8887251F3CC2006B3017 /* MessageCell.swift */; };
-		A10A8891251F58C6006B3017 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A8890251F58C6006B3017 /* Constants.swift */; };
 		A10A8894251F6238006B3017 /* MessageCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A8893251F6238006B3017 /* MessageCellModel.swift */; };
 		A11D45542548416A00A25815 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11D45532548416A00A25815 /* CoreDataManager.swift */; };
 		A1202F89253648A60056BFCE /* SaveUserDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1202F88253648A60056BFCE /* SaveUserDataOperation.swift */; };
@@ -33,6 +32,7 @@
 		A1475869250F5FA3004DFCAA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1475867250F5FA3004DFCAA /* LaunchScreen.storyboard */; };
 		A1475871250F5FEA004DFCAA /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1475870250F5FEA004DFCAA /* Logger.swift */; };
 		A1475874250F6036004DFCAA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A1475873250F6036004DFCAA /* README.md */; };
+		A1635973255DE0E700D1888A /* PresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1635972255DE0E700D1888A /* PresentationAssembly.swift */; };
 		A16570822517600300C22EAD /* UIAlertController+ConstraintsFix.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16570812517600300C22EAD /* UIAlertController+ConstraintsFix.swift */; };
 		A16570852517E6A700C22EAD /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A16570842517E6A700C22EAD /* ProfileViewController.xib */; };
 		A169F0C825573A6C001F0EDB /* Managed.swift in Sources */ = {isa = PBXBuildFile; fileRef = A169F0C725573A6C001F0EDB /* Managed.swift */; };
@@ -66,7 +66,6 @@
 		A10A887C251F30CC006B3017 /* UIColor+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Random.swift"; sourceTree = "<group>"; };
 		A10A887F251F3C60006B3017 /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
 		A10A8887251F3CC2006B3017 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
-		A10A8890251F58C6006B3017 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A10A8893251F6238006B3017 /* MessageCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCellModel.swift; sourceTree = "<group>"; };
 		A11D45532548416A00A25815 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		A1202F88253648A60056BFCE /* SaveUserDataOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveUserDataOperation.swift; sourceTree = "<group>"; };
@@ -90,6 +89,7 @@
 		A147586A250F5FA3004DFCAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A1475870250F5FEA004DFCAA /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		A1475873250F6036004DFCAA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		A1635972255DE0E700D1888A /* PresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationAssembly.swift; sourceTree = "<group>"; };
 		A16570812517600300C22EAD /* UIAlertController+ConstraintsFix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+ConstraintsFix.swift"; sourceTree = "<group>"; };
 		A16570842517E6A700C22EAD /* ProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
 		A169F0C725573A6C001F0EDB /* Managed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Managed.swift; sourceTree = "<group>"; };
@@ -274,6 +274,7 @@
 			isa = PBXGroup;
 			children = (
 				A147585C250F5FA2004DFCAA /* AppDelegate.swift */,
+				A1635977255DE0FB00D1888A /* PresentationLayer */,
 				A139ED912517416600DA947B /* ViewControllers */,
 				A139ED94251741A900DA947B /* Views */,
 				A12320802529C84B005F8249 /* Managers */,
@@ -289,11 +290,26 @@
 		A1475872250F6000004DFCAA /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				A10A8890251F58C6006B3017 /* Constants.swift */,
 				A1475870250F5FEA004DFCAA /* Logger.swift */,
 				A16570832517601700C22EAD /* Extensions */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		A1635975255DE0EC00D1888A /* Assembly */ = {
+			isa = PBXGroup;
+			children = (
+				A1635972255DE0E700D1888A /* PresentationAssembly.swift */,
+			);
+			path = Assembly;
+			sourceTree = "<group>";
+		};
+		A1635977255DE0FB00D1888A /* PresentationLayer */ = {
+			isa = PBXGroup;
+			children = (
+				A1635975255DE0EC00D1888A /* Assembly */,
+			);
+			path = PresentationLayer;
 			sourceTree = "<group>";
 		};
 		A16570832517601700C22EAD /* Extensions */ = {
@@ -546,7 +562,6 @@
 				A137AD0B254869B700E50037 /* MessageDB.swift in Sources */,
 				A1202F89253648A60056BFCE /* SaveUserDataOperation.swift in Sources */,
 				A169F0C825573A6C001F0EDB /* Managed.swift in Sources */,
-				A10A8891251F58C6006B3017 /* Constants.swift in Sources */,
 				A18A6865253EF9B400E1B4D7 /* FirebaseExtensions.swift in Sources */,
 				A10A887D251F30CC006B3017 /* UIColor+Random.swift in Sources */,
 				A128E913253C81D0000ED358 /* InputAccessoryContainerView.swift in Sources */,
@@ -566,6 +581,7 @@
 				A18E47432534C4BA0096D1B3 /* UIViewController+Alert.swift in Sources */,
 				A12320742528C30B005F8249 /* ThemeSettingsViewController.swift in Sources */,
 				A10A8889251F3CC2006B3017 /* MessageCell.swift in Sources */,
+				A1635973255DE0E700D1888A /* PresentationAssembly.swift in Sources */,
 				A1F1F4692536318A002388AB /* UserDataStorage.swift in Sources */,
 				A1202FCF2537059D0056BFCE /* FetchUserDataOperation.swift in Sources */,
 				A18E473C2534BB430096D1B3 /* OperationDataManager.swift in Sources */,

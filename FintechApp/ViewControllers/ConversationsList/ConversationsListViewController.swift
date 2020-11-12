@@ -39,7 +39,7 @@ final class ConversationsListViewController: UIViewController {
         let fetchRequest = ChannelDB.defaultSortedFetchRequest
         
         fetchRequest.returnsObjectsAsFaults = false
-
+        
         fetchRequest.fetchBatchSize = 22
         
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
@@ -94,7 +94,7 @@ final class ConversationsListViewController: UIViewController {
         title = "Channels"
         
         let settingsButton = UIBarButtonItem(image: #imageLiteral(resourceName: "settings"), style: .plain, target: self, action: #selector(handleSettings))
-        settingsButton.tintColor = Constants.Colors.settingsGray
+        settingsButton.tintColor = UIColor(red: 0.329, green: 0.329, blue: 0.345, alpha: 0.9)
         navigationItem.setLeftBarButton(settingsButton, animated: true)
         
         let avatarView = AvatarImageView(style: .circle)
