@@ -11,13 +11,12 @@ import CoreData
 protocol ConversationsModelProtocol {
     var currentTheme: Theme { get }
     
-    func fetchChannels(completion: @escaping (FirestoreUpdate<Channel>) -> Void)
-    func createChannelWith(_ name: String, completion: @escaping SuccessCompletion)
-    func deleteChannelWith(channelId: String, completion: @escaping SuccessCompletion)
+    func createFBChannelWith(_ name: String, completion: @escaping SuccessCompletion)
+    func deleteFBChannelWith(channelId: String, completion: @escaping SuccessCompletion)
     
-    func addOrUpdateChannels(_ channels: [Channel])
-    func deleteChannels(_ channels: [Channel])
-    func fetchedResultsController(delegate: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController<ChannelDB>
+    var fetchedResultsController: NSFetchedResultsController<ChannelDB> { get }
+    func fetchSavedChannels()
+    func fetchNewChannelsAndSaveToDB()
 }
 
 final class ConversationsModel: ConversationsModelProtocol {
@@ -36,27 +35,15 @@ final class ConversationsModel: ConversationsModelProtocol {
         self.coreDataService = coreDataService
     }
     
-    func fetchChannels(completion: @escaping (FirestoreUpdate<Channel>) -> Void) {
-        firebaseService.fetchChannels(completion: completion)
-    }
-    
-    func createChannelWith(_ name: String, completion: @escaping SuccessCompletion) {
+    func createFBChannelWith(_ name: String, completion: @escaping SuccessCompletion) {
         firebaseService.createChannelWith(name, completion: completion)
     }
     
-    func deleteChannelWith(channelId: String, completion: @escaping SuccessCompletion) {
+    func deleteFBChannelWith(channelId: String, completion: @escaping SuccessCompletion) {
         firebaseService.deleteChannelWith(channelId: channelId, completion: completion)
     }
     
-    func addOrUpdateChannels(_ channels: [Channel]) {
-        coreDataService.addOrUpdateChannels(channels)
-    }
-    
-    func deleteChannels(_ channels: [Channel]) {
-        coreDataService.deleteChannels(channels)
-    }
-    
-    func fetchedResultsController(delegate: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController<ChannelDB> {
+    lazy var fetchedResultsController: NSFetchedResultsController<ChannelDB> = {
         let fetchRequest = ChannelDB.defaultSortedFetchRequest
         
         fetchRequest.returnsObjectsAsFaults = false
@@ -67,7 +54,22 @@ final class ConversationsModel: ConversationsModelProtocol {
                                              managedObjectContext: coreDataService.mainContext,
                                              sectionNameKeyPath: nil,
                                              cacheName: "channelsCache")
-        frc.delegate = delegate
         return frc
+    }()
+    
+    func fetchSavedChannels() {
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            Logger.log(error.localizedDescription)
+        }
+    }
+    
+    func fetchNewChannelsAndSaveToDB() {
+        firebaseService.fetchChannels { (channelUpdates) in
+            self.coreDataService.addOrUpdateChannels(channelUpdates.added)
+            self.coreDataService.addOrUpdateChannels(channelUpdates.modified)
+            self.coreDataService.deleteChannels(channelUpdates.removed)
+        }
     }
 }

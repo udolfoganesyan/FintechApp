@@ -14,11 +14,10 @@ protocol ConversationModelProtocol {
     func fetchMessages(completion: @escaping (FirestoreUpdate<Message>) -> Void)
     func sendMessage(_ message: String, completion: @escaping SuccessCompletion)
     
-    var title: String { get }
-    var channelId: String { get }
-    var channelObjectID: NSManagedObjectID { get }
-    func addMessages(_ messages: [Message], forChannelWith objectID: NSManagedObjectID)
-    func fetchedResultsController(delegate: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController<MessageDB>
+    var channelTitle: String { get }
+    var fetchedResultsController: NSFetchedResultsController<MessageDB> { get }
+    func fetchSavedMessages()
+    func fetchNewMessagesAndSaveToDB()
 }
 
 final class ConversationModel: ConversationModelProtocol {
@@ -27,19 +26,18 @@ final class ConversationModel: ConversationModelProtocol {
     private let themeService: ThemeServiceProtocol
     private let firebaseService: FirebaseServiceProtocol
     private let coreDataService: CoreDataServiceProtocol
+    private let channelId: String
     
-    let channelId: String
+    private var channelObjectID: NSManagedObjectID {
+        channel.objectID
+    }
     
     var currentTheme: Theme {
         themeService.currentTheme
     }
     
-    var title: String {
+    var channelTitle: String {
         channel.name
-    }
-    
-    var channelObjectID: NSManagedObjectID {
-        channel.objectID
     }
     
     init(themeService: ThemeServiceProtocol, firebaseService: FirebaseServiceProtocol, coreDataService: CoreDataServiceProtocol, channel: ChannelDB) {
@@ -58,11 +56,7 @@ final class ConversationModel: ConversationModelProtocol {
         firebaseService.sendMessage(message, to: channelId, completion: completion)
     }
     
-    func addMessages(_ messages: [Message], forChannelWith objectID: NSManagedObjectID) {
-        coreDataService.addMessages(messages, forChannelWith: objectID)
-    }
-    
-    func fetchedResultsController(delegate: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController<MessageDB> {
+    lazy var fetchedResultsController: NSFetchedResultsController<MessageDB> = {
         let fetchRequest = MessageDB.defaultSortedFetchRequest
         
         let predicate = NSPredicate(format: "channel == %@", channel)
@@ -76,7 +70,22 @@ final class ConversationModel: ConversationModelProtocol {
                                              managedObjectContext: coreDataService.mainContext,
                                              sectionNameKeyPath: "dateForSection",
                                              cacheName: nil)
-        frc.delegate = delegate
         return frc
+    }()
+    
+    func fetchSavedMessages() {
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            Logger.log(error.localizedDescription)
+        }
+    }
+    
+    func fetchNewMessagesAndSaveToDB() {
+        fetchMessages { [weak self] (messageUpdates) in
+            guard let self = self else { return }
+            
+            self.coreDataService.addMessages(messageUpdates.added, forChannelWith: self.channelObjectID)
+        }
     }
 }

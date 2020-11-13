@@ -35,8 +35,7 @@ final class ConversationsViewController: UIViewController {
         return button
     }()
     
-    private lazy var fetchedResultsController: NSFetchedResultsController<ChannelDB> = conversationsModel.fetchedResultsController(delegate: self)
-    
+    private lazy var frcDelegate = FetchedResultsControllerDelegate<ChannelDB>(tableView: tableView)
     private var actionToEnable: UIAlertAction?
     private let conversationsModel: ConversationsModelProtocol
     private let presentationAssembly: PresentationAssemblyProtocol
@@ -45,6 +44,8 @@ final class ConversationsViewController: UIViewController {
         self.presentationAssembly = presentationAssembly
         self.conversationsModel = conversationsModel
         super.init(nibName: nil, bundle: nil)
+        
+        conversationsModel.fetchedResultsController.delegate = frcDelegate
     }
     
     required init?(coder: NSCoder) {
@@ -59,24 +60,8 @@ final class ConversationsViewController: UIViewController {
         setupAddButton()
         updateTheme()
         
-        fetchSavedChannels()
-        fetchNewChannelsAndSaveToDB()
-    }
-    
-    private func fetchSavedChannels() {
-        do {
-            try fetchedResultsController.performFetch()
-        } catch {
-            Logger.log(error.localizedDescription)
-        }
-    }
-    
-    private func fetchNewChannelsAndSaveToDB() {
-        conversationsModel.fetchChannels { (channelUpdates) in
-            self.conversationsModel.addOrUpdateChannels(channelUpdates.added)
-            self.conversationsModel.addOrUpdateChannels(channelUpdates.modified)
-            self.conversationsModel.deleteChannels(channelUpdates.removed)
-        }
+        conversationsModel.fetchSavedChannels()
+        conversationsModel.fetchNewChannelsAndSaveToDB()
     }
     
     private func setupNavigationBar() {
@@ -140,7 +125,7 @@ final class ConversationsViewController: UIViewController {
                 return
             }
             
-            self.conversationsModel.createChannelWith(name) { (success) in
+            self.conversationsModel.createFBChannelWith(name) { (success) in
                 if !success {
                     self.showOkAlert("Error", "Could not create channel :(")
                 }
@@ -165,7 +150,7 @@ final class ConversationsViewController: UIViewController {
 extension ConversationsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedChannel = fetchedResultsController.object(at: indexPath)
+        let selectedChannel = conversationsModel.fetchedResultsController.object(at: indexPath)
         let conversationsViewController = presentationAssembly.conversationViewController(forChannel: selectedChannel)
         navigationController?.pushViewController(conversationsViewController, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
@@ -177,7 +162,7 @@ extension ConversationsViewController: UITableViewDelegate {
 extension ConversationsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let sectionInfo = fetchedResultsController.sections?[section] else { return 0 }
+        guard let sectionInfo = conversationsModel.fetchedResultsController.sections?[section] else { return 0 }
         return sectionInfo.numberOfObjects
     }
     
@@ -186,7 +171,7 @@ extension ConversationsViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let channelDB = fetchedResultsController.object(at: indexPath)
+        let channelDB = conversationsModel.fetchedResultsController.object(at: indexPath)
         let model = ConversationCellModel(channelDB: channelDB)
         
         cell.configure(with: model, and: conversationsModel.currentTheme)
@@ -200,48 +185,13 @@ extension ConversationsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let channel = fetchedResultsController.object(at: indexPath)
-            conversationsModel.deleteChannelWith(channelId: channel.identifier) { (success) in
+            let channel = conversationsModel.fetchedResultsController.object(at: indexPath)
+            conversationsModel.deleteFBChannelWith(channelId: channel.identifier) { (success) in
                 if !success {
                     self.showOkAlert("Error", "Could not delete channel :(")
                 }
             }
         }
-    }
-}
-
-// MARK: - NSFetchedResultsControllerDelegate
-
-extension ConversationsViewController: NSFetchedResultsControllerDelegate {
-    
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.beginUpdates()
-    }
-    
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                    didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        guard anObject is ChannelDB else { return }
-        
-        switch type {
-        case .insert:
-            guard let newIndexPath = newIndexPath else { return }
-            tableView.insertRows(at: [newIndexPath], with: .fade)
-        case .delete:
-            guard let indexPath = indexPath else { return }
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        case .update:
-            guard let indexPath = indexPath else { return }
-            tableView.reloadRows(at: [indexPath], with: .fade)
-        case .move:
-            guard let indexPath = indexPath,
-                  let newIndexPath = newIndexPath else { return }
-            tableView.moveRow(at: indexPath, to: newIndexPath)
-        default: return
-        }
-    }
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.endUpdates()
     }
 }
 

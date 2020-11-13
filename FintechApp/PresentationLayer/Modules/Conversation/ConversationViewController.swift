@@ -30,8 +30,7 @@ final class ConversationViewController: UIViewController {
         return inputContainerView
     }()
     
-    private lazy var fetchedResultsController: NSFetchedResultsController<MessageDB> = conversationModel.fetchedResultsController(delegate: self)
-    
+    private lazy var frcDelegate = FetchedResultsControllerDelegate<MessageDB>(tableView: tableView)
     private let conversationModel: ConversationModelProtocol
     
     override var inputAccessoryView: UIView? {
@@ -45,7 +44,13 @@ final class ConversationViewController: UIViewController {
     init(conversationModel: ConversationModelProtocol) {
         self.conversationModel = conversationModel
         super.init(nibName: nil, bundle: nil)
-        title = conversationModel.title
+        
+        title = conversationModel.channelTitle
+        
+        frcDelegate.didUpdateTable = { [weak self] in
+            self?.scrollToTheBottom()
+        }
+        conversationModel.fetchedResultsController.delegate = frcDelegate
     }
     
     required init?(coder: NSCoder) {
@@ -59,30 +64,14 @@ final class ConversationViewController: UIViewController {
         setupEndEditingTap()
         layoutTableView()
         
-        fetchSavedMessages()
-        fetchNewMessagesAndSaveToDB()
-    }
-    
-    private func fetchSavedMessages() {
-        do {
-            try fetchedResultsController.performFetch()
-        } catch {
-            Logger.log(error.localizedDescription)
-        }
-    }
-    
-    private func fetchNewMessagesAndSaveToDB() {
-        conversationModel.fetchMessages() { [weak self] (messageUpdates) in
-            guard let self = self else { return }
-            
-            self.conversationModel.addMessages(messageUpdates.added, forChannelWith: self.conversationModel.channelObjectID)
-        }
+        conversationModel.fetchSavedMessages()
+        conversationModel.fetchNewMessagesAndSaveToDB()
     }
     
     private func scrollToTheBottom() {
-        guard let numberOfSections = fetchedResultsController.sections?.count,
+        guard let numberOfSections = conversationModel.fetchedResultsController.sections?.count,
               numberOfSections > 0 else { return }
-        guard let numberOfObjectsInTheLastSection = fetchedResultsController.sections?[numberOfSections - 1].numberOfObjects,
+        guard let numberOfObjectsInTheLastSection = conversationModel.fetchedResultsController.sections?[numberOfSections - 1].numberOfObjects,
               numberOfObjectsInTheLastSection > 0 else { return }
         
         tableView.scrollToRow(at: IndexPath(row: numberOfObjectsInTheLastSection - 1, section: numberOfSections - 1), at: .bottom, animated: true)
@@ -130,64 +119,6 @@ final class ConversationViewController: UIViewController {
     }
 }
 
-// MARK: - NSFetchedResultsControllerDelegate
-
-extension ConversationViewController: NSFetchedResultsControllerDelegate {
-    
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.beginUpdates()
-    }
-    
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                    didChange anObject: Any,
-                    at indexPath: IndexPath?,
-                    for type: NSFetchedResultsChangeType,
-                    newIndexPath: IndexPath?) {
-        guard anObject is MessageDB else { return }
-        
-        switch type {
-        case .insert:
-            print("newIndexPath", newIndexPath)
-            guard let newIndexPath = newIndexPath else { return }
-            tableView.insertRows(at: [newIndexPath], with: .fade)
-        case .delete:
-            guard let indexPath = indexPath else { return }
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        case .update:
-            guard let indexPath = indexPath else { return }
-            tableView.reloadRows(at: [indexPath], with: .fade)
-        case .move:
-            print("indexPath", indexPath)
-            print("newIndexPath", newIndexPath)
-            guard let indexPath = indexPath,
-                  let newIndexPath = newIndexPath else { return }
-            tableView.moveRow(at: indexPath, to: newIndexPath)
-        default: return
-        }
-    }
-    
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                    didChange sectionInfo: NSFetchedResultsSectionInfo,
-                    atSectionIndex sectionIndex: Int,
-                    for type: NSFetchedResultsChangeType) {
-        
-        let indexSet = IndexSet(integer: sectionIndex)
-        
-        switch type {
-        case .insert:
-            tableView.insertSections(indexSet, with: .fade)
-        case .delete:
-            tableView.deleteSections(indexSet, with: .fade)
-        default: return
-        }
-    }
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.endUpdates()
-        scrollToTheBottom()
-    }
-}
-
 // MARK: - InputDelegate
 
 extension ConversationViewController: InputDelegate {
@@ -207,7 +138,7 @@ extension ConversationViewController: InputDelegate {
 extension ConversationViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let sectionDate = fetchedResultsController.sections?[section].name else { return nil }
+        guard let sectionDate = conversationModel.fetchedResultsController.sections?[section].name else { return nil }
         
         let headerView = ConversationDateHeader(dateString: sectionDate, theme: conversationModel.currentTheme)
         return headerView
@@ -219,11 +150,11 @@ extension ConversationViewController: UITableViewDelegate {
 extension ConversationViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        fetchedResultsController.sections?.count ?? 1
+        conversationModel.fetchedResultsController.sections?.count ?? 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let sectionInfo = fetchedResultsController.sections?[section] else { return 0 }
+        guard let sectionInfo = conversationModel.fetchedResultsController.sections?[section] else { return 0 }
         return sectionInfo.numberOfObjects
     }
     
@@ -232,7 +163,7 @@ extension ConversationViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let messageDB = fetchedResultsController.object(at: indexPath)
+        let messageDB = conversationModel.fetchedResultsController.object(at: indexPath)
         let model = MessageCellModel(messageDB: messageDB)
         
         cell.configure(with: model, and: conversationModel.currentTheme)

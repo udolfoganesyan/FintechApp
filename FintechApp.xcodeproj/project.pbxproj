@@ -38,6 +38,7 @@
 		A163597C255DE20B00D1888A /* RootAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = A163597B255DE20B00D1888A /* RootAssembly.swift */; };
 		A163597F255DE31600D1888A /* ServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = A163597E255DE31600D1888A /* ServiceAssembly.swift */; };
 		A1635985255DE37400D1888A /* CoreAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1635984255DE37400D1888A /* CoreAssembly.swift */; };
+		A164F9A8255ECEBC00C7A56F /* FetchedResultsControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A164F9A7255ECEBC00C7A56F /* FetchedResultsControllerDelegate.swift */; };
 		A16570822517600300C22EAD /* UIAlertController+ConstraintsFix.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16570812517600300C22EAD /* UIAlertController+ConstraintsFix.swift */; };
 		A16570852517E6A700C22EAD /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A16570842517E6A700C22EAD /* ProfileViewController.xib */; };
 		A169F0C825573A6C001F0EDB /* Managed.swift in Sources */ = {isa = PBXBuildFile; fileRef = A169F0C725573A6C001F0EDB /* Managed.swift */; };
@@ -102,6 +103,7 @@
 		A163597B255DE20B00D1888A /* RootAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootAssembly.swift; sourceTree = "<group>"; };
 		A163597E255DE31600D1888A /* ServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAssembly.swift; sourceTree = "<group>"; };
 		A1635984255DE37400D1888A /* CoreAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreAssembly.swift; sourceTree = "<group>"; };
+		A164F9A7255ECEBC00C7A56F /* FetchedResultsControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchedResultsControllerDelegate.swift; sourceTree = "<group>"; };
 		A16570812517600300C22EAD /* UIAlertController+ConstraintsFix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+ConstraintsFix.swift"; sourceTree = "<group>"; };
 		A16570842517E6A700C22EAD /* ProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
 		A169F0C725573A6C001F0EDB /* Managed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Managed.swift; sourceTree = "<group>"; };
@@ -248,9 +250,16 @@
 			isa = PBXGroup;
 			children = (
 				A139ED92251741A000DA947B /* AvatarImageView.swift */,
-				A10A883B251E8BF8006B3017 /* OnlineBadgeView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		A13A4571255EA01D007609A7 /* AdditionalUI */ = {
+			isa = PBXGroup;
+			children = (
+				A10A883B251E8BF8006B3017 /* OnlineBadgeView.swift */,
+			);
+			path = AdditionalUI;
 			sourceTree = "<group>";
 		};
 		A1475850250F5FA2004DFCAA = {
@@ -313,6 +322,7 @@
 			children = (
 				A1635975255DE0EC00D1888A /* Assembly */,
 				A1635979255DE15200D1888A /* Modules */,
+				A164F9AA255ECEF800C7A56F /* AdditionalClasses */,
 				A139ED94251741A900DA947B /* Views */,
 			);
 			path = PresentationLayer;
@@ -362,6 +372,14 @@
 				A1635989255DE37B00D1888A /* Assembly */,
 			);
 			path = CoreLayer;
+			sourceTree = "<group>";
+		};
+		A164F9AA255ECEF800C7A56F /* AdditionalClasses */ = {
+			isa = PBXGroup;
+			children = (
+				A164F9A7255ECEBC00C7A56F /* FetchedResultsControllerDelegate.swift */,
+			);
+			path = AdditionalClasses;
 			sourceTree = "<group>";
 		};
 		A16570832517601700C22EAD /* Extensions */ = {
@@ -417,6 +435,7 @@
 		A1C7439D251E3872005B5195 /* ConversationsList */ = {
 			isa = PBXGroup;
 			children = (
+				A13A4571255EA01D007609A7 /* AdditionalUI */,
 				A10A8884251F3C76006B3017 /* Cell */,
 				A13A4552255DF639007609A7 /* ConversationsModel.swift */,
 				A1C7439A251E386B005B5195 /* ConversationsViewController.swift */,
@@ -630,6 +649,7 @@
 				A13A4558255DFA11007609A7 /* ConversationModel.swift in Sources */,
 				A12320862529CB87005F8249 /* Theme.swift in Sources */,
 				A18E47432534C4BA0096D1B3 /* UIViewController+Alert.swift in Sources */,
+				A164F9A8255ECEBC00C7A56F /* FetchedResultsControllerDelegate.swift in Sources */,
 				A12320742528C30B005F8249 /* ThemeSettingsViewController.swift in Sources */,
 				A10A8889251F3CC2006B3017 /* MessageCell.swift in Sources */,
 				A1635973255DE0E700D1888A /* PresentationAssembly.swift in Sources */,
