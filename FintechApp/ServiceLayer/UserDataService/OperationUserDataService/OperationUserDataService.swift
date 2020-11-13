@@ -1,5 +1,5 @@
 //
-//  OperationDataManager.swift
+//  OperationUserDataService.swift
 //  FintechApp
 //
 //  Created by Rudolf Oganesyan on 12.10.2020.
@@ -8,19 +8,22 @@
 
 import UIKit
 
-struct OperationDataManager: AsyncDataManager {
+final class OperationUserDataService: UserDataServiceProtocol {
     
+    private let userDataCore: UserDataCoreProtocol
     private let operationQueue = OperationQueue()
     
+    init(userDataCore: UserDataCoreProtocol) {
+        self.userDataCore = userDataCore
+    }
+    
     func saveUserData(user: User, completion: @escaping SuccessCompletion) {
-        
-        let saveUserDataOperation = SaveUserDataOperation(user: user, completion: completion)
+        let saveUserDataOperation = SaveUserDataOperation(user: user, userDataCore: userDataCore, completion: completion)
         operationQueue.addOperation(saveUserDataOperation)
     }
     
     func fetchUserData(completion: @escaping FetchUserCompletion) {
-        
-        let fetchUserDataOperation = FetchUserDataOperation()
+        let fetchUserDataOperation = FetchUserDataOperation(userDataCore: userDataCore)
         fetchUserDataOperation.completionBlock = {
             OperationQueue.main.addOperation {
                 completion(fetchUserDataOperation.fetchedUser)

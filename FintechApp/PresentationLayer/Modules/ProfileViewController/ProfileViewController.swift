@@ -27,7 +27,6 @@ final class ProfileViewController: UIViewController {
     private lazy var avatarView = AvatarImageView(style: .circle)
     private var inEditingMode = false
     private var didChangeAvatar = false
-    private var dataManager: AsyncDataManager?
     private let profileInteractor: ProfileInteractorProtocol
     
     init(profileInteractor: ProfileInteractorProtocol) {
@@ -63,18 +62,15 @@ final class ProfileViewController: UIViewController {
         aboutTextView.backgroundColor = profileInteractor.currentTheme.incomingCellColor
         aboutTextView.textColor = profileInteractor.currentTheme.primaryTextColor
         activityIndicator.color = profileInteractor.currentTheme.secondaryTextColor
-        setupSaveButtons()
+        setupSaveButton(gcdSaveButton)
+        setupSaveButton(operationSaveButton)
         setupAvatarView()
     }
     
-    private func setupSaveButtons() {
-        gcdSaveButton.layer.cornerRadius = 14
-        gcdSaveButton.layer.masksToBounds = true
-        gcdSaveButton.backgroundColor = profileInteractor.currentTheme.buttonBackgroundColor
-        
-        operationSaveButton.layer.cornerRadius = 14
-        operationSaveButton.layer.masksToBounds = true
-        operationSaveButton.backgroundColor = profileInteractor.currentTheme.buttonBackgroundColor
+    private func setupSaveButton(_ button: UIButton) {
+        button.layer.cornerRadius = 14
+        button.layer.masksToBounds = true
+        button.backgroundColor = profileInteractor.currentTheme.buttonBackgroundColor
     }
     
     private func setupAvatarView() {
@@ -94,8 +90,7 @@ final class ProfileViewController: UIViewController {
     }
     
     private func fetchAndSetUserData() {
-        dataManager = OperationDataManager()
-        dataManager?.fetchUserData(completion: { (user) in
+        profileInteractor.fetchUserData(completion: { (user) in
             self.nameLabel.text = user.fullName
             self.fullNameTextField.text = self.nameLabel.text
             
@@ -126,12 +121,12 @@ final class ProfileViewController: UIViewController {
     }
     
     @IBAction private func saveViaGCDTouched(_ sender: UIButton) {
-        dataManager = GCDDataManager()
+        profileInteractor.setServiceType(.gcd)
         save()
     }
     
     @IBAction private func saveViaOperationTouched(_ sender: UIButton) {
-        dataManager = OperationDataManager()
+        profileInteractor.setServiceType(.operation)
         save()
     }
     
@@ -142,7 +137,7 @@ final class ProfileViewController: UIViewController {
                         about: aboutTextView.text,
                         image: avatarView.image)
         
-        dataManager?.saveUserData(user: user) { (success) in
+        profileInteractor.saveUserData(user: user) { (success) in
             if success {
                 self.showOkAlert("Done ✓", nil)
                 self.fetchAndSetUserData()

@@ -1,5 +1,5 @@
 //
-//  GCDDataManager.swift
+//  GCDUserDataService.swift
 //  FintechApp
 //
 //  Created by Rudolf Oganesyan on 12.10.2020.
@@ -8,21 +8,18 @@
 
 import UIKit
 
-typealias FetchUserCompletion = (User) -> Void
-
-protocol AsyncDataManager {
-    func saveUserData(user: User, completion: @escaping SuccessCompletion)
-    func fetchUserData(completion: @escaping FetchUserCompletion)
-}
-
-struct GCDDataManager: AsyncDataManager {
+final class GCDUserDataService: UserDataServiceProtocol {
     
-    private let userDataStorage = UserDataStorage()
+    private let userDataCore: UserDataCoreProtocol
     private let storageQueue = DispatchQueue(label: "com.rudolf.FintechApp.storage")
+    
+    init(userDataCore: UserDataCoreProtocol) {
+        self.userDataCore = userDataCore
+    }
     
     func saveUserData(user: User, completion: @escaping SuccessCompletion) {
         storageQueue.async {
-            self.userDataStorage.saveUserData(user: user) { (success) in
+            self.userDataCore.saveUserData(user: user) { (success) in
                 DispatchQueue.main.async {
                     completion(success)
                 }
@@ -32,10 +29,7 @@ struct GCDDataManager: AsyncDataManager {
     
     func fetchUserData(completion: @escaping FetchUserCompletion) {
         storageQueue.async {
-            let fullName = self.userDataStorage.getFullName()
-            let about = self.userDataStorage.getAbout()
-            let image = self.userDataStorage.getAvatar()
-            let user = User(fullName: fullName, about: about, image: image)
+            let user = self.userDataCore.fetchUserData()
             DispatchQueue.main.async {
                 completion(user)
             }

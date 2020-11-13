@@ -27,7 +27,10 @@ final class PresentationAssembly: PresentationAssemblyProtocol {
     // MARK: - ConversationsViewController
     
     func profileViewController() -> ProfileViewController {
-        let profileInteractor = ProfileInteractor(themeService: serviceAssembly.themeService)
+        let profileInteractor =
+            ProfileInteractor(themeService: serviceAssembly.themeService,
+                              gcdUserDataService: serviceAssembly.gcdUserDataService,
+                              operationUserDataService: serviceAssembly.operationUserDataService)
         let profileVC = ProfileViewController(profileInteractor: profileInteractor)
         return profileVC
     }
@@ -37,8 +40,8 @@ final class PresentationAssembly: PresentationAssemblyProtocol {
     func conversationsListViewController() -> ConversationsViewController {
         let conversationsInteractor =
             ConversationsInteractor(themeService: serviceAssembly.themeService,
-                               firebaseService: serviceAssembly.firebaseService,
-                               coreDataService: serviceAssembly.coreDataService)
+                                    firebaseService: serviceAssembly.firebaseService,
+                                    coreDataService: serviceAssembly.coreDataService)
         let rootVC = ConversationsViewController(conversationsInteractor: conversationsInteractor, presentationAssembly: self)
         return rootVC
     }
@@ -48,25 +51,18 @@ final class PresentationAssembly: PresentationAssemblyProtocol {
     func conversationViewController(forChannel channel: ChannelDB) -> ConversationViewController {
         let conversationInteractor =
             ConversationInteractor(themeService: serviceAssembly.themeService,
-                              firebaseService: serviceAssembly.firebaseService,
-                              coreDataService: serviceAssembly.coreDataService,
-                              channel: channel)
+                                   firebaseService: serviceAssembly.firebaseService,
+                                   coreDataService: serviceAssembly.coreDataService,
+                                   channel: channel)
         let conversationVC = ConversationViewController(conversationInteractor: conversationInteractor)
         return conversationVC
     }
     
     // MARK: - ThemeSettingsViewController
-
+    
     func themeSettingsViewController() -> ThemeSettingsViewController {
         let themeSettingsInteractor = ThemeSettingsInteractor(themeService: serviceAssembly.themeService)
         let themeSettingsVC = ThemeSettingsViewController(themeSettingsInteractor: themeSettingsInteractor)
         return themeSettingsVC
     }
-    
-//    func demoViewCotnroller() -> DemoViewController {
-//        let model = demoModel()
-//        let demoVC = DemoViewController(model: model, presentationAssembly: self)
-//        model.delegate = demoVC
-//        return demoVC
-//    }
 }

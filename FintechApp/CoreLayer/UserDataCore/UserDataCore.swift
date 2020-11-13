@@ -1,8 +1,8 @@
 //
-//  UserDataStorage.swift
+//  UserDataCore.swift
 //  FintechApp
 //
-//  Created by Rudolf Oganesyan on 13.10.2020.
+//  Created by Rudolf Oganesyan on 14.11.2020.
 //  Copyright © 2020 Рудольф О. All rights reserved.
 //
 
@@ -10,11 +10,16 @@ import UIKit
 
 typealias SuccessCompletion = (_ success: Bool) -> Void
 
+protocol UserDataCoreProtocol {
+    func saveUserData(user: User, completion: @escaping SuccessCompletion)
+    func fetchUserData() -> User
+}
+
 enum UserDataStorageError: Error {
     case writingError
 }
 
-struct UserDataStorage {
+final class UserDataCore: UserDataCoreProtocol {
     
     private var fullNameFileURL: URL {
         getDocumentsDirectory().appendingPathComponent("name.txt")
@@ -74,7 +79,15 @@ struct UserDataStorage {
         }
     }
     
-    func getFullName() -> String? {
+    func fetchUserData() -> User {
+        let fullName = getFullName()
+        let about = getAbout()
+        let image = getAvatar()
+        let user = User(fullName: fullName, about: about, image: image)
+        return user
+    }
+    
+    private func getFullName() -> String? {
         
         do {
             let fullNameData = try Data(contentsOf: fullNameFileURL)
@@ -89,7 +102,7 @@ struct UserDataStorage {
         }
     }
     
-    func getAbout() -> String? {
+    private func getAbout() -> String? {
         
         do {
             let aboutData = try Data(contentsOf: aboutFileURL)
@@ -104,7 +117,7 @@ struct UserDataStorage {
         }
     }
     
-    func getAvatar() -> UIImage? {
+    private func getAvatar() -> UIImage? {
         
         do {
             let avatarData = try Data(contentsOf: avatarFileURL)

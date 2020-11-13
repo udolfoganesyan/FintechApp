@@ -12,11 +12,13 @@ final class FetchUserDataOperation: Operation {
     
     var fetchedUser = User(fullName: nil, about: nil, image: nil)
     
-    private let userDataStorage = UserDataStorage()
+    private let userDataCore: UserDataCoreProtocol
+    
+    init(userDataCore: UserDataCoreProtocol) {
+        self.userDataCore = userDataCore
+    }
     
     override func main() {
-        fetchedUser = User(fullName: userDataStorage.getFullName(),
-                           about: userDataStorage.getAbout(),
-                           image: userDataStorage.getAvatar())
+        fetchedUser = userDataCore.fetchUserData()
     }
 }

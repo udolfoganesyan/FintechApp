@@ -12,6 +12,8 @@ protocol ServicesAssemblyProtocol {
     var themeService: ThemeServiceProtocol { get }
     var firebaseService: FirebaseServiceProtocol { get }
     var coreDataService: CoreDataServiceProtocol { get }
+    var gcdUserDataService: UserDataServiceProtocol { get }
+    var operationUserDataService: UserDataServiceProtocol { get }
 }
 
 final class ServicesAssembly: ServicesAssemblyProtocol {
@@ -21,6 +23,8 @@ final class ServicesAssembly: ServicesAssemblyProtocol {
     lazy var themeService: ThemeServiceProtocol = ThemeService()
     lazy var firebaseService: FirebaseServiceProtocol = FirebaseService()
     lazy var coreDataService: CoreDataServiceProtocol = CoreDataService(dataModelName: CoreDataService.chatDataModelName)
+    lazy var gcdUserDataService: UserDataServiceProtocol = GCDUserDataService(userDataCore: coreAssembly.userDataCore)
+    lazy var operationUserDataService: UserDataServiceProtocol = OperationUserDataService(userDataCore: coreAssembly.userDataCore)
     
     init(coreAssembly: CoreAssemblyProtocol) {
         self.coreAssembly = coreAssembly
