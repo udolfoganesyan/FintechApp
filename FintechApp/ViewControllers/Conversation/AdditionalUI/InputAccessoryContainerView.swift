@@ -67,12 +67,14 @@ final class InputAccessoryContainerView: UIView {
     }
     
     @objc private func handleSend() {
-        guard let text = inputTextField.text,
-              !text.isEmpty else { return }
+        guard let text = inputTextField.text else { return }
+        
+        let trimmedText = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmedText.isEmpty else { return }
         
         self.sendButton.isEnabled = false
         
-        delegate?.handleSend(text: text, completion: { (success) in
+        delegate?.handleSend(text: trimmedText, completion: { (success) in
             if success {
                 self.inputTextField.text = nil
             } else {

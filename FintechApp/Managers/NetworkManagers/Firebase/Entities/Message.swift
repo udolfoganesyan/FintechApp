@@ -10,6 +10,7 @@ import FirebaseFirestore
 
 struct Message {
     
+    let identifier: String
     let content: String
     let created: Date
     let senderId: String
@@ -21,6 +22,7 @@ struct Message {
               let created = keyedData[.created] as? Timestamp,
               let senderId = keyedData[.senderId] as? String,
               let senderName = keyedData[.senderName] as? String else { return nil }
+        self.identifier = document.documentID
         self.content = content
         self.created = created.dateValue()
         self.senderId = senderId

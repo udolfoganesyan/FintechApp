@@ -33,11 +33,14 @@ final class ConversationViewController: UIViewController {
         didSet {
             tableView.reloadData()
             scrollToTheBottom()
+            saveMessages()
         }
     }
+    private let coreDataManager: CoreDataManager
     
-    init(channelId: String) {
+    init(channelId: String, coreDataManager: CoreDataManager) {
         self.channelId = channelId
+        self.coreDataManager = coreDataManager
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -65,6 +68,18 @@ final class ConversationViewController: UIViewController {
     private func fetchMessages() {
         FirebaseManager.fetchMessagesFor(channelId) { [weak self] (messages) in
             self?.messages = messages
+        }
+    }
+    
+    private func saveMessages() {
+        if !messages.isEmpty {
+            coreDataManager.performSave { (context) in
+                let predicate = NSPredicate(format: "identifier == %@", self.channelId)
+                let channel = self.coreDataManager.fetchChannels(withPredicate: predicate, in: context)
+                let messagesDB = self.messages.map { MessageDB(message: $0, context: context) }
+                let setOfMessagesToAdd = NSSet(array: messagesDB)
+                channel?.first?.addToMessages(setOfMessagesToAdd)
+            }
         }
     }
     
