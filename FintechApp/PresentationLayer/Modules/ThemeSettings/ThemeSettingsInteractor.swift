@@ -1,5 +1,5 @@
 //
-//  ThemeSettingsModel.swift
+//  ThemeSettingsInteractor.swift
 //  FintechApp
 //
 //  Created by Rudolf Oganesyan on 13.11.2020.
@@ -8,12 +8,12 @@
 
 import Foundation
 
-protocol ThemeSettingsModelProtocol {
+protocol ThemeSettingsInteractorProtocol {
     var currentTheme: Theme { get }
     func updateThemeWith(_ theme: Theme, completion: @escaping () -> Void)
 }
 
-final class ThemeSettingsModel: ThemeSettingsModelProtocol {
+final class ThemeSettingsInteractor: ThemeSettingsInteractorProtocol {
     
     let themeService: ThemeServiceProtocol
     

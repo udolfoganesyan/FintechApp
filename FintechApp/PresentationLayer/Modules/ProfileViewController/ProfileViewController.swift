@@ -28,10 +28,10 @@ final class ProfileViewController: UIViewController {
     private var inEditingMode = false
     private var didChangeAvatar = false
     private var dataManager: AsyncDataManager?
-    private let profileModel: ProfileModelProtocol
+    private let profileInteractor: ProfileInteractorProtocol
     
-    init(profileModel: ProfileModelProtocol) {
-        self.profileModel = profileModel
+    init(profileInteractor: ProfileInteractorProtocol) {
+        self.profileInteractor = profileInteractor
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -48,21 +48,21 @@ final class ProfileViewController: UIViewController {
     }
     
     private func setupSubviews() {
-        view.backgroundColor = profileModel.currentTheme.backgroundColor
-        nameLabel.textColor = profileModel.currentTheme.primaryTextColor
-        aboutLabel.textColor = profileModel.currentTheme.primaryTextColor
-        aboutInfoLabel.textColor = profileModel.currentTheme.secondaryTextColor
-        fullNameTextField.backgroundColor = profileModel.currentTheme.incomingCellColor
-        fullNameTextField.textColor = profileModel.currentTheme.primaryTextColor
+        view.backgroundColor = profileInteractor.currentTheme.backgroundColor
+        nameLabel.textColor = profileInteractor.currentTheme.primaryTextColor
+        aboutLabel.textColor = profileInteractor.currentTheme.primaryTextColor
+        aboutInfoLabel.textColor = profileInteractor.currentTheme.secondaryTextColor
+        fullNameTextField.backgroundColor = profileInteractor.currentTheme.incomingCellColor
+        fullNameTextField.textColor = profileInteractor.currentTheme.primaryTextColor
         fullNameTextField.attributedPlaceholder =
             NSAttributedString(string: "Full name",
-                               attributes: [NSAttributedString.Key.foregroundColor: profileModel.currentTheme.secondaryTextColor])
+                               attributes: [NSAttributedString.Key.foregroundColor: profileInteractor.currentTheme.secondaryTextColor])
         let padding = aboutTextView.textContainer.lineFragmentPadding
         aboutTextView.textContainerInset = UIEdgeInsets(top: 0, left: -padding, bottom: 0, right: -padding)
         aboutTextView.delegate = self
-        aboutTextView.backgroundColor = profileModel.currentTheme.incomingCellColor
-        aboutTextView.textColor = profileModel.currentTheme.primaryTextColor
-        activityIndicator.color = profileModel.currentTheme.secondaryTextColor
+        aboutTextView.backgroundColor = profileInteractor.currentTheme.incomingCellColor
+        aboutTextView.textColor = profileInteractor.currentTheme.primaryTextColor
+        activityIndicator.color = profileInteractor.currentTheme.secondaryTextColor
         setupSaveButtons()
         setupAvatarView()
     }
@@ -70,11 +70,11 @@ final class ProfileViewController: UIViewController {
     private func setupSaveButtons() {
         gcdSaveButton.layer.cornerRadius = 14
         gcdSaveButton.layer.masksToBounds = true
-        gcdSaveButton.backgroundColor = profileModel.currentTheme.buttonBackgroundColor
+        gcdSaveButton.backgroundColor = profileInteractor.currentTheme.buttonBackgroundColor
         
         operationSaveButton.layer.cornerRadius = 14
         operationSaveButton.layer.masksToBounds = true
-        operationSaveButton.backgroundColor = profileModel.currentTheme.buttonBackgroundColor
+        operationSaveButton.backgroundColor = profileInteractor.currentTheme.buttonBackgroundColor
     }
     
     private func setupAvatarView() {

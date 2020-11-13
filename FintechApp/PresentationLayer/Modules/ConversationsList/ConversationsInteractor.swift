@@ -1,5 +1,5 @@
 //
-//  ConversationsModel.swift
+//  ConversationsInteractor.swift
 //  FintechApp
 //
 //  Created by Rudolf Oganesyan on 13.11.2020.
@@ -8,7 +8,7 @@
 
 import CoreData
 
-protocol ConversationsModelProtocol {
+protocol ConversationsInteractorProtocol {
     var currentTheme: Theme { get }
     
     func createFBChannelWith(_ name: String, completion: @escaping SuccessCompletion)
@@ -19,7 +19,7 @@ protocol ConversationsModelProtocol {
     func fetchNewChannelsAndSaveToDB()
 }
 
-final class ConversationsModel: ConversationsModelProtocol {
+final class ConversationsInteractor: ConversationsInteractorProtocol {
     
     private let themeService: ThemeServiceProtocol
     private let firebaseService: FirebaseServiceProtocol

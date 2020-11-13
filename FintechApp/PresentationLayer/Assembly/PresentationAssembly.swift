@@ -27,39 +27,39 @@ final class PresentationAssembly: PresentationAssemblyProtocol {
     // MARK: - ConversationsViewController
     
     func profileViewController() -> ProfileViewController {
-        let profileModel = ProfileModel(themeService: serviceAssembly.themeService)
-        let profileVC = ProfileViewController(profileModel: profileModel)
+        let profileInteractor = ProfileInteractor(themeService: serviceAssembly.themeService)
+        let profileVC = ProfileViewController(profileInteractor: profileInteractor)
         return profileVC
     }
     
     // MARK: - ConversationsViewController
     
     func conversationsListViewController() -> ConversationsViewController {
-        let conversationsModel =
-            ConversationsModel(themeService: serviceAssembly.themeService,
+        let conversationsInteractor =
+            ConversationsInteractor(themeService: serviceAssembly.themeService,
                                firebaseService: serviceAssembly.firebaseService,
                                coreDataService: serviceAssembly.coreDataService)
-        let rootVC = ConversationsViewController(conversationsModel: conversationsModel, presentationAssembly: self)
+        let rootVC = ConversationsViewController(conversationsInteractor: conversationsInteractor, presentationAssembly: self)
         return rootVC
     }
     
     // MARK: - ConversationViewController
     
     func conversationViewController(forChannel channel: ChannelDB) -> ConversationViewController {
-        let conversationModel =
-            ConversationModel(themeService: serviceAssembly.themeService,
+        let conversationInteractor =
+            ConversationInteractor(themeService: serviceAssembly.themeService,
                               firebaseService: serviceAssembly.firebaseService,
                               coreDataService: serviceAssembly.coreDataService,
                               channel: channel)
-        let conversationVC = ConversationViewController(conversationModel: conversationModel)
+        let conversationVC = ConversationViewController(conversationInteractor: conversationInteractor)
         return conversationVC
     }
     
     // MARK: - ThemeSettingsViewController
 
     func themeSettingsViewController() -> ThemeSettingsViewController {
-        let themeSettingsModel = ThemeSettingsModel(themeService: serviceAssembly.themeService)
-        let themeSettingsVC = ThemeSettingsViewController(themeSettingsModel: themeSettingsModel)
+        let themeSettingsInteractor = ThemeSettingsInteractor(themeService: serviceAssembly.themeService)
+        let themeSettingsVC = ThemeSettingsViewController(themeSettingsInteractor: themeSettingsInteractor)
         return themeSettingsVC
     }
     

@@ -18,19 +18,19 @@ final class ConversationViewController: UIViewController {
         tableView.allowsSelection = false
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.backgroundColor = conversationModel.currentTheme.backgroundColor
+        tableView.backgroundColor = conversationInteractor.currentTheme.backgroundColor
         tableView.keyboardDismissMode = .interactive
         return tableView
     }()
     
     private lazy var inputContainerView: InputAccessoryContainerView = {
-        let inputContainerView = InputAccessoryContainerView(theme: conversationModel.currentTheme)
+        let inputContainerView = InputAccessoryContainerView(theme: conversationInteractor.currentTheme)
         inputContainerView.delegate = self
         return inputContainerView
     }()
     
     private lazy var frcDelegate = FetchedResultsControllerDelegate<MessageDB>(tableView: tableView)
-    private let conversationModel: ConversationModelProtocol
+    private let conversationInteractor: ConversationInteractorProtocol
     
     override var inputAccessoryView: UIView? {
         return inputContainerView
@@ -40,16 +40,16 @@ final class ConversationViewController: UIViewController {
         return true
     }
     
-    init(conversationModel: ConversationModelProtocol) {
-        self.conversationModel = conversationModel
+    init(conversationInteractor: ConversationInteractorProtocol) {
+        self.conversationInteractor = conversationInteractor
         super.init(nibName: nil, bundle: nil)
         
-        title = conversationModel.channelTitle
+        title = conversationInteractor.channelTitle
         
         frcDelegate.didUpdateTable = { [weak self] in
             self?.scrollToTheBottom()
         }
-        conversationModel.fetchedResultsController.delegate = frcDelegate
+        conversationInteractor.fetchedResultsController.delegate = frcDelegate
     }
     
     required init?(coder: NSCoder) {
@@ -63,14 +63,14 @@ final class ConversationViewController: UIViewController {
         setupEndEditingTap()
         layoutTableView()
         
-        conversationModel.fetchSavedMessages()
-        conversationModel.fetchNewMessagesAndSaveToDB()
+        conversationInteractor.fetchSavedMessages()
+        conversationInteractor.fetchNewMessagesAndSaveToDB()
     }
     
     private func scrollToTheBottom() {
-        guard let numberOfSections = conversationModel.fetchedResultsController.sections?.count,
+        guard let numberOfSections = conversationInteractor.fetchedResultsController.sections?.count,
               numberOfSections > 0 else { return }
-        guard let numberOfObjectsInTheLastSection = conversationModel.fetchedResultsController.sections?[numberOfSections - 1].numberOfObjects,
+        guard let numberOfObjectsInTheLastSection = conversationInteractor.fetchedResultsController.sections?[numberOfSections - 1].numberOfObjects,
               numberOfObjectsInTheLastSection > 0 else { return }
         
         tableView.scrollToRow(at: IndexPath(row: numberOfObjectsInTheLastSection - 1, section: numberOfSections - 1), at: .bottom, animated: true)
@@ -123,7 +123,7 @@ final class ConversationViewController: UIViewController {
 extension ConversationViewController: InputDelegate {
     
     func handleSend(text: String, completion: @escaping SuccessCompletion) {
-        conversationModel.sendMessage(text) { (success) in
+        conversationInteractor.sendMessage(text) { (success) in
             if !success {
                 self.showOkAlert("Error", "Could not send message :(")
             }
@@ -137,9 +137,9 @@ extension ConversationViewController: InputDelegate {
 extension ConversationViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let sectionDate = conversationModel.fetchedResultsController.sections?[section].name else { return nil }
+        guard let sectionDate = conversationInteractor.fetchedResultsController.sections?[section].name else { return nil }
         
-        let headerView = ConversationDateHeader(dateString: sectionDate, theme: conversationModel.currentTheme)
+        let headerView = ConversationDateHeader(dateString: sectionDate, theme: conversationInteractor.currentTheme)
         return headerView
     }
 }
@@ -149,11 +149,11 @@ extension ConversationViewController: UITableViewDelegate {
 extension ConversationViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        conversationModel.fetchedResultsController.sections?.count ?? 1
+        conversationInteractor.fetchedResultsController.sections?.count ?? 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let sectionInfo = conversationModel.fetchedResultsController.sections?[section] else { return 0 }
+        guard let sectionInfo = conversationInteractor.fetchedResultsController.sections?[section] else { return 0 }
         return sectionInfo.numberOfObjects
     }
     
@@ -162,10 +162,10 @@ extension ConversationViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let messageDB = conversationModel.fetchedResultsController.object(at: indexPath)
+        let messageDB = conversationInteractor.fetchedResultsController.object(at: indexPath)
         let model = MessageCellModel(messageDB: messageDB)
         
-        cell.configure(with: model, and: conversationModel.currentTheme)
+        cell.configure(with: model, and: conversationInteractor.currentTheme)
         return cell
     }
 }

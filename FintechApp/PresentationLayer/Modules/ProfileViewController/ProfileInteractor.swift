@@ -1,5 +1,5 @@
 //
-//  ProfileModel.swift
+//  ProfileInteractor.swift
 //  FintechApp
 //
 //  Created by Rudolf Oganesyan on 13.11.2020.
@@ -8,11 +8,11 @@
 
 import Foundation
 
-protocol ProfileModelProtocol {
+protocol ProfileInteractorProtocol {
     var currentTheme: Theme { get }
 }
 
-final class ProfileModel: ProfileModelProtocol {
+final class ProfileInteractor: ProfileInteractorProtocol {
     
     let themeService: ThemeServiceProtocol
     

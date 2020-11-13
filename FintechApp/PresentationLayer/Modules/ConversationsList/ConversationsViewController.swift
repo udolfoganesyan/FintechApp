@@ -36,15 +36,15 @@ final class ConversationsViewController: UIViewController {
     
     private lazy var frcDelegate = FetchedResultsControllerDelegate<ChannelDB>(tableView: tableView)
     private var actionToEnable: UIAlertAction?
-    private let conversationsModel: ConversationsModelProtocol
+    private let conversationsInteractor: ConversationsInteractorProtocol
     private let presentationAssembly: PresentationAssemblyProtocol
     
-    init(conversationsModel: ConversationsModelProtocol, presentationAssembly: PresentationAssemblyProtocol) {
+    init(conversationsInteractor: ConversationsInteractorProtocol, presentationAssembly: PresentationAssemblyProtocol) {
         self.presentationAssembly = presentationAssembly
-        self.conversationsModel = conversationsModel
+        self.conversationsInteractor = conversationsInteractor
         super.init(nibName: nil, bundle: nil)
         
-        conversationsModel.fetchedResultsController.delegate = frcDelegate
+        conversationsInteractor.fetchedResultsController.delegate = frcDelegate
     }
     
     required init?(coder: NSCoder) {
@@ -59,8 +59,8 @@ final class ConversationsViewController: UIViewController {
         setupAddButton()
         updateTheme()
         
-        conversationsModel.fetchSavedChannels()
-        conversationsModel.fetchNewChannelsAndSaveToDB()
+        conversationsInteractor.fetchSavedChannels()
+        conversationsInteractor.fetchNewChannelsAndSaveToDB()
     }
     
     private func setupNavigationBar() {
@@ -124,7 +124,7 @@ final class ConversationsViewController: UIViewController {
                 return
             }
             
-            self.conversationsModel.createFBChannelWith(name) { (success) in
+            self.conversationsInteractor.createFBChannelWith(name) { (success) in
                 if !success {
                     self.showOkAlert("Error", "Could not create channel :(")
                 }
@@ -149,7 +149,7 @@ final class ConversationsViewController: UIViewController {
 extension ConversationsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedChannel = conversationsModel.fetchedResultsController.object(at: indexPath)
+        let selectedChannel = conversationsInteractor.fetchedResultsController.object(at: indexPath)
         let conversationsViewController = presentationAssembly.conversationViewController(forChannel: selectedChannel)
         navigationController?.pushViewController(conversationsViewController, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
@@ -161,7 +161,7 @@ extension ConversationsViewController: UITableViewDelegate {
 extension ConversationsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let sectionInfo = conversationsModel.fetchedResultsController.sections?[section] else { return 0 }
+        guard let sectionInfo = conversationsInteractor.fetchedResultsController.sections?[section] else { return 0 }
         return sectionInfo.numberOfObjects
     }
     
@@ -170,10 +170,10 @@ extension ConversationsViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let channelDB = conversationsModel.fetchedResultsController.object(at: indexPath)
+        let channelDB = conversationsInteractor.fetchedResultsController.object(at: indexPath)
         let model = ConversationCellModel(channelDB: channelDB)
         
-        cell.configure(with: model, and: conversationsModel.currentTheme)
+        cell.configure(with: model, and: conversationsInteractor.currentTheme)
         
         return cell
     }
@@ -184,8 +184,8 @@ extension ConversationsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let channel = conversationsModel.fetchedResultsController.object(at: indexPath)
-            conversationsModel.deleteFBChannelWith(channelId: channel.identifier) { (success) in
+            let channel = conversationsInteractor.fetchedResultsController.object(at: indexPath)
+            conversationsInteractor.deleteFBChannelWith(channelId: channel.identifier) { (success) in
                 if !success {
                     self.showOkAlert("Error", "Could not delete channel :(")
                 }
@@ -203,10 +203,10 @@ extension ConversationsViewController: SettingsDelegate {
     }
     
     private func updateTheme() {
-        tableView.backgroundColor = conversationsModel.currentTheme.backgroundColor
+        tableView.backgroundColor = conversationsInteractor.currentTheme.backgroundColor
         tableView.reloadData()
         
-        navigationController?.navigationBar.barTintColor = conversationsModel.currentTheme.backgroundColor
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: conversationsModel.currentTheme.primaryTextColor]
+        navigationController?.navigationBar.barTintColor = conversationsInteractor.currentTheme.backgroundColor
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: conversationsInteractor.currentTheme.primaryTextColor]
     }
 }

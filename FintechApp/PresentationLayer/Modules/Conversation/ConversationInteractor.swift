@@ -1,5 +1,5 @@
 //
-//  ConversationModel.swift
+//  ConversationInteractor.swift
 //  FintechApp
 //
 //  Created by Rudolf Oganesyan on 13.11.2020.
@@ -8,7 +8,7 @@
 
 import CoreData
 
-protocol ConversationModelProtocol {
+protocol ConversationInteractorProtocol {
     var currentTheme: Theme { get }
     
     func fetchMessages(completion: @escaping (FirestoreUpdate<Message>) -> Void)
@@ -20,7 +20,7 @@ protocol ConversationModelProtocol {
     func fetchNewMessagesAndSaveToDB()
 }
 
-final class ConversationModel: ConversationModelProtocol {
+final class ConversationInteractor: ConversationInteractorProtocol {
     
     private let channel: ChannelDB
     private let themeService: ThemeServiceProtocol
