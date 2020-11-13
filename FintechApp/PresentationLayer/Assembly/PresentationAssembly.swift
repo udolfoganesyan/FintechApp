@@ -69,9 +69,4 @@ final class PresentationAssembly: PresentationAssemblyProtocol {
 //        model.delegate = demoVC
 //        return demoVC
 //    }
-//
-//    private func demoModel() -> IDemoModel {
-//        return DemoModel(appsService: serviceAssembly.appService,
-//                         tracksService: serviceAssembly.tracksService)
-//    }
 }
