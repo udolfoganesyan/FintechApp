@@ -16,16 +16,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        FirebaseApp.configure()
+        ThemeManager.setupNavigationBarAppearance()
+        
         window = UIWindow(frame: UIScreen.main.bounds)
-        let coreDataManager = CoreDataManager()
+        let coreDataManager = CoreDataManager(dataModelName: CoreDataManager.chatDataModelName)
         let rootVC = ConversationsListViewController(coreDataManager: coreDataManager)
         let navController = UINavigationController(rootViewController: rootVC)
         window?.rootViewController = navController
         window?.makeKeyAndVisible()
-        
-        ThemeManager.setupNavigationBarAppearance()
-        
-        FirebaseApp.configure()
         
         return true
     }

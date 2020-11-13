@@ -16,6 +16,7 @@ final class MessageDB: NSManagedObject {
     @NSManaged var created: Date
     @NSManaged var senderId: String
     @NSManaged var senderName: String
+    @NSManaged var dateForSection: Date
     @NSManaged var channel: ChannelDB?
     
     var about: String {
@@ -30,9 +31,27 @@ final class MessageDB: NSManagedObject {
         self.created = message.created
         self.senderId = message.senderId
         self.senderName = message.senderName
+        self.dateForSection = getDateWithoutTimeFrom(message.created)
+    }
+    
+    private func getDateWithoutTimeFrom(_ date: Date) -> Date {
+        let calendar = Calendar.current
+        let dateForSection = calendar.date(from: calendar.dateComponents([.year, .month, .day], from: date))
+        return dateForSection ?? Date()
     }
     
     @nonobjc class func fetchRequest() -> NSFetchRequest<MessageDB> {
         return NSFetchRequest<MessageDB>(entityName: "MessageDB")
+    }
+}
+
+// MARK: - Managed
+
+extension MessageDB: Managed {
+    
+    static var defaultSortDescriptors: [NSSortDescriptor] {
+        let sectionsSort = NSSortDescriptor(key: "dateForSection", ascending: true)
+        let rowsSort = NSSortDescriptor(key: "created", ascending: true)
+        return [sectionsSort, rowsSort]
     }
 }

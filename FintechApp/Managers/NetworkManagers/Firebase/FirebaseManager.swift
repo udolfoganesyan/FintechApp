@@ -30,21 +30,15 @@ enum FirebaseManager {
     private static let database = Firestore.firestore()
     private static let channelsReference = database.collection(FirebaseKeys.channels.rawValue)
     
-    static func fetchChannels(completion: @escaping ([Channel]) -> Void) {
+    static func fetchChannels(completion: @escaping (FirestoreUpdate<Channel>) -> Void) {
         channelsReference.addSnapshotListener { (snapshot, error) in
             guard error == nil else { return }
             guard let snapshot = snapshot else { return }
             
-            let documents = snapshot.documents
-            let channels = parseChannelsFrom(documents)
-            completion(channels)
+            let documentChanges = snapshot.documentChanges
+            let channelUpdates = FirestoreUpdate<Channel>(documentChanges: documentChanges)
+            completion(channelUpdates)
         }
-    }
-    
-    private static func parseChannelsFrom(_ documents: [QueryDocumentSnapshot]) -> [Channel] {
-        var channels = documents.compactMap { Channel($0) }
-        channels.sort { $0.lastActivity ?? Date(timeIntervalSince1970: 0) > $1.lastActivity ?? Date(timeIntervalSince1970: 0) }
-        return channels
     }
     
     static func createChannelWith(_ name: String, completion: @escaping SuccessCompletion) {
@@ -56,21 +50,22 @@ enum FirebaseManager {
         channelsReference.addDocument(data: data, completion: completion)
     }
     
-    static func fetchMessagesFor(_ channelId: String, completion: @escaping ([Message]) -> Void) {
+    static func deleteChannelWith(channelId: String, completion: @escaping SuccessCompletion) {
+        channelsReference.document(channelId).delete { (error) in
+            let success = error == nil
+            completion(success)
+        }
+    }
+    
+    static func fetchMessagesFor(_ channelId: String, completion: @escaping (FirestoreUpdate<Message>) -> Void) {
         channelsReference.document(channelId).collection(FirebaseKeys.messages.rawValue).addSnapshotListener { (snapshot, error) in
             guard error == nil else { return }
             guard let snapshot = snapshot else { return }
             
-            let documents = snapshot.documents
-            let messages = parseMessagesFrom(documents)
-            completion(messages)
+            let documentChanges = snapshot.documentChanges
+            let messageUpdates = FirestoreUpdate<Message>(documentChanges: documentChanges)
+            completion(messageUpdates)
         }
-    }
-    
-    private static func parseMessagesFrom(_ documents: [QueryDocumentSnapshot]) -> [Message] {
-        var messages = documents.compactMap { Message($0) }
-        messages.sort { $0.created < $1.created }
-        return messages
     }
     
     static func sendMessage(_ message: String, to channelId: String, completion: @escaping SuccessCompletion) {
@@ -80,7 +75,6 @@ enum FirebaseManager {
             FirebaseKeys.senderId: myId,
             FirebaseKeys.senderName: "Rudolf"
         ]
-        
         channelsReference.document(channelId).collection(FirebaseKeys.messages.rawValue).addDocument(data: data, completion: completion)
     }
 }

@@ -39,6 +39,10 @@ final class InputAccessoryContainerView: UIView {
         return button
     }()
     
+    override var intrinsicContentSize: CGSize {
+        .zero
+    }
+    
     init() {
         super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
         backgroundColor = ThemeManager.currentTheme.backgroundColor
@@ -60,10 +64,6 @@ final class InputAccessoryContainerView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override var intrinsicContentSize: CGSize {
-        .zero
     }
     
     @objc private func handleSend() {

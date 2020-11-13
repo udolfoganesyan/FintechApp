@@ -11,7 +11,7 @@ import Foundation
 struct Logger {
     
     // in case we dont need logs even in debug mode
-    static let isOn = true
+    static let isOn = false
     
     static func log(_ message: String, function: String = #function) {
         #if DEBUG

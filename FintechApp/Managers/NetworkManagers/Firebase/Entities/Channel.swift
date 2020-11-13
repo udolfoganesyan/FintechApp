@@ -8,7 +8,7 @@
 
 import FirebaseFirestore
 
-struct Channel {
+struct Channel: FirestoreSnapshotInitializable {
     
     let identifier: String
     let name: String

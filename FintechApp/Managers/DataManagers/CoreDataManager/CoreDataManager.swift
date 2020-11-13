@@ -10,82 +10,38 @@ import CoreData
 
 final class CoreDataManager {
     
-    var didUpdateDataBase: ((CoreDataManager) -> Void)
+    static let chatDataModelName = "Chat"
     
-    private var storeUrl: URL = {
-        guard let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last else {
-            fatalError("Documents path not found")
+    var didUpdateDataBase: ((CoreDataManager) -> Void)?
+    
+    private let dataModelName: String
+    
+    private lazy var storeContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: dataModelName)
+        container.loadPersistentStores { (_, error) in
+            if let error = error as NSError? {
+                Logger.log("Unresolved error \(error), \(error.userInfo)")
+            }
         }
-        Logger.log(documentsUrl.appendingPathComponent("Chat.sqlite").absoluteString)
-        return documentsUrl.appendingPathComponent("Chat.sqlite")
+        container.viewContext.automaticallyMergesChangesFromParent = true
+        return container
     }()
     
-    private let dataModelName = "Chat"
-    private let dataModelExtension = "momd"
+    lazy var mainContext: NSManagedObjectContext = {
+        return self.storeContainer.viewContext
+    }()
     
-    init() {
-        didUpdateDataBase = { manager in
-            _ = manager.fetchChannels()
-            _ = manager.fetchMessages()
-        }
+    init(dataModelName: String) {
+        self.dataModelName = dataModelName
         enableObservers()
     }
     
-    private(set) lazy var managedObjectModel: NSManagedObjectModel = {
-        guard let modelUrl = Bundle.main.url(forResource: self.dataModelName, withExtension: self.dataModelExtension) else {
-            fatalError("model not found")
-        }
-        guard let managedObjectModel = NSManagedObjectModel(contentsOf: modelUrl) else {
-            fatalError("could not create mom")
-        }
-        
-        return managedObjectModel
-    }()
-    
-    private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
-        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        
-        do {
-            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType,
-                                               configurationName: nil,
-                                               at: self.storeUrl,
-                                               options: nil)
-        } catch {
-            fatalError(error.localizedDescription)
-        }
-        return coordinator
-    }()
-    
-    private lazy var writerContext: NSManagedObjectContext = {
-        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        context.persistentStoreCoordinator = persistentStoreCoordinator
-        context.mergePolicy = NSOverwriteMergePolicy
-        return context
-    }()
-    
-    private(set) lazy var mainContext: NSManagedObjectContext = {
-        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        context.parent = writerContext
-        context.automaticallyMergesChangesFromParent = true
-        context.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
-        return context
-    }()
-    
-    private func saveContext() -> NSManagedObjectContext {
-        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        context.parent = mainContext
-        context.automaticallyMergesChangesFromParent = true
-        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-        
-        return context
-    }
-    
     func performSave(_ block: @escaping (NSManagedObjectContext) -> Void) {
-        let context = saveContext()
-        context.perform {
+        storeContainer.performBackgroundTask { (context) in
             block(context)
             if context.hasChanges {
                 do {
+                    try context.obtainPermanentIDs(for: Array(context.insertedObjects))
                     try self.performSave(in: context)
                 } catch { assertionFailure(error.localizedDescription) }
             }
@@ -99,28 +55,51 @@ final class CoreDataManager {
         }
     }
     
-    func fetchChannels(withPredicate predicate: NSPredicate? = nil, in context: NSManagedObjectContext? = nil) -> [ChannelDB]? {
-        do {
-            let fetchContext = context ?? mainContext
-            let request: NSFetchRequest<ChannelDB> = ChannelDB.fetchRequest()
-            request.predicate = predicate
-            let channels = try fetchContext.fetch(request)
-            channels.forEach { Logger.log($0.about) }
-            return channels
-        } catch {
-            Logger.log(error.localizedDescription)
-            return nil
+    func addOrUpdateChannels(_ channels: [Channel]) {
+        performSave { (context) in
+            channels.forEach {
+                let fetchRequest: NSFetchRequest<ChannelDB> = ChannelDB.fetchRequest()
+                let predicate = NSPredicate(format: "identifier = %@", $0.identifier)
+                fetchRequest.predicate = predicate
+                do {
+                    let channelsDB = try context.fetch(fetchRequest)
+                    if let channel = channelsDB.first {                    channel.setValue($0.lastActivity, forKey: "lastActivity")
+                        channel.setValue($0.lastMessage, forKey: "lastMessage")
+                        channel.setValue($0.name, forKey: "name")
+                    } else {
+                        _ = ChannelDB(channel: $0, context: context)
+                    }
+                } catch {
+                    Logger.log(error.localizedDescription)
+                }
+            }
         }
     }
     
-    func fetchMessages() -> [MessageDB]? {
-        do {
-            let messages = try mainContext.fetch(MessageDB.fetchRequest()) as? [MessageDB] ?? []
-            messages.forEach { Logger.log($0.about) }
-            return messages
-        } catch {
-            Logger.log(error.localizedDescription)
-            return nil
+    func deleteChannels(_ channels: [Channel]) {
+        performSave { (context) in
+            channels.forEach {
+                let fetchRequest: NSFetchRequest<ChannelDB> = ChannelDB.fetchRequest()
+                let predicate = NSPredicate(format: "identifier = %@", $0.identifier)
+                fetchRequest.predicate = predicate
+                do {
+                    let channelsDB = try context.fetch(fetchRequest)
+                    guard let channelToDelete = channelsDB.first else { return }
+                    context.delete(channelToDelete)
+                } catch {
+                    Logger.log(error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    func addMessages(_ messages: [Message], forChannelWith objectID: NSManagedObjectID) {
+        performSave { (context) in
+            guard let channelToAddMessages = context.object(with: objectID) as? ChannelDB else { return }
+            
+            let messagesDB = messages.map { MessageDB(message: $0, context: context) }
+            let setOfMessagesToAdd = NSOrderedSet(array: messagesDB)
+            channelToAddMessages.addToMessages(setOfMessagesToAdd)
         }
     }
     
@@ -137,7 +116,7 @@ final class CoreDataManager {
         
         Logger.log("something changed in database")
         
-        didUpdateDataBase(self)
+        didUpdateDataBase?(self)
         
         if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject> {
             Logger.log("Added: \(inserts.count)")
