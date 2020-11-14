@@ -55,7 +55,7 @@ final class ConversationsViewController: UIViewController {
         super.viewDidLoad()
         
         setupNavigationBar()
-        setupTableView()
+        layoutTableView()
         setupAddButton()
         updateTheme()
         
@@ -94,7 +94,7 @@ final class ConversationsViewController: UIViewController {
         present(profileViewController, animated: true)
     }
     
-    private func setupTableView() {
+    private func layoutTableView() {
         view.addSubview(tableView)
         tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true

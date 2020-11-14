@@ -10,6 +10,7 @@ import Foundation
 
 protocol PresentationAssemblyProtocol {
     func profileViewController() -> ProfileViewController
+    func webImagesViewController() -> WebImagesViewController
     func conversationsListViewController() -> ConversationsViewController
     func conversationViewController(forChannel channel: ChannelDB) -> ConversationViewController
     func themeSettingsViewController() -> ThemeSettingsViewController
@@ -24,15 +25,23 @@ final class PresentationAssembly: PresentationAssemblyProtocol {
         serviceAssembly.themeService.setupNavigationBarAppearance()
     }
     
-    // MARK: - ConversationsViewController
+    // MARK: - ProfileViewController
     
     func profileViewController() -> ProfileViewController {
         let profileInteractor =
             ProfileInteractor(themeService: serviceAssembly.themeService,
                               gcdUserDataService: serviceAssembly.gcdUserDataService,
                               operationUserDataService: serviceAssembly.operationUserDataService)
-        let profileVC = ProfileViewController(profileInteractor: profileInteractor)
+        let profileVC = ProfileViewController(profileInteractor: profileInteractor, presentationAssembly: self)
         return profileVC
+    }
+    
+    // MARK: - WebImagesViewController
+    
+    func webImagesViewController() -> WebImagesViewController {
+        let webImagesInteractor = WebImagesInteractor()
+        let webImagesVC = WebImagesViewController(webImagesInteractor: webImagesInteractor)
+        return webImagesVC
     }
     
     // MARK: - ConversationsViewController
@@ -42,8 +51,8 @@ final class PresentationAssembly: PresentationAssemblyProtocol {
             ConversationsInteractor(themeService: serviceAssembly.themeService,
                                     firebaseService: serviceAssembly.firebaseService,
                                     coreDataService: serviceAssembly.coreDataService)
-        let rootVC = ConversationsViewController(conversationsInteractor: conversationsInteractor, presentationAssembly: self)
-        return rootVC
+        let conversationsVC = ConversationsViewController(conversationsInteractor: conversationsInteractor, presentationAssembly: self)
+        return conversationsVC
     }
     
     // MARK: - ConversationViewController

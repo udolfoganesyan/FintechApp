@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A107A74525605D6600C1CC73 /* WebImagesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A107A74425605D6600C1CC73 /* WebImagesService.swift */; };
+		A107A74C2560778800C1CC73 /* WebImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A107A74B2560778800C1CC73 /* WebImagesViewController.swift */; };
+		A107A750256077C500C1CC73 /* WebImagesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A107A74F256077C500C1CC73 /* WebImagesInteractor.swift */; };
+		A107A75525607D3D00C1CC73 /* WebImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A107A75425607D3D00C1CC73 /* WebImageCell.swift */; };
 		A10A883C251E8BF8006B3017 /* OnlineBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A883B251E8BF8006B3017 /* OnlineBadgeView.swift */; };
 		A10A887D251F30CC006B3017 /* UIColor+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A887C251F30CC006B3017 /* UIColor+Random.swift */; };
 		A10A8880251F3C60006B3017 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A887F251F3C60006B3017 /* ConversationViewController.swift */; };
@@ -58,7 +62,7 @@
 		A1C743A3251E39BF005B5195 /* ConversationCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C743A2251E39BF005B5195 /* ConversationCellModel.swift */; };
 		A1C743A7251E3ABA005B5195 /* ConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C743A5251E3ABA005B5195 /* ConversationCell.swift */; };
 		A1C743A8251E3ABA005B5195 /* ConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A1C743A6251E3ABA005B5195 /* ConversationCell.xib */; };
-		A1C743AB251E3C6B005B5195 /* UITableViewCell+reuseIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C743AA251E3C6B005B5195 /* UITableViewCell+reuseIdentifier.swift */; };
+		A1C743AB251E3C6B005B5195 /* ConvenientCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C743AA251E3C6B005B5195 /* ConvenientCell.swift */; };
 		A1CF7B2D2538B5BC00190B95 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A1CF7B2C2538B5BC00190B95 /* GoogleService-Info.plist */; };
 		A1DE22C425484519008F05FA /* Chat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A1DE22C225484519008F05FA /* Chat.xcdatamodeld */; };
 		A1F6B16D255175E900C7E1D2 /* HeaderDateLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F6B16C255175E900C7E1D2 /* HeaderDateLabel.swift */; };
@@ -71,6 +75,10 @@
 		1C7E1EEFBFD98FAA5EFDF703 /* Pods_FintechApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FintechApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		514E5A995CD6C9BABDE5FB16 /* Pods-FintechApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FintechApp.debug.xcconfig"; path = "Target Support Files/Pods-FintechApp/Pods-FintechApp.debug.xcconfig"; sourceTree = "<group>"; };
 		9D62D48067EC9199756A663E /* Pods-FintechApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FintechApp.release.xcconfig"; path = "Target Support Files/Pods-FintechApp/Pods-FintechApp.release.xcconfig"; sourceTree = "<group>"; };
+		A107A74425605D6600C1CC73 /* WebImagesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebImagesService.swift; sourceTree = "<group>"; };
+		A107A74B2560778800C1CC73 /* WebImagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebImagesViewController.swift; sourceTree = "<group>"; };
+		A107A74F256077C500C1CC73 /* WebImagesInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebImagesInteractor.swift; sourceTree = "<group>"; };
+		A107A75425607D3D00C1CC73 /* WebImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebImageCell.swift; sourceTree = "<group>"; };
 		A10A883B251E8BF8006B3017 /* OnlineBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineBadgeView.swift; sourceTree = "<group>"; };
 		A10A887C251F30CC006B3017 /* UIColor+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Random.swift"; sourceTree = "<group>"; };
 		A10A887F251F3C60006B3017 /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
@@ -124,7 +132,7 @@
 		A1C743A2251E39BF005B5195 /* ConversationCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCellModel.swift; sourceTree = "<group>"; };
 		A1C743A5251E3ABA005B5195 /* ConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCell.swift; sourceTree = "<group>"; };
 		A1C743A6251E3ABA005B5195 /* ConversationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationCell.xib; sourceTree = "<group>"; };
-		A1C743AA251E3C6B005B5195 /* UITableViewCell+reuseIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+reuseIdentifier.swift"; sourceTree = "<group>"; };
+		A1C743AA251E3C6B005B5195 /* ConvenientCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvenientCell.swift; sourceTree = "<group>"; };
 		A1CF7B2C2538B5BC00190B95 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A1DE22C325484519008F05FA /* Chat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Chat.xcdatamodel; sourceTree = "<group>"; };
 		A1F6B16C255175E900C7E1D2 /* HeaderDateLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderDateLabel.swift; sourceTree = "<group>"; };
@@ -159,6 +167,40 @@
 				1C7E1EEFBFD98FAA5EFDF703 /* Pods_FintechApp.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A107A74325605D2D00C1CC73 /* WebImagesService */ = {
+			isa = PBXGroup;
+			children = (
+				A107A74425605D6600C1CC73 /* WebImagesService.swift */,
+			);
+			path = WebImagesService;
+			sourceTree = "<group>";
+		};
+		A107A74825605D7900C1CC73 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				A12320852529CB87005F8249 /* Theme.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		A107A74A2560775900C1CC73 /* WebImagesViewController */ = {
+			isa = PBXGroup;
+			children = (
+				A107A75825607D6500C1CC73 /* Cell */,
+				A107A74F256077C500C1CC73 /* WebImagesInteractor.swift */,
+				A107A74B2560778800C1CC73 /* WebImagesViewController.swift */,
+			);
+			path = WebImagesViewController;
+			sourceTree = "<group>";
+		};
+		A107A75825607D6500C1CC73 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				A107A75425607D3D00C1CC73 /* WebImageCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		A10A8882251F3C65006B3017 /* Conversation */ = {
@@ -213,8 +255,8 @@
 		A12320842529CB7B005F8249 /* ThemeService */ = {
 			isa = PBXGroup;
 			children = (
+				A107A74825605D7900C1CC73 /* Entities */,
 				A123207D2529C845005F8249 /* ThemeService.swift */,
-				A12320852529CB87005F8249 /* Theme.swift */,
 			);
 			path = ThemeService;
 			sourceTree = "<group>";
@@ -325,6 +367,7 @@
 			isa = PBXGroup;
 			children = (
 				A16570862517EC0E00C22EAD /* ProfileViewController */,
+				A107A74A2560775900C1CC73 /* WebImagesViewController */,
 				A1C7439D251E3872005B5195 /* ConversationsList */,
 				A10A8882251F3C65006B3017 /* Conversation */,
 				A12320772528C313005F8249 /* ThemeSettings */,
@@ -344,6 +387,7 @@
 			isa = PBXGroup;
 			children = (
 				A1635981255DE31D00D1888A /* Assembly */,
+				A107A74325605D2D00C1CC73 /* WebImagesService */,
 				A12320842529CB7B005F8249 /* ThemeService */,
 				A187D123253C4AFD008AAE86 /* FirebaseService */,
 				A11D45562548417500A25815 /* CoreDataService */,
@@ -381,7 +425,7 @@
 			isa = PBXGroup;
 			children = (
 				A16570812517600300C22EAD /* UIAlertController+ConstraintsFix.swift */,
-				A1C743AA251E3C6B005B5195 /* UITableViewCell+reuseIdentifier.swift */,
+				A1C743AA251E3C6B005B5195 /* ConvenientCell.swift */,
 				A10A887C251F30CC006B3017 /* UIColor+Random.swift */,
 				A18E47422534C4BA0096D1B3 /* UIViewController+Alert.swift */,
 				A1202FCB2537049E0056BFCE /* UIViewController+Keyboard.swift */,
@@ -635,6 +679,7 @@
 				A1202F89253648A60056BFCE /* SaveUserDataOperation.swift in Sources */,
 				A169F0C825573A6C001F0EDB /* Managed.swift in Sources */,
 				A18A6865253EF9B400E1B4D7 /* FirebaseExtensions.swift in Sources */,
+				A107A74525605D6600C1CC73 /* WebImagesService.swift in Sources */,
 				A10A887D251F30CC006B3017 /* UIColor+Random.swift in Sources */,
 				A128E913253C81D0000ED358 /* InputAccessoryContainerView.swift in Sources */,
 				A137AD09254869B700E50037 /* ChannelDB.swift in Sources */,
@@ -658,12 +703,15 @@
 				A12320742528C30B005F8249 /* ThemeSettingsViewController.swift in Sources */,
 				A10A8889251F3CC2006B3017 /* MessageCell.swift in Sources */,
 				A1635973255DE0E700D1888A /* PresentationAssembly.swift in Sources */,
+				A107A74C2560778800C1CC73 /* WebImagesViewController.swift in Sources */,
 				A1202FCF2537059D0056BFCE /* FetchUserDataOperation.swift in Sources */,
 				A18E473C2534BB430096D1B3 /* OperationUserDataService.swift in Sources */,
 				A128E906253C719C000ED358 /* Message.swift in Sources */,
 				A1635985255DE37400D1888A /* CoreAssembly.swift in Sources */,
 				A1C7439B251E386B005B5195 /* ConversationsViewController.swift in Sources */,
-				A1C743AB251E3C6B005B5195 /* UITableViewCell+reuseIdentifier.swift in Sources */,
+				A107A75525607D3D00C1CC73 /* WebImageCell.swift in Sources */,
+				A1C743AB251E3C6B005B5195 /* ConvenientCell.swift in Sources */,
+				A107A750256077C500C1CC73 /* WebImagesInteractor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

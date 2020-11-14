@@ -28,9 +28,11 @@ final class ProfileViewController: UIViewController {
     private var inEditingMode = false
     private var didChangeAvatar = false
     private let profileInteractor: ProfileInteractorProtocol
+    private let presentationAssembly: PresentationAssemblyProtocol
     
-    init(profileInteractor: ProfileInteractorProtocol) {
+    init(profileInteractor: ProfileInteractorProtocol, presentationAssembly: PresentationAssemblyProtocol) {
         self.profileInteractor = profileInteractor
+        self.presentationAssembly = presentationAssembly
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -198,12 +200,18 @@ final class ProfileViewController: UIViewController {
         let galleryAction = UIAlertAction(title: "Gallery", style: .default) { _ in
             self.showImagePicker(for: .photoLibrary)
         }
+        let downloadAction = UIAlertAction(title: "Download", style: .default) { _ in
+            let webImagesViewController = self.presentationAssembly.webImagesViewController()
+            webImagesViewController.delegate = self
+            self.present(webImagesViewController, animated: true)
+        }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
         #if !targetEnvironment(simulator)
         alertController.addAction(cameraAction)
         #endif
         alertController.addAction(galleryAction)
+        alertController.addAction(downloadAction)
         alertController.addAction(cancelAction)
         alertController.pruneNegativeWidthConstraints()
         self.present(alertController, animated: true, completion: nil)
@@ -235,6 +243,17 @@ final class ProfileViewController: UIViewController {
 extension ProfileViewController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
+        checkChangesAndSetSaveButtons()
+    }
+}
+
+// MARK: - WebImagesViewControllerDelegate
+
+extension ProfileViewController: WebImagesViewControllerDelegate {
+    
+    func didChooseImage(_ image: UIImage) {
+        avatarView.setupWith(image: image)
+        didChangeAvatar = true
         checkChangesAndSetSaveButtons()
     }
 }
