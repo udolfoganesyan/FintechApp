@@ -201,9 +201,7 @@ final class ProfileViewController: UIViewController {
             self.showImagePicker(for: .photoLibrary)
         }
         let downloadAction = UIAlertAction(title: "Download", style: .default) { _ in
-            let webImagesViewController = self.presentationAssembly.webImagesViewController()
-            webImagesViewController.delegate = self
-            self.present(webImagesViewController, animated: true)
+            self.presentWebImagesViewController()
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
@@ -233,6 +231,18 @@ final class ProfileViewController: UIViewController {
         present(imagePickerController, animated: true)
     }
     
+    private func presentWebImagesViewController() {
+        let webImagesViewController = self.presentationAssembly.webImagesViewController()
+        webImagesViewController.delegate = self
+        present(webImagesViewController, animated: true)
+    }
+    
+    private func setAvatarImage(_ image: UIImage) {
+        avatarView.setupWith(image: image)
+        didChangeAvatar = true
+        checkChangesAndSetSaveButtons()
+    }
+    
     @IBAction private func closeButtonTouched(_ sender: UIButton) {
         dismiss(animated: true)
     }
@@ -252,9 +262,7 @@ extension ProfileViewController: UITextViewDelegate {
 extension ProfileViewController: WebImagesViewControllerDelegate {
     
     func didChooseImage(_ image: UIImage) {
-        avatarView.setupWith(image: image)
-        didChangeAvatar = true
-        checkChangesAndSetSaveButtons()
+        setAvatarImage(image)
     }
 }
 
@@ -265,10 +273,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
         
-        avatarView.setupWith(image: image)
-        didChangeAvatar = true
-        checkChangesAndSetSaveButtons()
-        
+        setAvatarImage(image)
         dismiss(animated: true)
     }
     

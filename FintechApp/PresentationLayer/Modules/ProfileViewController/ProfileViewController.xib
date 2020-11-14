@@ -120,7 +120,7 @@
                         <constraint firstAttribute="width" secondItem="d79-4t-izx" secondAttribute="height" multiplier="1:1" id="DUg-we-NX7"/>
                         <constraint firstAttribute="width" constant="40" id="ajl-wi-Qol"/>
                     </constraints>
-                    <color key="tintColor" red="0.32941176470588235" green="0.32941176470588235" blue="0.34509803921568627" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="tintColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                     <state key="normal" image="close">
                         <color key="titleColor" systemColor="labelColor"/>
                     </state>
