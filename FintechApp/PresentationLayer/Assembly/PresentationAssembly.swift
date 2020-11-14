@@ -39,7 +39,9 @@ final class PresentationAssembly: PresentationAssemblyProtocol {
     // MARK: - WebImagesViewController
     
     func webImagesViewController() -> WebImagesViewController {
-        let webImagesInteractor = WebImagesInteractor(webImagesService: serviceAssembly.webImagesService)
+        let webImagesInteractor =
+            WebImagesInteractor(themeService: serviceAssembly.themeService,
+                                webImagesService: serviceAssembly.webImagesService)
         let webImagesVC = WebImagesViewController(webImagesInteractor: webImagesInteractor)
         return webImagesVC
     }

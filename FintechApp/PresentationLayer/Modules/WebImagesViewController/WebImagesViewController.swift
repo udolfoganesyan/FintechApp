@@ -31,6 +31,7 @@ final class WebImagesViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(WebImageCell.self, forCellWithReuseIdentifier: WebImageCell.reuseIdentifier)
+        collectionView.backgroundColor = webImagesInteractor.currentTheme.backgroundColor
         return collectionView
     }()
     
@@ -58,11 +59,10 @@ final class WebImagesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = webImagesInteractor.currentTheme.backgroundColor
+        
         layoutCloseButton()
         layoutCollectionView()
-        
-        collectionView.backgroundColor = .white
-        view.backgroundColor = .white
     }
     
     private func layoutCloseButton() {

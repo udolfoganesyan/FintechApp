@@ -9,14 +9,20 @@
 import Foundation
 
 protocol WebImagesInteractorProtocol {
-    
+    var currentTheme: Theme { get }
 }
 
 final class WebImagesInteractor: WebImagesInteractorProtocol {
     
+    private let themeService: ThemeServiceProtocol
     private let webImagesService: WebImagesServiceProtocol
     
-    init(webImagesService: WebImagesServiceProtocol) {
+    var currentTheme: Theme {
+        themeService.currentTheme
+    }
+    
+    init(themeService: ThemeServiceProtocol, webImagesService: WebImagesServiceProtocol) {
+        self.themeService = themeService
         self.webImagesService = webImagesService
     }
 }
