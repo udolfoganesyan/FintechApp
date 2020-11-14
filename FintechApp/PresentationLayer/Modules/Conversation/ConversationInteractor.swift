@@ -22,10 +22,10 @@ protocol ConversationInteractorProtocol {
 
 final class ConversationInteractor: ConversationInteractorProtocol {
     
-    private let channel: ChannelDB
     private let themeService: ThemeServiceProtocol
     private let firebaseService: FirebaseServiceProtocol
     private let coreDataService: CoreDataServiceProtocol
+    private let channel: ChannelDB
     private let channelId: String
     
     private var channelObjectID: NSManagedObjectID {

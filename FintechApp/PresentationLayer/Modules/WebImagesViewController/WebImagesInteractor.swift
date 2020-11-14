@@ -14,4 +14,9 @@ protocol WebImagesInteractorProtocol {
 
 final class WebImagesInteractor: WebImagesInteractorProtocol {
     
+    private let webImagesService: WebImagesServiceProtocol
+    
+    init(webImagesService: WebImagesServiceProtocol) {
+        self.webImagesService = webImagesService
+    }
 }

@@ -15,7 +15,7 @@ protocol ThemeSettingsInteractorProtocol {
 
 final class ThemeSettingsInteractor: ThemeSettingsInteractorProtocol {
     
-    let themeService: ThemeServiceProtocol
+    private let themeService: ThemeServiceProtocol
     
     var currentTheme: Theme {
         themeService.currentTheme

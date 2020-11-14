@@ -22,11 +22,11 @@ protocol ProfileInteractorProtocol {
 
 final class ProfileInteractor: ProfileInteractorProtocol {
     
-    private var serviceTypeToUse: UserDataServiceType = .gcd
+    private let themeService: ThemeServiceProtocol
+    private let gcdUserDataService: UserDataServiceProtocol
+    private let operationUserDataService: UserDataServiceProtocol
     
-    let themeService: ThemeServiceProtocol
-    let gcdUserDataService: UserDataServiceProtocol
-    let operationUserDataService: UserDataServiceProtocol
+    private var serviceTypeToUse: UserDataServiceType = .gcd
     
     var currentTheme: Theme {
         themeService.currentTheme
