@@ -9,7 +9,12 @@
 import Foundation
 
 struct ImageSourceResponse: Codable, Hashable {
+    
     let urls: [ImageURL]
+    
+    enum CodingKeys: String, CodingKey {
+        case urls = "hits"
+    }
 }
 
 struct ImageURL: Codable, Hashable {
@@ -17,16 +22,15 @@ struct ImageURL: Codable, Hashable {
 }
 
 protocol WebImagesServiceProtocol {
-    
+    func fetchImageSource(completion: @escaping (ImageSourceResponse?) -> Void)
 }
 
 final class WebImagesService: WebImagesServiceProtocol {
     
     private let apiKey = "19121692-1bd9206998dd87f9d136ef50a"
     
-    func fetchForecast(for city: String, completion: @escaping (ImageSourceResponse?) -> Void) {
-        
-        guard let url = URL(string: "https://pixabay.com/api/?key=\(apiKey)&q=geometry&image_type=photo") else {
+    func fetchImageSource(completion: @escaping (ImageSourceResponse?) -> Void) {
+        guard let url = URL(string: "https://pixabay.com/api/?key=\(apiKey)&q=harry+potter&image_type=photo&per_page=100") else {
             completion(nil)
             return
         }

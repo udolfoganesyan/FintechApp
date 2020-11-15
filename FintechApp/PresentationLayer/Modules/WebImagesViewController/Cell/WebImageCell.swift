@@ -10,18 +10,18 @@ import UIKit
 
 final class WebImageCell: UICollectionViewCell {
     
-    private lazy var imageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
-        return imageView
-    }()
+    private lazy var imageView = WebImageView()
     
     private var imageURL: String?
+    
+    var image: UIImage? {
+        imageView.image
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        backgroundColor = #colorLiteral(red: 0.2605174184, green: 0.2605243921, blue: 0.260520637, alpha: 1)
         layoutImageView()
     }
     
@@ -43,6 +43,7 @@ final class WebImageCell: UICollectionViewCell {
 extension WebImageCell: ConfigurableView {
     
     func configure(with model: WebImageCellModel) {
-        
+        guard let url = URL(string: model.imageURL) else { return }
+        imageView.loadImage(from: url)
     }
 }

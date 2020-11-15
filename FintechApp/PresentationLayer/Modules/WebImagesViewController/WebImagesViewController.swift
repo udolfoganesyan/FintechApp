@@ -46,6 +46,11 @@ final class WebImagesViewController: UIViewController {
     
     private let cellPadding: CGFloat = 2
     private let webImagesInteractor: WebImagesInteractorProtocol
+    private var imageURLs = [ImageURL]() {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     init(webImagesInteractor: WebImagesInteractorProtocol) {
         self.webImagesInteractor = webImagesInteractor
@@ -63,6 +68,10 @@ final class WebImagesViewController: UIViewController {
         
         layoutCloseButton()
         layoutCollectionView()
+        
+        webImagesInteractor.getImageURLs { (imageURLs) in
+            self.imageURLs = imageURLs
+        }
     }
     
     private func layoutCloseButton() {
@@ -91,7 +100,8 @@ final class WebImagesViewController: UIViewController {
 extension WebImagesViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedImage = UIImage()
+        guard let cell = collectionView.cellForItem(at: indexPath) as? WebImageCell,
+              let selectedImage = cell.image else { return }
         delegate?.didChooseImage(selectedImage)
         dismiss(animated: true)
     }
@@ -102,14 +112,17 @@ extension WebImagesViewController: UICollectionViewDelegate {
 extension WebImagesViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        122
+        imageURLs.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WebImageCell.reuseIdentifier, for: indexPath) as? WebImageCell else {
             return UICollectionViewCell()
         }
-        cell.backgroundColor = .blue
+        
+        let model = WebImageCellModel(imageURL: imageURLs[indexPath.row].webformatURL)
+        cell.configure(with: model)
+        
         return cell
     }
 }

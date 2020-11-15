@@ -10,6 +10,7 @@ import Foundation
 
 protocol WebImagesInteractorProtocol {
     var currentTheme: Theme { get }
+    func getImageURLs(completion: @escaping ([ImageURL]) -> Void)
 }
 
 final class WebImagesInteractor: WebImagesInteractorProtocol {
@@ -20,9 +21,20 @@ final class WebImagesInteractor: WebImagesInteractorProtocol {
     var currentTheme: Theme {
         themeService.currentTheme
     }
-    
+        
     init(themeService: ThemeServiceProtocol, webImagesService: WebImagesServiceProtocol) {
         self.themeService = themeService
         self.webImagesService = webImagesService
+    }
+    
+    func getImageURLs(completion: @escaping ([ImageURL]) -> Void) {
+        webImagesService.fetchImageSource { (imageSource) in
+            guard let imageSource = imageSource else {
+                completion([])
+                return
+            }
+
+            completion(imageSource.urls)
+        }
     }
 }

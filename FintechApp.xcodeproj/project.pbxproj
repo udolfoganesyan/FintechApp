@@ -12,6 +12,7 @@
 		A107A750256077C500C1CC73 /* WebImagesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A107A74F256077C500C1CC73 /* WebImagesInteractor.swift */; };
 		A107A75525607D3D00C1CC73 /* WebImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A107A75425607D3D00C1CC73 /* WebImageCell.swift */; };
 		A107A75C2561519800C1CC73 /* WebImageCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A107A75B2561519800C1CC73 /* WebImageCellModel.swift */; };
+		A107A75F2561BB8800C1CC73 /* WebImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A107A75E2561BB8800C1CC73 /* WebImageView.swift */; };
 		A10A883C251E8BF8006B3017 /* OnlineBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A883B251E8BF8006B3017 /* OnlineBadgeView.swift */; };
 		A10A887D251F30CC006B3017 /* UIColor+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A887C251F30CC006B3017 /* UIColor+Random.swift */; };
 		A10A8880251F3C60006B3017 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A887F251F3C60006B3017 /* ConversationViewController.swift */; };
@@ -81,6 +82,7 @@
 		A107A74F256077C500C1CC73 /* WebImagesInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebImagesInteractor.swift; sourceTree = "<group>"; };
 		A107A75425607D3D00C1CC73 /* WebImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebImageCell.swift; sourceTree = "<group>"; };
 		A107A75B2561519800C1CC73 /* WebImageCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebImageCellModel.swift; sourceTree = "<group>"; };
+		A107A75E2561BB8800C1CC73 /* WebImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebImageView.swift; sourceTree = "<group>"; };
 		A10A883B251E8BF8006B3017 /* OnlineBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineBadgeView.swift; sourceTree = "<group>"; };
 		A10A887C251F30CC006B3017 /* UIColor+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Random.swift"; sourceTree = "<group>"; };
 		A10A887F251F3C60006B3017 /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 		A107A74A2560775900C1CC73 /* WebImagesViewController */ = {
 			isa = PBXGroup;
 			children = (
+				A107A7622561BB8F00C1CC73 /* AdditionalUI */,
 				A107A75825607D6500C1CC73 /* Cell */,
 				A107A74F256077C500C1CC73 /* WebImagesInteractor.swift */,
 				A107A74B2560778800C1CC73 /* WebImagesViewController.swift */,
@@ -204,6 +207,14 @@
 				A107A75B2561519800C1CC73 /* WebImageCellModel.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		A107A7622561BB8F00C1CC73 /* AdditionalUI */ = {
+			isa = PBXGroup;
+			children = (
+				A107A75E2561BB8800C1CC73 /* WebImageView.swift */,
+			);
+			path = AdditionalUI;
 			sourceTree = "<group>";
 		};
 		A10A8882251F3C65006B3017 /* Conversation */ = {
@@ -710,6 +721,7 @@
 				A107A74C2560778800C1CC73 /* WebImagesViewController.swift in Sources */,
 				A1202FCF2537059D0056BFCE /* FetchUserDataOperation.swift in Sources */,
 				A18E473C2534BB430096D1B3 /* OperationUserDataService.swift in Sources */,
+				A107A75F2561BB8800C1CC73 /* WebImageView.swift in Sources */,
 				A128E906253C719C000ED358 /* Message.swift in Sources */,
 				A1635985255DE37400D1888A /* CoreAssembly.swift in Sources */,
 				A1C7439B251E386B005B5195 /* ConversationsViewController.swift in Sources */,

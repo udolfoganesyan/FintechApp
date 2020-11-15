@@ -164,8 +164,8 @@ extension ConversationViewController: UITableViewDataSource {
         
         let messageDB = conversationInteractor.fetchedResultsController.object(at: indexPath)
         let model = MessageCellModel(messageDB: messageDB, theme: conversationInteractor.currentTheme)
-        
         cell.configure(with: model)
+        
         return cell
     }
 }
