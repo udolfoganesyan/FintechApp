@@ -27,7 +27,8 @@ final class AvatarImageView: UIImageView {
         self.style = style
         
         super.init(frame: .zero)
-        self.translatesAutoresizingMaskIntoConstraints = false
+        translatesAutoresizingMaskIntoConstraints = false
+        contentMode = .scaleAspectFill
         
         setupLabel()
     }
@@ -42,6 +43,8 @@ final class AvatarImageView: UIImageView {
         if style == .circle {
             layer.masksToBounds = true
             layer.cornerRadius = frame.width / 2
+            layer.borderColor = #colorLiteral(red: 0.2605174184, green: 0.2605243921, blue: 0.260520637, alpha: 1)
+            layer.borderWidth = frame.width / 50
         }
         
         nameLabel.font = .systemFont(ofSize: self.frame.height / 2)

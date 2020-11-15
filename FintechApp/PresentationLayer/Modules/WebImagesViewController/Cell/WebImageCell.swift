@@ -11,7 +11,6 @@ import UIKit
 final class WebImageCell: UICollectionViewCell {
     
     private lazy var imageView = WebImageView()
-    
     private var imageURL: String?
     
     var image: UIImage? {
