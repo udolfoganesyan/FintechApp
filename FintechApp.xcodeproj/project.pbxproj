@@ -422,6 +422,7 @@
 			isa = PBXGroup;
 			children = (
 				A1635989255DE37B00D1888A /* Assembly */,
+				A188A7D42561EB6F0053FFFA /* NetworkCore */,
 				A1761CBF255F375E00BDFF14 /* UserDataCore */,
 			);
 			path = CoreLayer;
@@ -482,6 +483,13 @@
 				A18A6864253EF9B400E1B4D7 /* FirebaseExtensions.swift */,
 			);
 			path = FirebaseService;
+			sourceTree = "<group>";
+		};
+		A188A7D42561EB6F0053FFFA /* NetworkCore */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = NetworkCore;
 			sourceTree = "<group>";
 		};
 		A18E473E2534BB480096D1B3 /* GCDUserDataService */ = {

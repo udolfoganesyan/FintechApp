@@ -44,11 +44,20 @@ final class WebImagesViewController: UIViewController {
         return button
     }()
     
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView(style: .whiteLarge)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.color = webImagesInteractor.currentTheme.secondaryTextColor
+        return activityIndicator
+    }()
+    
     private let cellPadding: CGFloat = 2
     private let webImagesInteractor: WebImagesInteractorProtocol
     private var imageURLs = [ImageURL]() {
         didSet {
             collectionView.reloadData()
+            activityIndicator.stopAnimating()
         }
     }
     
@@ -68,7 +77,9 @@ final class WebImagesViewController: UIViewController {
         
         layoutCloseButton()
         layoutCollectionView()
+        layoutActivityIndicator()
         
+        activityIndicator.startAnimating()
         webImagesInteractor.getImageURLs { (imageURLs) in
             self.imageURLs = imageURLs
         }
@@ -88,6 +99,12 @@ final class WebImagesViewController: UIViewController {
         collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+    }
+    
+    private func layoutActivityIndicator() {
+        collectionView.addSubview(activityIndicator)
+        activityIndicator.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor).isActive = true
+        activityIndicator.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor).isActive = true
     }
     
     @objc private func handleClose() {
