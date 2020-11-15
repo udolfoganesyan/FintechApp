@@ -71,9 +71,10 @@ final class MessageCell: UITableViewCell {
 
 extension MessageCell: ConfigurableView {
     
-    func configure(with model: MessageCellModel, and theme: Theme) {
+    func configure(with model: MessageCellModel) {
         messageLabel.attributedText = model.attributedText
         isIncoming = model.isIncoming
+        let theme = model.theme
         messageBackgroundView.backgroundColor = isIncoming ? theme.incomingCellColor : theme.outgoingCellColor
         messageLabel.textColor = isIncoming ? theme.incomingCellTextColor : theme.outgoingCellTextColor
         backgroundColor = theme.backgroundColor

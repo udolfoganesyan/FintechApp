@@ -15,11 +15,13 @@ struct ConversationCellModel {
     let name: String
     let message: String
     let date: String
+    let theme: Theme
     
-    init(channelDB: ChannelDB) {
+    init(channelDB: ChannelDB, theme: Theme) {
         self.name = channelDB.name
         self.message = channelDB.lastMessage ?? ""
         self.date = ConversationCellModel.getFormattedDateStringFrom(channelDB.lastActivity)
+        self.theme = theme
     }
     
     static private func getFormattedDateStringFrom(_ date: Date?) -> String {
