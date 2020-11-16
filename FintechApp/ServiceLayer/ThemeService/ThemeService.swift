@@ -38,9 +38,10 @@ final class ThemeService: ThemeServiceProtocol {
     }
     
     func setupNavigationBarAppearance() {
-        let navigationBarAppearace = UINavigationBar.appearance()
+        let navigationBarAppearance = UINavigationBar.appearance()
         
-        navigationBarAppearace.barTintColor = currentTheme.backgroundColor
-        navigationBarAppearace.titleTextAttributes = [NSAttributedString.Key.foregroundColor: currentTheme.primaryTextColor]
+        navigationBarAppearance.shadowImage = UIImage()
+        navigationBarAppearance.barTintColor = currentTheme.backgroundColor
+        navigationBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: currentTheme.primaryTextColor]
     }
 }
