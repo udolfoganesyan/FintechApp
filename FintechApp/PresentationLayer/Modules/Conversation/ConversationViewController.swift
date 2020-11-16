@@ -89,7 +89,7 @@ final class ConversationViewController: UIViewController {
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
         
         if notification.name == UIResponder.keyboardWillHideNotification {
-            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: view.safeAreaInsets.bottom, right: 0)
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: inputContainerView.frame.height - view.safeAreaInsets.bottom, right: 0)
         } else {
             tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom, right: 0)
         }
@@ -111,8 +111,8 @@ final class ConversationViewController: UIViewController {
     
     private func layoutTableView() {
         view.addSubview(tableView)
-        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }

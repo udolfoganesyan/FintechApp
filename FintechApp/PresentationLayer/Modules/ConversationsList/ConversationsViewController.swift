@@ -96,7 +96,7 @@ final class ConversationsViewController: UIViewController {
     
     private func layoutTableView() {
         view.addSubview(tableView)
-        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
