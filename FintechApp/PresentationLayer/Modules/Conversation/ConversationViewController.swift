@@ -59,6 +59,8 @@ final class ConversationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = conversationInteractor.currentTheme.backgroundColor
+        
         setupKeyboardObservers()
         setupEndEditingTap()
         layoutTableView()

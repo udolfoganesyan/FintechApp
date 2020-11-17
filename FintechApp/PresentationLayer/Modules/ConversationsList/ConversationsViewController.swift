@@ -202,6 +202,7 @@ extension ConversationsViewController: SettingsDelegate {
     }
     
     private func updateTheme() {
+        view.backgroundColor = conversationsInteractor.currentTheme.backgroundColor
         tableView.backgroundColor = conversationsInteractor.currentTheme.backgroundColor
         tableView.reloadData()
         
