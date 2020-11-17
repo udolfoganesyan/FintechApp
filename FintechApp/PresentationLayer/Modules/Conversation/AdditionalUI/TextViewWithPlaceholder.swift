@@ -14,7 +14,6 @@ final class TextViewWithPlaceholder: UITextView {
     
     private lazy var placeholderLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Placeholder text"
         label.textColor = theme.secondaryTextColor
         return label
@@ -33,19 +32,11 @@ final class TextViewWithPlaceholder: UITextView {
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleTextChange), name: UITextView.textDidChangeNotification, object: nil)
         
-        setupView()
+        addSubviewInBounds(placeholderLabel, topPadding: 8, leadingPadding: 6)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupView() {
-        addSubview(placeholderLabel)
-        placeholderLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8).isActive = true
-        placeholderLabel.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        placeholderLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 6).isActive = true
-        placeholderLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
     }
     
     @objc private func handleTextChange() {

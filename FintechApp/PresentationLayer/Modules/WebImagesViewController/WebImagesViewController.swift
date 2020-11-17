@@ -46,7 +46,6 @@ final class WebImagesViewController: UIViewController {
     
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView(style: .whiteLarge)
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.hidesWhenStopped = true
         activityIndicator.color = webImagesInteractor.currentTheme.secondaryTextColor
         return activityIndicator
@@ -102,9 +101,7 @@ final class WebImagesViewController: UIViewController {
     }
     
     private func layoutActivityIndicator() {
-        collectionView.addSubview(activityIndicator)
-        activityIndicator.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor).isActive = true
-        activityIndicator.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor).isActive = true
+        collectionView.addSubviewCentered(activityIndicator)
     }
     
     @objc private func handleClose() {

@@ -12,7 +12,6 @@ final class ConversationsViewController: UIViewController {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(ConversationCell.nib, forCellReuseIdentifier: ConversationCell.reuseIdentifier)
         tableView.delegate = self
         tableView.dataSource = self
@@ -95,11 +94,7 @@ final class ConversationsViewController: UIViewController {
     }
     
     private func layoutTableView() {
-        view.addSubview(tableView)
-        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        view.addSubviewWithSameSizeAndSafeTop(tableView)
     }
     
     private func setupAddButton() {

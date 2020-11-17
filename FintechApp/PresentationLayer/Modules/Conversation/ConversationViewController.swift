@@ -12,7 +12,6 @@ final class ConversationViewController: UIViewController {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(MessageCell.self, forCellReuseIdentifier: MessageCell.reuseIdentifier)
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
@@ -111,11 +110,7 @@ final class ConversationViewController: UIViewController {
     }
     
     private func layoutTableView() {
-        view.addSubview(tableView)
-        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        view.addSubviewWithSameSizeAndSafeTop(tableView)
     }
 }
 

@@ -57,6 +57,7 @@
 		A18E47392534BB330096D1B3 /* GCDUserDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18E47382534BB330096D1B3 /* GCDUserDataService.swift */; };
 		A18E473C2534BB430096D1B3 /* OperationUserDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18E473B2534BB430096D1B3 /* OperationUserDataService.swift */; };
 		A18E47432534C4BA0096D1B3 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18E47422534C4BA0096D1B3 /* UIViewController+Alert.swift */; };
+		A195969C256404760099867E /* UIView+AddSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A195969B256404760099867E /* UIView+AddSubview.swift */; };
 		A1AF2223255F394700F98541 /* UserDataServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AF2222255F394700F98541 /* UserDataServiceProtocol.swift */; };
 		A1C0CDB1255DF139002C1D76 /* ThemeSettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C0CDB0255DF139002C1D76 /* ThemeSettingsInteractor.swift */; };
 		A1C0CDB5255DF31C002C1D76 /* ProfileInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C0CDB4255DF31C002C1D76 /* ProfileInteractor.swift */; };
@@ -129,6 +130,7 @@
 		A18E47382534BB330096D1B3 /* GCDUserDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDUserDataService.swift; sourceTree = "<group>"; };
 		A18E473B2534BB430096D1B3 /* OperationUserDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationUserDataService.swift; sourceTree = "<group>"; };
 		A18E47422534C4BA0096D1B3 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
+		A195969B256404760099867E /* UIView+AddSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+AddSubview.swift"; sourceTree = "<group>"; };
 		A1AF2222255F394700F98541 /* UserDataServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataServiceProtocol.swift; sourceTree = "<group>"; };
 		A1C0CDB0255DF139002C1D76 /* ThemeSettingsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSettingsInteractor.swift; sourceTree = "<group>"; };
 		A1C0CDB4255DF31C002C1D76 /* ProfileInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInteractor.swift; sourceTree = "<group>"; };
@@ -444,6 +446,7 @@
 				A10A887C251F30CC006B3017 /* UIColor+Random.swift */,
 				A18E47422534C4BA0096D1B3 /* UIViewController+Alert.swift */,
 				A1202FCB2537049E0056BFCE /* UIViewController+Keyboard.swift */,
+				A195969B256404760099867E /* UIView+AddSubview.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -725,6 +728,7 @@
 				A164F9A8255ECEBC00C7A56F /* FetchedResultsControllerDelegate.swift in Sources */,
 				A12320742528C30B005F8249 /* ThemeSettingsViewController.swift in Sources */,
 				A10A8889251F3CC2006B3017 /* MessageCell.swift in Sources */,
+				A195969C256404760099867E /* UIView+AddSubview.swift in Sources */,
 				A1635973255DE0E700D1888A /* PresentationAssembly.swift in Sources */,
 				A107A74C2560778800C1CC73 /* WebImagesViewController.swift in Sources */,
 				A1202FCF2537059D0056BFCE /* FetchUserDataOperation.swift in Sources */,

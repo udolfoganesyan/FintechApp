@@ -14,7 +14,6 @@ final class WebImageView: UIImageView {
     
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView(style: .gray)
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.hidesWhenStopped = true
         return activityIndicator
     }()
@@ -28,7 +27,7 @@ final class WebImageView: UIImageView {
         contentMode = .scaleAspectFill
         clipsToBounds = true
         
-        layoutActivityIndicator()
+        addSubviewCentered(activityIndicator)
     }
     
     required init?(coder: NSCoder) {
@@ -63,11 +62,5 @@ final class WebImageView: UIImageView {
         })
         
         task?.resume()
-    }
-    
-    private func layoutActivityIndicator() {
-        addSubview(activityIndicator)
-        activityIndicator.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        activityIndicator.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
 }
