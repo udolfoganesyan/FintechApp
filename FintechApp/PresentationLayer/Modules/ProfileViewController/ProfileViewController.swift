@@ -76,7 +76,7 @@ final class ProfileViewController: UIViewController {
     }
     
     private func setupAvatarView() {
-        avatarView.install(on: avatarContainerView)
+        avatarContainerView.addSubviewInBounds(avatarView)
         avatarView.setupWith(firstName: "Rudolf", lastName: "Oganesyan", color: #colorLiteral(red: 0.8941176471, green: 0.9098039216, blue: 0.168627451, alpha: 1))
         let avatarTap = UITapGestureRecognizer(target: self, action: #selector(handleAvatar))
         avatarView.addGestureRecognizer(avatarTap)

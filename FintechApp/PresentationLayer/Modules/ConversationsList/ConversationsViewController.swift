@@ -71,7 +71,7 @@ final class ConversationsViewController: UIViewController {
         
         let avatarView = AvatarImageView(style: .circle)
         let avatarViewContainer = UIView()
-        avatarView.install(on: avatarViewContainer)
+        avatarViewContainer.addSubviewInBounds(avatarView)
         avatarView.setupWith(firstName: "Rudolf", lastName: "Oganesyan", color: #colorLiteral(red: 0.8941176471, green: 0.9098039216, blue: 0.168627451, alpha: 1))
         let profileButton = UIBarButtonItem(customView: avatarViewContainer)
         profileButton.customView?.translatesAutoresizingMaskIntoConstraints = false

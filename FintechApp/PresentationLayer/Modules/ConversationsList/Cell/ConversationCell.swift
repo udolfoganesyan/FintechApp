@@ -26,7 +26,7 @@ final class ConversationCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        avatarView.install(on: avatarContainer)
+        avatarContainer.addSubviewInBounds(avatarView)
         onlineBadge.install(on: avatarContainer)
         
         backgroundColor = .clear
