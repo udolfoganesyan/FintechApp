@@ -19,6 +19,13 @@
 		A10A8889251F3CC2006B3017 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A8887251F3CC2006B3017 /* MessageCell.swift */; };
 		A10A8894251F6238006B3017 /* MessageCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A8893251F6238006B3017 /* MessageCellModel.swift */; };
 		A1153A962565AF290004881C /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1153A952565AF290004881C /* Types.swift */; };
+		A1153A9F2565B9F90004881C /* RequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1153A9E2565B9F90004881C /* RequestProtocol.swift */; };
+		A1153AA32565BA050004881C /* ParserProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1153AA22565BA050004881C /* ParserProtocol.swift */; };
+		A1153AA62565BA740004881C /* ImageSourceParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1153AA52565BA740004881C /* ImageSourceParser.swift */; };
+		A1153AA92565BC230004881C /* ImageSourceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1153AA82565BC230004881C /* ImageSourceRequest.swift */; };
+		A1153AAD2565BF860004881C /* RequestSenderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1153AAC2565BF860004881C /* RequestSenderProtocol.swift */; };
+		A1153AB12565C0730004881C /* RequestSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1153AB02565C0730004881C /* RequestSender.swift */; };
+		A1153AB42565C8B60004881C /* RequestsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1153AB32565C8B60004881C /* RequestsFactory.swift */; };
 		A11D45542548416A00A25815 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11D45532548416A00A25815 /* CoreDataService.swift */; };
 		A1202F89253648A60056BFCE /* SaveUserDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1202F88253648A60056BFCE /* SaveUserDataOperation.swift */; };
 		A1202FCC2537049E0056BFCE /* UIViewController+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1202FCB2537049E0056BFCE /* UIViewController+Keyboard.swift */; };
@@ -91,6 +98,13 @@
 		A10A8887251F3CC2006B3017 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		A10A8893251F6238006B3017 /* MessageCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCellModel.swift; sourceTree = "<group>"; };
 		A1153A952565AF290004881C /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
+		A1153A9E2565B9F90004881C /* RequestProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestProtocol.swift; sourceTree = "<group>"; };
+		A1153AA22565BA050004881C /* ParserProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserProtocol.swift; sourceTree = "<group>"; };
+		A1153AA52565BA740004881C /* ImageSourceParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSourceParser.swift; sourceTree = "<group>"; };
+		A1153AA82565BC230004881C /* ImageSourceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSourceRequest.swift; sourceTree = "<group>"; };
+		A1153AAC2565BF860004881C /* RequestSenderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestSenderProtocol.swift; sourceTree = "<group>"; };
+		A1153AB02565C0730004881C /* RequestSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestSender.swift; sourceTree = "<group>"; };
+		A1153AB32565C8B60004881C /* RequestsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsFactory.swift; sourceTree = "<group>"; };
 		A11D45532548416A00A25815 /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
 		A1202F88253648A60056BFCE /* SaveUserDataOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveUserDataOperation.swift; sourceTree = "<group>"; };
 		A1202FCB2537049E0056BFCE /* UIViewController+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Keyboard.swift"; sourceTree = "<group>"; };
@@ -249,6 +263,33 @@
 				A10A8893251F6238006B3017 /* MessageCellModel.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		A1153A9C2565B9B80004881C /* Parsers */ = {
+			isa = PBXGroup;
+			children = (
+				A1153AA22565BA050004881C /* ParserProtocol.swift */,
+				A1153AA52565BA740004881C /* ImageSourceParser.swift */,
+			);
+			path = Parsers;
+			sourceTree = "<group>";
+		};
+		A1153A9D2565B9C10004881C /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				A1153A9E2565B9F90004881C /* RequestProtocol.swift */,
+				A1153AA82565BC230004881C /* ImageSourceRequest.swift */,
+			);
+			path = Requests;
+			sourceTree = "<group>";
+		};
+		A1153AAB2565BF720004881C /* RequestSender */ = {
+			isa = PBXGroup;
+			children = (
+				A1153AAC2565BF860004881C /* RequestSenderProtocol.swift */,
+				A1153AB02565C0730004881C /* RequestSender.swift */,
+			);
+			path = RequestSender;
 			sourceTree = "<group>";
 		};
 		A11D45562548417500A25815 /* CoreDataService */ = {
@@ -494,6 +535,10 @@
 		A188A7D42561EB6F0053FFFA /* NetworkCore */ = {
 			isa = PBXGroup;
 			children = (
+				A1153AB32565C8B60004881C /* RequestsFactory.swift */,
+				A1153AAB2565BF720004881C /* RequestSender */,
+				A1153A9D2565B9C10004881C /* Requests */,
+				A1153A9C2565B9B80004881C /* Parsers */,
 			);
 			path = NetworkCore;
 			sourceTree = "<group>";
@@ -694,6 +739,8 @@
 				A16570822517600300C22EAD /* UIAlertController+ConstraintsFix.swift in Sources */,
 				A163597F255DE31600D1888A /* ServiceAssembly.swift in Sources */,
 				A1475861250F5FA2004DFCAA /* ProfileViewController.swift in Sources */,
+				A1153AA62565BA740004881C /* ImageSourceParser.swift in Sources */,
+				A1153AAD2565BF860004881C /* RequestSenderProtocol.swift in Sources */,
 				A1F6B16D255175E900C7E1D2 /* HeaderDateLabel.swift in Sources */,
 				A18E47392534BB330096D1B3 /* GCDUserDataService.swift in Sources */,
 				A1C743A3251E39BF005B5195 /* ConversationCellModel.swift in Sources */,
@@ -708,6 +755,7 @@
 				A1202F89253648A60056BFCE /* SaveUserDataOperation.swift in Sources */,
 				A169F0C825573A6C001F0EDB /* Managed.swift in Sources */,
 				A18A6865253EF9B400E1B4D7 /* FirebaseExtensions.swift in Sources */,
+				A1153AB12565C0730004881C /* RequestSender.swift in Sources */,
 				A107A74525605D6600C1CC73 /* WebImagesService.swift in Sources */,
 				A10A887D251F30CC006B3017 /* UIColor+Random.swift in Sources */,
 				A128E913253C81D0000ED358 /* InputAccessoryContainerView.swift in Sources */,
@@ -720,6 +768,7 @@
 				A13A4553255DF639007609A7 /* ConversationsInteractor.swift in Sources */,
 				A169F0DD255961A9001F0EDB /* TextViewWithPlaceholder.swift in Sources */,
 				A1C743A7251E3ABA005B5195 /* ConversationCell.swift in Sources */,
+				A1153AB42565C8B60004881C /* RequestsFactory.swift in Sources */,
 				A10A883C251E8BF8006B3017 /* OnlineBadgeView.swift in Sources */,
 				A1FADAE02550B8DE00B230BD /* FirestoreUpdate.swift in Sources */,
 				A187D126253C5230008AAE86 /* Channel.swift in Sources */,
@@ -731,11 +780,14 @@
 				A164F9A8255ECEBC00C7A56F /* FetchedResultsControllerDelegate.swift in Sources */,
 				A1153A962565AF290004881C /* Types.swift in Sources */,
 				A12320742528C30B005F8249 /* ThemeSettingsViewController.swift in Sources */,
+				A1153AA32565BA050004881C /* ParserProtocol.swift in Sources */,
 				A10A8889251F3CC2006B3017 /* MessageCell.swift in Sources */,
 				A195969C256404760099867E /* UIView+AddSubview.swift in Sources */,
+				A1153AA92565BC230004881C /* ImageSourceRequest.swift in Sources */,
 				A1635973255DE0E700D1888A /* PresentationAssembly.swift in Sources */,
 				A107A74C2560778800C1CC73 /* WebImagesViewController.swift in Sources */,
 				A1202FCF2537059D0056BFCE /* FetchUserDataOperation.swift in Sources */,
+				A1153A9F2565B9F90004881C /* RequestProtocol.swift in Sources */,
 				A18E473C2534BB430096D1B3 /* OperationUserDataService.swift in Sources */,
 				A107A75F2561BB8800C1CC73 /* WebImageView.swift in Sources */,
 				A128E906253C719C000ED358 /* Message.swift in Sources */,

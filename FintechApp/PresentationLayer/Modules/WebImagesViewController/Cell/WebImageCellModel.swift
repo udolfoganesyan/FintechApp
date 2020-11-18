@@ -10,5 +10,5 @@ import Foundation
 
 struct WebImageCellModel {
     
-    let imageURL: String
+    let imageURLString: String
 }

@@ -26,7 +26,7 @@ final class ServicesAssembly: ServicesAssemblyProtocol {
     lazy var coreDataService: CoreDataServiceProtocol = CoreDataService(dataModelName: CoreDataService.chatDataModelName)
     lazy var gcdUserDataService: UserDataServiceProtocol = GCDUserDataService(userDataCore: coreAssembly.userDataCore)
     lazy var operationUserDataService: UserDataServiceProtocol = OperationUserDataService(userDataCore: coreAssembly.userDataCore)
-    lazy var webImagesService: WebImagesServiceProtocol = WebImagesService()
+    lazy var webImagesService: WebImagesServiceProtocol = WebImagesService(requestSender: coreAssembly.requestSender)
     
     init(coreAssembly: CoreAssemblyProtocol) {
         self.coreAssembly = coreAssembly

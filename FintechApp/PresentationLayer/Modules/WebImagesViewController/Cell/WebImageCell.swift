@@ -34,7 +34,7 @@ final class WebImageCell: UICollectionViewCell {
 extension WebImageCell: ConfigurableView {
     
     func configure(with model: WebImageCellModel) {
-        guard let url = URL(string: model.imageURL) else { return }
-        imageView.loadImage(from: url)
+        guard let imageURL = URL(string: model.imageURLString) else { return }
+        imageView.loadImage(from: imageURL)
     }
 }

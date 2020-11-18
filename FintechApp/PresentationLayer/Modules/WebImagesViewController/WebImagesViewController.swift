@@ -134,7 +134,7 @@ extension WebImagesViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        let model = WebImageCellModel(imageURL: imageURLs[indexPath.row].webformatURL)
+        let model = WebImageCellModel(imageURLString: imageURLs[indexPath.row].webformatURL)
         cell.configure(with: model)
         
         return cell
