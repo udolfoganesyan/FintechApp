@@ -25,10 +25,10 @@ public enum FirebaseKeys: String {
 
 protocol FirebaseServiceProtocol {
     func fetchChannels(completion: @escaping (FirestoreUpdate<Channel>) -> Void)
-    func createChannelWith(_ name: String, completion: @escaping SuccessCompletion)
-    func deleteChannelWith(channelId: String, completion: @escaping SuccessCompletion)
+    func createChannelWith(_ name: String, completion: @escaping BoolClosure)
+    func deleteChannelWith(channelId: String, completion: @escaping BoolClosure)
     func fetchMessagesFor(_ channelId: String, completion: @escaping (FirestoreUpdate<Message>) -> Void)
-    func sendMessage(_ message: String, to channelId: String, completion: @escaping SuccessCompletion)
+    func sendMessage(_ message: String, to channelId: String, completion: @escaping BoolClosure)
 }
 
 final class FirebaseService: FirebaseServiceProtocol {
@@ -49,7 +49,7 @@ final class FirebaseService: FirebaseServiceProtocol {
         }
     }
     
-    func createChannelWith(_ name: String, completion: @escaping SuccessCompletion) {
+    func createChannelWith(_ name: String, completion: @escaping BoolClosure) {
         let data: [FirebaseKeys: Any?] = [
             FirebaseKeys.name: name,
             FirebaseKeys.lastMessage: nil,
@@ -58,7 +58,7 @@ final class FirebaseService: FirebaseServiceProtocol {
         channelsReference.addDocument(data: data, completion: completion)
     }
     
-    func deleteChannelWith(channelId: String, completion: @escaping SuccessCompletion) {
+    func deleteChannelWith(channelId: String, completion: @escaping BoolClosure) {
         channelsReference.document(channelId).delete { (error) in
             let success = error == nil
             completion(success)
@@ -76,7 +76,7 @@ final class FirebaseService: FirebaseServiceProtocol {
         }
     }
     
-    func sendMessage(_ message: String, to channelId: String, completion: @escaping SuccessCompletion) {
+    func sendMessage(_ message: String, to channelId: String, completion: @escaping BoolClosure) {
         let data: [FirebaseKeys: Any?] = [
             FirebaseKeys.content: message,
             FirebaseKeys.created: Timestamp(),

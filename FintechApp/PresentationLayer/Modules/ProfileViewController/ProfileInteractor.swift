@@ -16,7 +16,7 @@ enum UserDataServiceType {
 protocol ProfileInteractorProtocol {
     var currentTheme: Theme { get }
     func setServiceType(_ type: UserDataServiceType)
-    func saveUserData(user: User, completion: @escaping SuccessCompletion)
+    func saveUserData(user: User, completion: @escaping BoolClosure)
     func fetchUserData(completion: @escaping FetchUserCompletion)
 }
 
@@ -42,7 +42,7 @@ final class ProfileInteractor: ProfileInteractorProtocol {
         serviceTypeToUse = type
     }
     
-    func saveUserData(user: User, completion: @escaping SuccessCompletion) {
+    func saveUserData(user: User, completion: @escaping BoolClosure) {
         switch serviceTypeToUse {
         case .gcd:
             gcdUserDataService.saveUserData(user: user, completion: completion)

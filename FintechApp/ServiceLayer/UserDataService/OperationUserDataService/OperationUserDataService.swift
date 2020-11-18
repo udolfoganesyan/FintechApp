@@ -17,7 +17,7 @@ final class OperationUserDataService: UserDataServiceProtocol {
         self.userDataCore = userDataCore
     }
     
-    func saveUserData(user: User, completion: @escaping SuccessCompletion) {
+    func saveUserData(user: User, completion: @escaping BoolClosure) {
         let saveUserDataOperation = SaveUserDataOperation(user: user, userDataCore: userDataCore, completion: completion)
         operationQueue.addOperation(saveUserDataOperation)
     }

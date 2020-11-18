@@ -12,7 +12,7 @@ protocol ConversationInteractorProtocol {
     var currentTheme: Theme { get }
     
     func fetchMessages(completion: @escaping (FirestoreUpdate<Message>) -> Void)
-    func sendMessage(_ message: String, completion: @escaping SuccessCompletion)
+    func sendMessage(_ message: String, completion: @escaping BoolClosure)
     
     var channelTitle: String { get }
     var fetchedResultsController: NSFetchedResultsController<MessageDB> { get }
@@ -52,7 +52,7 @@ final class ConversationInteractor: ConversationInteractorProtocol {
         firebaseService.fetchMessagesFor(channelId, completion: completion)
     }
     
-    func sendMessage(_ message: String, completion: @escaping SuccessCompletion) {
+    func sendMessage(_ message: String, completion: @escaping BoolClosure) {
         firebaseService.sendMessage(message, to: channelId, completion: completion)
     }
     

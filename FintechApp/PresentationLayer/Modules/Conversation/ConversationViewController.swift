@@ -118,7 +118,7 @@ final class ConversationViewController: UIViewController {
 
 extension ConversationViewController: InputDelegate {
     
-    func handleSend(text: String, completion: @escaping SuccessCompletion) {
+    func handleSend(text: String, completion: @escaping BoolClosure) {
         conversationInteractor.sendMessage(text) { (success) in
             if !success {
                 self.showOkAlert("Error", "Could not send message :(")

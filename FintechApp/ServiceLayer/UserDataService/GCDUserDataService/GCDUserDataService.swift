@@ -17,7 +17,7 @@ final class GCDUserDataService: UserDataServiceProtocol {
         self.userDataCore = userDataCore
     }
     
-    func saveUserData(user: User, completion: @escaping SuccessCompletion) {
+    func saveUserData(user: User, completion: @escaping BoolClosure) {
         storageQueue.async {
             self.userDataCore.saveUserData(user: user) { (success) in
                 DispatchQueue.main.async {

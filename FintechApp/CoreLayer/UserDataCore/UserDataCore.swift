@@ -8,10 +8,8 @@
 
 import UIKit
 
-typealias SuccessCompletion = (_ success: Bool) -> Void
-
 protocol UserDataCoreProtocol {
-    func saveUserData(user: User, completion: @escaping SuccessCompletion)
+    func saveUserData(user: User, completion: @escaping BoolClosure)
     func fetchUserData() -> User
 }
 
@@ -31,7 +29,7 @@ final class UserDataCore: UserDataCoreProtocol {
         getDocumentsDirectory().appendingPathComponent("avatar.jpeg")
     }
     
-    func saveUserData(user: User, completion: @escaping SuccessCompletion) {
+    func saveUserData(user: User, completion: @escaping BoolClosure) {
         
         do {
             if let fullName = user.fullName {

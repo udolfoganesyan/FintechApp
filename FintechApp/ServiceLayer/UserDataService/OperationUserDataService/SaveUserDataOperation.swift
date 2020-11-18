@@ -12,9 +12,9 @@ final class SaveUserDataOperation: Operation {
     
     private let userDataCore: UserDataCoreProtocol
     private let user: User
-    private let completion: SuccessCompletion
+    private let completion: BoolClosure
     
-    init(user: User, userDataCore: UserDataCoreProtocol, completion: @escaping SuccessCompletion) {
+    init(user: User, userDataCore: UserDataCoreProtocol, completion: @escaping BoolClosure) {
         self.user = user
         self.userDataCore = userDataCore
         self.completion = completion

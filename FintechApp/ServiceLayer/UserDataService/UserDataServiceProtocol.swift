@@ -11,6 +11,6 @@ import Foundation
 typealias FetchUserCompletion = (User) -> Void
 
 protocol UserDataServiceProtocol {
-    func saveUserData(user: User, completion: @escaping SuccessCompletion)
+    func saveUserData(user: User, completion: @escaping BoolClosure)
     func fetchUserData(completion: @escaping FetchUserCompletion)
 }

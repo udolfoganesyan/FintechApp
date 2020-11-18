@@ -18,6 +18,7 @@
 		A10A8880251F3C60006B3017 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A887F251F3C60006B3017 /* ConversationViewController.swift */; };
 		A10A8889251F3CC2006B3017 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A8887251F3CC2006B3017 /* MessageCell.swift */; };
 		A10A8894251F6238006B3017 /* MessageCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A8893251F6238006B3017 /* MessageCellModel.swift */; };
+		A1153A962565AF290004881C /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1153A952565AF290004881C /* Types.swift */; };
 		A11D45542548416A00A25815 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11D45532548416A00A25815 /* CoreDataService.swift */; };
 		A1202F89253648A60056BFCE /* SaveUserDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1202F88253648A60056BFCE /* SaveUserDataOperation.swift */; };
 		A1202FCC2537049E0056BFCE /* UIViewController+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1202FCB2537049E0056BFCE /* UIViewController+Keyboard.swift */; };
@@ -89,6 +90,7 @@
 		A10A887F251F3C60006B3017 /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
 		A10A8887251F3CC2006B3017 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		A10A8893251F6238006B3017 /* MessageCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCellModel.swift; sourceTree = "<group>"; };
+		A1153A952565AF290004881C /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		A11D45532548416A00A25815 /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
 		A1202F88253648A60056BFCE /* SaveUserDataOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveUserDataOperation.swift; sourceTree = "<group>"; };
 		A1202FCB2537049E0056BFCE /* UIViewController+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Keyboard.swift"; sourceTree = "<group>"; };
@@ -355,6 +357,7 @@
 			isa = PBXGroup;
 			children = (
 				A1475870250F5FEA004DFCAA /* Logger.swift */,
+				A1153A952565AF290004881C /* Types.swift */,
 				A16570832517601700C22EAD /* Extensions */,
 			);
 			path = Utilities;
@@ -726,6 +729,7 @@
 				A12320862529CB87005F8249 /* Theme.swift in Sources */,
 				A18E47432534C4BA0096D1B3 /* UIViewController+Alert.swift in Sources */,
 				A164F9A8255ECEBC00C7A56F /* FetchedResultsControllerDelegate.swift in Sources */,
+				A1153A962565AF290004881C /* Types.swift in Sources */,
 				A12320742528C30B005F8249 /* ThemeSettingsViewController.swift in Sources */,
 				A10A8889251F3CC2006B3017 /* MessageCell.swift in Sources */,
 				A195969C256404760099867E /* UIView+AddSubview.swift in Sources */,

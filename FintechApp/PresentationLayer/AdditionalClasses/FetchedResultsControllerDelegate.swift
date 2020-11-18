@@ -11,7 +11,7 @@ import CoreData
 
 final class FetchedResultsControllerDelegate<Entity>: NSObject, NSFetchedResultsControllerDelegate {
     
-    var didUpdateTable: (() -> Void)?
+    var didUpdateTable: (VoidClosure)?
     
     private let tableView: UITableView
     

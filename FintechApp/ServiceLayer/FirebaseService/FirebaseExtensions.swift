@@ -29,7 +29,7 @@ public extension DocumentSnapshot {
 
 public extension CollectionReference {
     
-    internal func addDocument(data: [FirebaseKeys: Any?], completion: @escaping SuccessCompletion) {
+    internal func addDocument(data: [FirebaseKeys: Any?], completion: @escaping BoolClosure) {
         var documentData: [String: Any] = [:]
         for (key, value) in data {
             documentData[key.rawValue] = value
