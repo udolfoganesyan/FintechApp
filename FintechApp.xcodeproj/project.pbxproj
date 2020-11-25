@@ -57,6 +57,8 @@
 		A16570852517E6A700C22EAD /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A16570842517E6A700C22EAD /* ProfileViewController.xib */; };
 		A169F0C825573A6C001F0EDB /* Managed.swift in Sources */ = {isa = PBXBuildFile; fileRef = A169F0C725573A6C001F0EDB /* Managed.swift */; };
 		A169F0DD255961A9001F0EDB /* TextViewWithPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A169F0DC255961A9001F0EDB /* TextViewWithPlaceholder.swift */; };
+		A16D5B202569C78200C48F78 /* WigglingAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16D5B1F2569C78200C48F78 /* WigglingAnimation.swift */; };
+		A16D5B25256B079900C48F78 /* ProfileTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16D5B24256B079900C48F78 /* ProfileTransition.swift */; };
 		A1761CBD255F375900BDFF14 /* UserDataCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1761CBC255F375900BDFF14 /* UserDataCore.swift */; };
 		A187D11A253B9391008AAE86 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = A187D119253B9391008AAE86 /* .swiftlint.yml */; };
 		A187D11D253C4AD4008AAE86 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A187D11C253C4AD4008AAE86 /* FirebaseService.swift */; };
@@ -138,6 +140,8 @@
 		A16570842517E6A700C22EAD /* ProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
 		A169F0C725573A6C001F0EDB /* Managed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Managed.swift; sourceTree = "<group>"; };
 		A169F0DC255961A9001F0EDB /* TextViewWithPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewWithPlaceholder.swift; sourceTree = "<group>"; };
+		A16D5B1F2569C78200C48F78 /* WigglingAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WigglingAnimation.swift; sourceTree = "<group>"; };
+		A16D5B24256B079900C48F78 /* ProfileTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTransition.swift; sourceTree = "<group>"; };
 		A1761CBC255F375900BDFF14 /* UserDataCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataCore.swift; sourceTree = "<group>"; };
 		A187D119253B9391008AAE86 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		A187D11C253C4AD4008AAE86 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
@@ -498,11 +502,29 @@
 		A16570862517EC0E00C22EAD /* ProfileViewController */ = {
 			isa = PBXGroup;
 			children = (
+				A16D5B27256B07A000C48F78 /* Transitions */,
+				A16D5B1E2569C76500C48F78 /* Animations */,
 				A1C0CDB4255DF31C002C1D76 /* ProfileInteractor.swift */,
 				A1475860250F5FA2004DFCAA /* ProfileViewController.swift */,
 				A16570842517E6A700C22EAD /* ProfileViewController.xib */,
 			);
 			path = ProfileViewController;
+			sourceTree = "<group>";
+		};
+		A16D5B1E2569C76500C48F78 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				A16D5B1F2569C78200C48F78 /* WigglingAnimation.swift */,
+			);
+			path = Animations;
+			sourceTree = "<group>";
+		};
+		A16D5B27256B07A000C48F78 /* Transitions */ = {
+			isa = PBXGroup;
+			children = (
+				A16D5B24256B079900C48F78 /* ProfileTransition.swift */,
+			);
+			path = Transitions;
 			sourceTree = "<group>";
 		};
 		A1761CBF255F375E00BDFF14 /* UserDataCore */ = {
@@ -768,9 +790,11 @@
 				A13A4553255DF639007609A7 /* ConversationsInteractor.swift in Sources */,
 				A169F0DD255961A9001F0EDB /* TextViewWithPlaceholder.swift in Sources */,
 				A1C743A7251E3ABA005B5195 /* ConversationCell.swift in Sources */,
+				A16D5B202569C78200C48F78 /* WigglingAnimation.swift in Sources */,
 				A1153AB42565C8B60004881C /* RequestsFactory.swift in Sources */,
 				A10A883C251E8BF8006B3017 /* OnlineBadgeView.swift in Sources */,
 				A1FADAE02550B8DE00B230BD /* FirestoreUpdate.swift in Sources */,
+				A16D5B25256B079900C48F78 /* ProfileTransition.swift in Sources */,
 				A187D126253C5230008AAE86 /* Channel.swift in Sources */,
 				A187D11D253C4AD4008AAE86 /* FirebaseService.swift in Sources */,
 				A147585D250F5FA2004DFCAA /* AppDelegate.swift in Sources */,

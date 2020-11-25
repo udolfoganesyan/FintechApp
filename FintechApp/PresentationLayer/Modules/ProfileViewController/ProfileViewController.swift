@@ -34,6 +34,9 @@ final class ProfileViewController: UIViewController {
         self.profileInteractor = profileInteractor
         self.presentationAssembly = presentationAssembly
         super.init(nibName: nil, bundle: nil)
+        
+        transitioningDelegate = self
+        modalPresentationStyle = .overFullScreen
     }
     
     required init?(coder: NSCoder) {
@@ -189,6 +192,22 @@ final class ProfileViewController: UIViewController {
             self.gcdSaveButton.isHidden.toggle()
             self.operationSaveButton.isHidden.toggle()
         }
+        if inEditingMode {
+            startWiggling()
+        } else {
+            stopWiggling()
+        }
+    }
+    
+    private func startWiggling() {
+        guard editButton.layer.animation(forKey: "wigglingAnimation") == nil else { return }
+        let wigglingAnimation = WigglingAnimation()
+        editButton.layer.add(wigglingAnimation, forKey: "wigglingAnimation")
+    }
+    
+    private func stopWiggling() {
+        editButton.layer.removeAllAnimations()
+        editButton.transform = CGAffineTransform.identity
     }
     
     private func presentActionSheet() {
@@ -279,5 +298,18 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true)
+    }
+}
+
+// MARK: - UIViewControllerTransitioningDelegate
+
+extension ProfileViewController: UIViewControllerTransitioningDelegate {
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        ProfileTransition(type: .present)
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        ProfileTransition(type: .dismiss)
     }
 }
