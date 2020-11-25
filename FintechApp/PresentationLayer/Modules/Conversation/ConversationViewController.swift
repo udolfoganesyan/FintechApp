@@ -37,7 +37,17 @@ final class ConversationViewController: UIViewController {
         button.addTarget(self, action: #selector(scrollToTheBottom), for: .touchUpInside)
         return button
     }()
+    
+    private var lastIndexPath: IndexPath? {
+        guard let numberOfSections = conversationInteractor.fetchedResultsController.sections?.count,
+              numberOfSections > 0 else { return nil }
+        guard let numberOfObjectsInTheLastSection = conversationInteractor.fetchedResultsController.sections?[numberOfSections - 1].numberOfObjects,
+              numberOfObjectsInTheLastSection > 0 else { return nil }
         
+        let indexPath = IndexPath(row: numberOfObjectsInTheLastSection - 1, section: numberOfSections - 1)
+        return indexPath
+    }
+    
     private lazy var frcDelegate = FetchedResultsControllerDelegate<MessageDB>(tableView: tableView)
     private let conversationInteractor: ConversationInteractorProtocol
     
@@ -80,12 +90,9 @@ final class ConversationViewController: UIViewController {
     }
     
     @objc private func scrollToTheBottom() {
-        guard let numberOfSections = conversationInteractor.fetchedResultsController.sections?.count,
-              numberOfSections > 0 else { return }
-        guard let numberOfObjectsInTheLastSection = conversationInteractor.fetchedResultsController.sections?[numberOfSections - 1].numberOfObjects,
-              numberOfObjectsInTheLastSection > 0 else { return }
+        guard let lastIndexPath = lastIndexPath else { return }
         
-        tableView.scrollToRow(at: IndexPath(row: numberOfObjectsInTheLastSection - 1, section: numberOfSections - 1), at: .bottom, animated: true)
+        tableView.scrollToRow(at: lastIndexPath, at: .bottom, animated: true)
     }
     
     private func setupKeyboardObservers() {
@@ -130,17 +137,9 @@ final class ConversationViewController: UIViewController {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard let numberOfSections = conversationInteractor.fetchedResultsController.sections?.count,
-              numberOfSections > 0 else { return }
-        guard let numberOfObjectsInTheLastSection = conversationInteractor.fetchedResultsController.sections?[numberOfSections - 1].numberOfObjects,
-              numberOfObjectsInTheLastSection > 0 else { return }
-
-        let indexPath = IndexPath(row: numberOfObjectsInTheLastSection - 1, section: numberOfSections - 1)
-        if tableView.indexPathsForVisibleRows?.contains(indexPath) ?? true {
-            scrollButton.isHidden = true
-        } else {
-            scrollButton.isHidden = false
-        }
+        guard let lastIndexPath = lastIndexPath else { return }
+        
+        scrollButton.isHidden = tableView.indexPathsForVisibleRows?.contains(lastIndexPath) ?? true
     }
     
     private func layoutTableView() {
