@@ -28,6 +28,16 @@ final class ConversationViewController: UIViewController {
         return inputContainerView
     }()
     
+    private lazy var scrollButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(#imageLiteral(resourceName: "scrollToTheBottom"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFit
+        button.isHidden = true
+        button.addTarget(self, action: #selector(scrollToTheBottom), for: .touchUpInside)
+        return button
+    }()
+        
     private lazy var frcDelegate = FetchedResultsControllerDelegate<MessageDB>(tableView: tableView)
     private let conversationInteractor: ConversationInteractorProtocol
     
@@ -63,12 +73,13 @@ final class ConversationViewController: UIViewController {
         setupKeyboardObservers()
         setupEndEditingTap()
         layoutTableView()
+        setupScrollToTheBottomButton()
         
         conversationInteractor.fetchSavedMessages()
         conversationInteractor.fetchNewMessagesAndSaveToDB()
     }
     
-    private func scrollToTheBottom() {
+    @objc private func scrollToTheBottom() {
         guard let numberOfSections = conversationInteractor.fetchedResultsController.sections?.count,
               numberOfSections > 0 else { return }
         guard let numberOfObjectsInTheLastSection = conversationInteractor.fetchedResultsController.sections?[numberOfSections - 1].numberOfObjects,
@@ -84,7 +95,8 @@ final class ConversationViewController: UIViewController {
     }
     
     @objc private func handleKeyboard(notification: Notification) {
-        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+        guard let userInfo = notification.userInfo,
+              let keyboardValue = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
         
         if notification.name == UIResponder.keyboardWillHideNotification {
             tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: inputContainerView.frame.height - view.safeAreaInsets.bottom, right: 0)
@@ -107,6 +119,28 @@ final class ConversationViewController: UIViewController {
     
     @objc private func handleTap() {
         inputContainerView.endEditing()
+    }
+    
+    private func setupScrollToTheBottomButton() {
+        view.addSubview(scrollButton)
+        scrollButton.heightAnchor.constraint(equalToConstant: 36).isActive = true
+        scrollButton.widthAnchor.constraint(equalTo: scrollButton.heightAnchor).isActive = true
+        scrollButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -26).isActive = true
+        scrollButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -72).isActive = true
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard let numberOfSections = conversationInteractor.fetchedResultsController.sections?.count,
+              numberOfSections > 0 else { return }
+        guard let numberOfObjectsInTheLastSection = conversationInteractor.fetchedResultsController.sections?[numberOfSections - 1].numberOfObjects,
+              numberOfObjectsInTheLastSection > 0 else { return }
+
+        let indexPath = IndexPath(row: numberOfObjectsInTheLastSection - 1, section: numberOfSections - 1)
+        if tableView.indexPathsForVisibleRows?.contains(indexPath) ?? true {
+            scrollButton.isHidden = true
+        } else {
+            scrollButton.isHidden = false
+        }
     }
     
     private func layoutTableView() {
