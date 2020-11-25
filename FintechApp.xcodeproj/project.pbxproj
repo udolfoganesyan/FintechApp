@@ -35,6 +35,7 @@
 		A12320752528C30B005F8249 /* ThemeSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A12320732528C30B005F8249 /* ThemeSettingsViewController.xib */; };
 		A123207E2529C845005F8249 /* ThemeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A123207D2529C845005F8249 /* ThemeService.swift */; };
 		A12320862529CB87005F8249 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12320852529CB87005F8249 /* Theme.swift */; };
+		A1246DD2256EF49D002F0702 /* TinkoffEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1246DD1256EF49D002F0702 /* TinkoffEmitter.swift */; };
 		A128E906253C719C000ED358 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128E905253C719C000ED358 /* Message.swift */; };
 		A128E913253C81D0000ED358 /* InputAccessoryContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128E912253C81D0000ED358 /* InputAccessoryContainerView.swift */; };
 		A137AD09254869B700E50037 /* ChannelDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = A137AD05254869B700E50037 /* ChannelDB.swift */; };
@@ -116,6 +117,7 @@
 		A12320732528C30B005F8249 /* ThemeSettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeSettingsViewController.xib; sourceTree = "<group>"; };
 		A123207D2529C845005F8249 /* ThemeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeService.swift; sourceTree = "<group>"; };
 		A12320852529CB87005F8249 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		A1246DD1256EF49D002F0702 /* TinkoffEmitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinkoffEmitter.swift; sourceTree = "<group>"; };
 		A128E905253C719C000ED358 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		A128E912253C81D0000ED358 /* InputAccessoryContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAccessoryContainerView.swift; sourceTree = "<group>"; };
 		A137AD05254869B700E50037 /* ChannelDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelDB.swift; sourceTree = "<group>"; };
@@ -482,6 +484,7 @@
 			isa = PBXGroup;
 			children = (
 				A164F9A7255ECEBC00C7A56F /* FetchedResultsControllerDelegate.swift */,
+				A1246DD1256EF49D002F0702 /* TinkoffEmitter.swift */,
 			);
 			path = AdditionalClasses;
 			sourceTree = "<group>";
@@ -787,6 +790,7 @@
 				A10A8894251F6238006B3017 /* MessageCellModel.swift in Sources */,
 				A1761CBD255F375900BDFF14 /* UserDataCore.swift in Sources */,
 				A1475871250F5FEA004DFCAA /* Logger.swift in Sources */,
+				A1246DD2256EF49D002F0702 /* TinkoffEmitter.swift in Sources */,
 				A13A4553255DF639007609A7 /* ConversationsInteractor.swift in Sources */,
 				A169F0DD255961A9001F0EDB /* TextViewWithPlaceholder.swift in Sources */,
 				A1C743A7251E3ABA005B5195 /* ConversationCell.swift in Sources */,

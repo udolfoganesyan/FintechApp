@@ -36,7 +36,7 @@ final class ProfileViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         transitioningDelegate = self
-        modalPresentationStyle = .overFullScreen
+        modalPresentationStyle = .custom
     }
     
     required init?(coder: NSCoder) {

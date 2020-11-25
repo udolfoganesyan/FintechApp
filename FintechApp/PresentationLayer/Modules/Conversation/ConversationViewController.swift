@@ -15,6 +15,7 @@ final class ConversationViewController: UIViewController {
         tableView.register(MessageCell.self, forCellReuseIdentifier: MessageCell.reuseIdentifier)
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
+        tableView.delaysContentTouches = false
         tableView.dataSource = self
         tableView.delegate = self
         tableView.backgroundColor = conversationInteractor.currentTheme.backgroundColor

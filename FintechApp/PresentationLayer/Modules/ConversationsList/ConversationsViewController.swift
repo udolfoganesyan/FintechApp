@@ -15,6 +15,7 @@ final class ConversationsViewController: UIViewController {
         tableView.register(ConversationCell.nib, forCellReuseIdentifier: ConversationCell.reuseIdentifier)
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.delaysContentTouches = false
         tableView.tableFooterView = UIView()
         tableView.rowHeight = 80
         return tableView
