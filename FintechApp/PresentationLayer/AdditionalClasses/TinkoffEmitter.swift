@@ -12,13 +12,13 @@ final class TinkoffEmitter {
     
     static var shared = TinkoffEmitter()
     
-    private let starParticle = TinkoffParticle()
+    private let tinkoffParticle = TinkoffParticle()
     
     private lazy var particleEmitter: CAEmitterLayer = {
         let emitter = CAEmitterLayer()
         emitter.emitterShape = .point
         emitter.renderMode = .unordered
-        emitter.emitterCells = [starParticle]
+        emitter.emitterCells = [tinkoffParticle]
         return emitter
     }()
     
