@@ -12,8 +12,9 @@ struct MessageCellModel {
     
     let attributedText: NSMutableAttributedString
     let isIncoming: Bool
+    let theme: Theme
     
-    init(messageDB: MessageDB) {
+    init(messageDB: MessageDB, theme: Theme) {
         let isIncoming = messageDB.senderId != FirebaseService.myId
         self.isIncoming = isIncoming
         
@@ -24,5 +25,6 @@ struct MessageCellModel {
             attributedText.append(NSAttributedString(string: messageDB.senderName, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 8, weight: .light)]))
         }
         self.attributedText = attributedText
+        self.theme = theme
     }
 }

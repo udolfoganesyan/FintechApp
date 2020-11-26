@@ -27,11 +27,12 @@ final class ProfileViewController: UIViewController {
     private lazy var avatarView = AvatarImageView(style: .circle)
     private var inEditingMode = false
     private var didChangeAvatar = false
-    private var dataManager: AsyncDataManager?
     private let profileInteractor: ProfileInteractorProtocol
+    private let presentationAssembly: PresentationAssemblyProtocol
     
-    init(profileInteractor: ProfileInteractorProtocol) {
+    init(profileInteractor: ProfileInteractorProtocol, presentationAssembly: PresentationAssemblyProtocol) {
         self.profileInteractor = profileInteractor
+        self.presentationAssembly = presentationAssembly
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -63,22 +64,19 @@ final class ProfileViewController: UIViewController {
         aboutTextView.backgroundColor = profileInteractor.currentTheme.incomingCellColor
         aboutTextView.textColor = profileInteractor.currentTheme.primaryTextColor
         activityIndicator.color = profileInteractor.currentTheme.secondaryTextColor
-        setupSaveButtons()
+        setupSaveButton(gcdSaveButton)
+        setupSaveButton(operationSaveButton)
         setupAvatarView()
     }
     
-    private func setupSaveButtons() {
-        gcdSaveButton.layer.cornerRadius = 14
-        gcdSaveButton.layer.masksToBounds = true
-        gcdSaveButton.backgroundColor = profileInteractor.currentTheme.buttonBackgroundColor
-        
-        operationSaveButton.layer.cornerRadius = 14
-        operationSaveButton.layer.masksToBounds = true
-        operationSaveButton.backgroundColor = profileInteractor.currentTheme.buttonBackgroundColor
+    private func setupSaveButton(_ button: UIButton) {
+        button.layer.cornerRadius = 14
+        button.layer.masksToBounds = true
+        button.backgroundColor = profileInteractor.currentTheme.buttonBackgroundColor
     }
     
     private func setupAvatarView() {
-        avatarView.install(on: avatarContainerView)
+        avatarContainerView.addSubviewInBounds(avatarView)
         avatarView.setupWith(firstName: "Rudolf", lastName: "Oganesyan", color: #colorLiteral(red: 0.8941176471, green: 0.9098039216, blue: 0.168627451, alpha: 1))
         let avatarTap = UITapGestureRecognizer(target: self, action: #selector(handleAvatar))
         avatarView.addGestureRecognizer(avatarTap)
@@ -94,8 +92,7 @@ final class ProfileViewController: UIViewController {
     }
     
     private func fetchAndSetUserData() {
-        dataManager = OperationDataManager()
-        dataManager?.fetchUserData(completion: { (user) in
+        profileInteractor.fetchUserData(completion: { (user) in
             self.nameLabel.text = user.fullName
             self.fullNameTextField.text = self.nameLabel.text
             
@@ -126,12 +123,12 @@ final class ProfileViewController: UIViewController {
     }
     
     @IBAction private func saveViaGCDTouched(_ sender: UIButton) {
-        dataManager = GCDDataManager()
+        profileInteractor.setServiceType(.gcd)
         save()
     }
     
     @IBAction private func saveViaOperationTouched(_ sender: UIButton) {
-        dataManager = OperationDataManager()
+        profileInteractor.setServiceType(.operation)
         save()
     }
     
@@ -142,7 +139,7 @@ final class ProfileViewController: UIViewController {
                         about: aboutTextView.text,
                         image: avatarView.image)
         
-        dataManager?.saveUserData(user: user) { (success) in
+        profileInteractor.saveUserData(user: user) { (success) in
             if success {
                 self.showOkAlert("Done ✓", nil)
                 self.fetchAndSetUserData()
@@ -203,12 +200,16 @@ final class ProfileViewController: UIViewController {
         let galleryAction = UIAlertAction(title: "Gallery", style: .default) { _ in
             self.showImagePicker(for: .photoLibrary)
         }
+        let downloadAction = UIAlertAction(title: "Download", style: .default) { _ in
+            self.presentWebImagesViewController()
+        }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
         #if !targetEnvironment(simulator)
         alertController.addAction(cameraAction)
         #endif
         alertController.addAction(galleryAction)
+        alertController.addAction(downloadAction)
         alertController.addAction(cancelAction)
         alertController.pruneNegativeWidthConstraints()
         self.present(alertController, animated: true, completion: nil)
@@ -230,6 +231,18 @@ final class ProfileViewController: UIViewController {
         present(imagePickerController, animated: true)
     }
     
+    private func presentWebImagesViewController() {
+        let webImagesViewController = self.presentationAssembly.webImagesViewController()
+        webImagesViewController.delegate = self
+        present(webImagesViewController, animated: true)
+    }
+    
+    private func setAvatarImage(_ image: UIImage) {
+        avatarView.setupWith(image: image)
+        didChangeAvatar = true
+        checkChangesAndSetSaveButtons()
+    }
+    
     @IBAction private func closeButtonTouched(_ sender: UIButton) {
         dismiss(animated: true)
     }
@@ -244,6 +257,15 @@ extension ProfileViewController: UITextViewDelegate {
     }
 }
 
+// MARK: - WebImagesViewControllerDelegate
+
+extension ProfileViewController: WebImagesViewControllerDelegate {
+    
+    func didChooseImage(_ image: UIImage) {
+        setAvatarImage(image)
+    }
+}
+
 // MARK: - UIImagePickerControllerDelegate
 
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -251,10 +273,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
         
-        avatarView.setupWith(image: image)
-        didChangeAvatar = true
-        checkChangesAndSetSaveButtons()
-        
+        setAvatarImage(image)
         dismiss(animated: true)
     }
     

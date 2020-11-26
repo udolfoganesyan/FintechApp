@@ -10,17 +10,18 @@ import UIKit
 
 final class SaveUserDataOperation: Operation {
     
-    private let userDataStorage = UserDataStorage()
-    private var user: User
-    private var completion: SuccessCompletion
+    private let userDataCore: UserDataCoreProtocol
+    private let user: User
+    private let completion: BoolClosure
     
-    init(user: User, completion: @escaping SuccessCompletion) {
+    init(user: User, userDataCore: UserDataCoreProtocol, completion: @escaping BoolClosure) {
         self.user = user
+        self.userDataCore = userDataCore
         self.completion = completion
     }
     
     override func main() {
-        userDataStorage.saveUserData(user: user) { (success) in
+        userDataCore.saveUserData(user: user) { (success) in
             OperationQueue.main.addOperation {
                 self.completion(success)
             }

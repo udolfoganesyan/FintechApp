@@ -10,12 +10,12 @@ import Foundation
 
 protocol ThemeSettingsInteractorProtocol {
     var currentTheme: Theme { get }
-    func updateThemeWith(_ theme: Theme, completion: @escaping () -> Void)
+    func updateThemeWith(_ theme: Theme, completion: @escaping VoidClosure)
 }
 
 final class ThemeSettingsInteractor: ThemeSettingsInteractorProtocol {
     
-    let themeService: ThemeServiceProtocol
+    private let themeService: ThemeServiceProtocol
     
     var currentTheme: Theme {
         themeService.currentTheme
@@ -25,7 +25,7 @@ final class ThemeSettingsInteractor: ThemeSettingsInteractorProtocol {
         self.themeService = themeService
     }
     
-    func updateThemeWith(_ theme: Theme, completion: @escaping () -> Void) {
+    func updateThemeWith(_ theme: Theme, completion: @escaping VoidClosure) {
         themeService.updateThemeWith(theme, completion: completion)
     }
 }

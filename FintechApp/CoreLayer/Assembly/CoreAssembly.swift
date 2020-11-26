@@ -9,9 +9,12 @@
 import Foundation
 
 protocol CoreAssemblyProtocol {
-//    var requestSender: IRequestSender { get }
+    var userDataCore: UserDataCoreProtocol { get }
+    var requestSender: RequestSenderProtocol { get }
 }
 
 final class CoreAssembly: CoreAssemblyProtocol {
-//    lazy var requestSender: IRequestSender = RequestSender()
+    
+    lazy var userDataCore: UserDataCoreProtocol = UserDataCore()
+    lazy var requestSender: RequestSenderProtocol = RequestSender()
 }

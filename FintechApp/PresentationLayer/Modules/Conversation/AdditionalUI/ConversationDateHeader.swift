@@ -19,7 +19,7 @@ final class ConversationDateHeader: UIView {
         self.theme = theme
         super.init(frame: .zero)
         
-        layoutLabel()
+        addSubviewCentered(dateLabel)
         setupLabel(with: dateString)
     }
     
@@ -43,12 +43,5 @@ final class ConversationDateHeader: UIView {
             ConversationDateHeader.dateFormatter.dateFormat = "EEEE, MMM d"
             return ConversationDateHeader.dateFormatter.string(from: date)
         }
-    }
-    
-    private func layoutLabel() {
-        addSubview(dateLabel)
-        
-        dateLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        dateLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
 }

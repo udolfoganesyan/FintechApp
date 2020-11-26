@@ -57,8 +57,8 @@ final class MessageCell: UITableViewCell {
         messageLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12).isActive = true
         messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12).isActive = true
         messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant: bounds.width * 0.75).isActive = true
-        leadingMessageConstraint = messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20)
-        trailingMessageConstraint = messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
+        leadingMessageConstraint = messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24)
+        trailingMessageConstraint = messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24)
         
         messageBackgroundView.topAnchor.constraint(equalTo: messageLabel.topAnchor, constant: -6).isActive = true
         messageBackgroundView.bottomAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 6).isActive = true
@@ -71,9 +71,10 @@ final class MessageCell: UITableViewCell {
 
 extension MessageCell: ConfigurableView {
     
-    func configure(with model: MessageCellModel, and theme: Theme) {
+    func configure(with model: MessageCellModel) {
         messageLabel.attributedText = model.attributedText
         isIncoming = model.isIncoming
+        let theme = model.theme
         messageBackgroundView.backgroundColor = isIncoming ? theme.incomingCellColor : theme.outgoingCellColor
         messageLabel.textColor = isIncoming ? theme.incomingCellTextColor : theme.outgoingCellTextColor
         backgroundColor = theme.backgroundColor

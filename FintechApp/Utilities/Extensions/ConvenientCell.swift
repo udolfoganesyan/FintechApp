@@ -1,5 +1,5 @@
 //
-//  UITableViewCell+reuseIdentifier.swift
+//  ConvenientCell.swift
 //  FintechApp
 //
 //  Created by Rudolf Oganesyan on 25.09.2020.
@@ -8,7 +8,11 @@
 
 import UIKit
 
-extension UITableViewCell {
+protocol ConvenientCell {
+    
+}
+
+extension ConvenientCell {
     
     static var nib: UINib {
         return UINib(nibName: reuseIdentifier, bundle: nil)
@@ -17,4 +21,12 @@ extension UITableViewCell {
     static var reuseIdentifier: String {
         return String(describing: self)
     }
+}
+
+extension UITableViewCell: ConvenientCell {
+    
+}
+
+extension UICollectionViewCell: ConvenientCell {
+    
 }

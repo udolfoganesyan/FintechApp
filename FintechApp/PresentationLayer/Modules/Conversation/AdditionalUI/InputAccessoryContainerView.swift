@@ -9,7 +9,7 @@
 import UIKit
 
 protocol InputDelegate: class {
-    func handleSend(text: String, completion: @escaping SuccessCompletion)
+    func handleSend(text: String, completion: @escaping BoolClosure)
 }
 
 final class InputAccessoryContainerView: UIView {

@@ -27,9 +27,10 @@ final class AvatarImageView: UIImageView {
         self.style = style
         
         super.init(frame: .zero)
-        self.translatesAutoresizingMaskIntoConstraints = false
+        translatesAutoresizingMaskIntoConstraints = false
+        contentMode = .scaleAspectFill
         
-        setupLabel()
+        addSubviewCentered(nameLabel)
     }
     
     required init?(coder: NSCoder) {
@@ -42,16 +43,11 @@ final class AvatarImageView: UIImageView {
         if style == .circle {
             layer.masksToBounds = true
             layer.cornerRadius = frame.width / 2
+            layer.borderColor = #colorLiteral(red: 0.2605174184, green: 0.2605243921, blue: 0.260520637, alpha: 1)
+            layer.borderWidth = frame.width / 50
         }
         
         nameLabel.font = .systemFont(ofSize: self.frame.height / 2)
-    }
-    
-    private func setupLabel() {
-        addSubview(nameLabel)
-        
-        nameLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        nameLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
     
     func setupWith(firstName: String, lastName: String = "", color: UIColor) {
@@ -63,13 +59,5 @@ final class AvatarImageView: UIImageView {
     func setupWith(image: UIImage) {
         nameLabel.isHidden = true
         self.image = image
-    }
-    
-    func install(on parentView: UIView) {
-        parentView.addSubview(self)
-        topAnchor.constraint(equalTo: parentView.topAnchor).isActive = true
-        bottomAnchor.constraint(equalTo: parentView.bottomAnchor).isActive = true
-        leadingAnchor.constraint(equalTo: parentView.leadingAnchor).isActive = true
-        trailingAnchor.constraint(equalTo: parentView.trailingAnchor).isActive = true
     }
 }

@@ -12,7 +12,6 @@ final class ConversationsViewController: UIViewController {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(ConversationCell.nib, forCellReuseIdentifier: ConversationCell.reuseIdentifier)
         tableView.delegate = self
         tableView.dataSource = self
@@ -55,7 +54,7 @@ final class ConversationsViewController: UIViewController {
         super.viewDidLoad()
         
         setupNavigationBar()
-        setupTableView()
+        layoutTableView()
         setupAddButton()
         updateTheme()
         
@@ -72,7 +71,7 @@ final class ConversationsViewController: UIViewController {
         
         let avatarView = AvatarImageView(style: .circle)
         let avatarViewContainer = UIView()
-        avatarView.install(on: avatarViewContainer)
+        avatarViewContainer.addSubviewInBounds(avatarView)
         avatarView.setupWith(firstName: "Rudolf", lastName: "Oganesyan", color: #colorLiteral(red: 0.8941176471, green: 0.9098039216, blue: 0.168627451, alpha: 1))
         let profileButton = UIBarButtonItem(customView: avatarViewContainer)
         profileButton.customView?.translatesAutoresizingMaskIntoConstraints = false
@@ -94,12 +93,8 @@ final class ConversationsViewController: UIViewController {
         present(profileViewController, animated: true)
     }
     
-    private func setupTableView() {
-        view.addSubview(tableView)
-        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+    private func layoutTableView() {
+        view.addSubviewWithSameSizeAndSafeTop(tableView)
     }
     
     private func setupAddButton() {
@@ -171,9 +166,8 @@ extension ConversationsViewController: UITableViewDataSource {
         }
         
         let channelDB = conversationsInteractor.fetchedResultsController.object(at: indexPath)
-        let model = ConversationCellModel(channelDB: channelDB)
-        
-        cell.configure(with: model, and: conversationsInteractor.currentTheme)
+        let model = ConversationCellModel(channelDB: channelDB, theme: conversationsInteractor.currentTheme)
+        cell.configure(with: model)
         
         return cell
     }
@@ -203,6 +197,7 @@ extension ConversationsViewController: SettingsDelegate {
     }
     
     private func updateTheme() {
+        view.backgroundColor = conversationsInteractor.currentTheme.backgroundColor
         tableView.backgroundColor = conversationsInteractor.currentTheme.backgroundColor
         tableView.reloadData()
         

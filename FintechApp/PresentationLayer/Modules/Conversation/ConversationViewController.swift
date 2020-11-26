@@ -12,7 +12,6 @@ final class ConversationViewController: UIViewController {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(MessageCell.self, forCellReuseIdentifier: MessageCell.reuseIdentifier)
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
@@ -59,6 +58,8 @@ final class ConversationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = conversationInteractor.currentTheme.backgroundColor
+        
         setupKeyboardObservers()
         setupEndEditingTap()
         layoutTableView()
@@ -85,12 +86,11 @@ final class ConversationViewController: UIViewController {
     @objc private func handleKeyboard(notification: Notification) {
         guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
         
-        let keyboardScreenEndFrame = keyboardValue.cgRectValue
-        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
-        
         if notification.name == UIResponder.keyboardWillHideNotification {
-            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: view.safeAreaInsets.bottom, right: 0)
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: inputContainerView.frame.height - view.safeAreaInsets.bottom, right: 0)
         } else {
+            let keyboardScreenEndFrame = keyboardValue.cgRectValue
+            let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
             tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom, right: 0)
         }
         
@@ -110,11 +110,7 @@ final class ConversationViewController: UIViewController {
     }
     
     private func layoutTableView() {
-        view.addSubview(tableView)
-        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        view.addSubviewWithSameSizeAndSafeTop(tableView)
     }
 }
 
@@ -122,7 +118,7 @@ final class ConversationViewController: UIViewController {
 
 extension ConversationViewController: InputDelegate {
     
-    func handleSend(text: String, completion: @escaping SuccessCompletion) {
+    func handleSend(text: String, completion: @escaping BoolClosure) {
         conversationInteractor.sendMessage(text) { (success) in
             if !success {
                 self.showOkAlert("Error", "Could not send message :(")
@@ -163,9 +159,9 @@ extension ConversationViewController: UITableViewDataSource {
         }
         
         let messageDB = conversationInteractor.fetchedResultsController.object(at: indexPath)
-        let model = MessageCellModel(messageDB: messageDB)
+        let model = MessageCellModel(messageDB: messageDB, theme: conversationInteractor.currentTheme)
+        cell.configure(with: model)
         
-        cell.configure(with: model, and: conversationInteractor.currentTheme)
         return cell
     }
 }

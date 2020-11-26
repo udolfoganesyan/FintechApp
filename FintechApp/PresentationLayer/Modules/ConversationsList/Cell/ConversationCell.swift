@@ -10,7 +10,7 @@ import UIKit
 
 protocol ConfigurableView {
     associatedtype ConfigurationModel
-    func configure(with model: ConfigurationModel, and theme: Theme)
+    func configure(with model: ConfigurationModel)
 }
 
 final class ConversationCell: UITableViewCell {
@@ -22,11 +22,11 @@ final class ConversationCell: UITableViewCell {
     
     private lazy var onlineBadge = OnlineBadgeView()
     private lazy var avatarView = AvatarImageView(style: .circle)
-        
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        avatarView.install(on: avatarContainer)
+        avatarContainer.addSubviewInBounds(avatarView)
         onlineBadge.install(on: avatarContainer)
         
         backgroundColor = .clear
@@ -40,7 +40,8 @@ final class ConversationCell: UITableViewCell {
 
 extension ConversationCell: ConfigurableView {
     
-    func configure(with model: ConversationCellModel, and theme: Theme) {
+    func configure(with model: ConversationCellModel) {
+        let theme = model.theme
         nameLabel.textColor = theme.primaryTextColor
         messageLabel.textColor = theme.secondaryTextColor
         dateLabel.textColor = theme.secondaryTextColor
@@ -50,7 +51,7 @@ extension ConversationCell: ConfigurableView {
         messageLabel.text = model.message
         messageLabel.font = .systemFont(ofSize: 16)
         dateLabel.text = model.date
-
+        
         if model.message.isEmpty {
             messageLabel.text = "No messages yet"
             messageLabel.font = .italicSystemFont(ofSize: 16)

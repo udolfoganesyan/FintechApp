@@ -11,8 +11,8 @@ import CoreData
 protocol ConversationsInteractorProtocol {
     var currentTheme: Theme { get }
     
-    func createFBChannelWith(_ name: String, completion: @escaping SuccessCompletion)
-    func deleteFBChannelWith(channelId: String, completion: @escaping SuccessCompletion)
+    func createFBChannelWith(_ name: String, completion: @escaping BoolClosure)
+    func deleteFBChannelWith(channelId: String, completion: @escaping BoolClosure)
     
     var fetchedResultsController: NSFetchedResultsController<ChannelDB> { get }
     func fetchSavedChannels()
@@ -35,11 +35,11 @@ final class ConversationsInteractor: ConversationsInteractorProtocol {
         self.coreDataService = coreDataService
     }
     
-    func createFBChannelWith(_ name: String, completion: @escaping SuccessCompletion) {
+    func createFBChannelWith(_ name: String, completion: @escaping BoolClosure) {
         firebaseService.createChannelWith(name, completion: completion)
     }
     
-    func deleteFBChannelWith(channelId: String, completion: @escaping SuccessCompletion) {
+    func deleteFBChannelWith(channelId: String, completion: @escaping BoolClosure) {
         firebaseService.deleteChannelWith(channelId: channelId, completion: completion)
     }
     
