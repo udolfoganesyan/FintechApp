@@ -8,8 +8,14 @@
 
 import UIKit
 
-struct User {
+struct User: Equatable {
     let fullName: String?
     let about: String?
     let image: UIImage?
+    
+    init(fullName: String? = nil, about: String? = nil, image: UIImage? = nil) {
+        self.fullName = fullName
+        self.about = about
+        self.image = image
+    }
 }
