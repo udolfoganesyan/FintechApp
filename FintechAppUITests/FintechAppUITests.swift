@@ -8,9 +8,9 @@
 
 import XCTest
 
-class FintechAppUITests: XCTestCase {
-
-    var app: XCUIApplication!
+final class FintechAppUITests: XCTestCase {
+    
+    private var app: XCUIApplication!
     
     override func setUp() {
         super.setUp()
