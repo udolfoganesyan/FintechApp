@@ -51,4 +51,27 @@ final class ThemeServiceTests: XCTestCase {
         //then
         XCTAssertEqual(UINavigationBar.appearance().barTintColor, sut?.currentTheme.backgroundColor)
     }
+    
+    func testCoreSavingCalled() {
+        //given
+        let themeToSave = Theme.day
+        let mockThemeCore = themeCore as? MockThemeCore
+        
+        //when
+        sut?.updateThemeWith(themeToSave, completion: { })
+        
+        //then
+        XCTAssertEqual(mockThemeCore?.savingCounter, 1)
+    }
+    
+    func testCoreFetchingCalled() {
+        //given
+        let mockThemeCore = themeCore as? MockThemeCore
+        
+        //when
+        _ = sut?.currentTheme
+        
+        //then
+        XCTAssertEqual(mockThemeCore?.fetchingCounter, 1)
+    }
 }
