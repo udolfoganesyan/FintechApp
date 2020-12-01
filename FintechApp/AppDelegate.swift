@@ -37,5 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func configureAppForUITesting() {
         UIView.setAnimationsEnabled(false)
+        self.window?.layer.speed = 100
     }
 }
