@@ -21,19 +21,19 @@ final class WebImagesInteractor: WebImagesInteractorProtocol {
     var currentTheme: Theme {
         themeService.currentTheme
     }
-        
+    
     init(themeService: ThemeServiceProtocol, webImagesService: WebImagesServiceProtocol) {
         self.themeService = themeService
         self.webImagesService = webImagesService
     }
     
     func getImageURLs(completion: @escaping ([ImageURL]) -> Void) {
-        webImagesService.fetchImageSource { (imageSource) in
+        webImagesService.fetchImageSource(theme: .harryPotter) { (imageSource) in
             guard let imageSource = imageSource else {
                 completion([])
                 return
             }
-
+            
             completion(imageSource.urls)
         }
     }

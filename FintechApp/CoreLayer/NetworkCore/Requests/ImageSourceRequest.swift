@@ -25,16 +25,16 @@ final class ImageSourceRequest: RequestProtocol {
                 "image_type": "photo",
                 "per_page": "100"]
     }
-    private var urlString: String {
-        let getParams = query.compactMap({ "\($0.key)=\($0.value)"}).joined(separator: "&")
-        return baseUrl + "?" + getParams
+    private var url: URL? {
+        let queryItems = query.compactMap { URLQueryItem(name: $0, value: $1) }
+        var comps = URLComponents(string: baseUrl)
+        comps?.queryItems = queryItems
+        return comps?.url
     }
     
     var urlRequest: URLRequest? {
-        if let url = URL(string: urlString) {
-            return URLRequest(url: url)
-        }
-        return nil
+        guard let url = url else { return nil }
+        return URLRequest(url: url)
     }
     
     init(searchTheme: SearchTheme) {

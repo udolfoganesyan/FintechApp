@@ -9,7 +9,7 @@
 import Foundation
 
 protocol WebImagesServiceProtocol {
-    func fetchImageSource(completion: @escaping (ImageSourceModel?) -> Void)
+    func fetchImageSource(theme: ImageSourceRequest.SearchTheme, completion: @escaping (ImageSourceModel?) -> Void)
 }
 
 final class WebImagesService: WebImagesServiceProtocol {
@@ -20,12 +20,24 @@ final class WebImagesService: WebImagesServiceProtocol {
         self.requestSender = requestSender
     }
     
-    func fetchImageSource(completion: @escaping (ImageSourceModel?) -> Void) {
-        let requestConfig = RequestsFactory.ImageSourceRequests.harryPotterConfig()
+    func fetchImageSource(theme: ImageSourceRequest.SearchTheme, completion: @escaping (ImageSourceModel?) -> Void) {
+        
+        let requestConfig = getRequestConfigFor(theme: theme)
         requestSender.send(requestConfig: requestConfig) { (imageSource) in
             DispatchQueue.main.async {
                 completion(imageSource)
             }
+        }
+    }
+    
+    private func getRequestConfigFor(theme: ImageSourceRequest.SearchTheme) -> RequestConfig<ImageSourceParser> {
+        switch theme {
+        case .harryPotter:
+            return RequestsFactory.ImageSourceRequests.harryPotterConfig()
+        case .starWars:
+            return RequestsFactory.ImageSourceRequests.starWarsConfig()
+        case .peakyBlinders:
+            return RequestsFactory.ImageSourceRequests.peakyBlindersConfig()
         }
     }
 }

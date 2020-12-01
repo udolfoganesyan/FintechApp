@@ -66,6 +66,8 @@
 		A187D11A253B9391008AAE86 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = A187D119253B9391008AAE86 /* .swiftlint.yml */; };
 		A187D11D253C4AD4008AAE86 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A187D11C253C4AD4008AAE86 /* FirebaseService.swift */; };
 		A187D126253C5230008AAE86 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A187D125253C5230008AAE86 /* Channel.swift */; };
+		A1889B932576F803003C6280 /* MockRequestSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1889B922576F803003C6280 /* MockRequestSender.swift */; };
+		A1889B9B2576F8EE003C6280 /* WebImageServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1889B9A2576F8EE003C6280 /* WebImageServiceTests.swift */; };
 		A18A6865253EF9B400E1B4D7 /* FirebaseExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18A6864253EF9B400E1B4D7 /* FirebaseExtensions.swift */; };
 		A18E47392534BB330096D1B3 /* GCDUserDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18E47382534BB330096D1B3 /* GCDUserDataService.swift */; };
 		A18E473C2534BB430096D1B3 /* OperationUserDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18E473B2534BB430096D1B3 /* OperationUserDataService.swift */; };
@@ -173,6 +175,8 @@
 		A187D119253B9391008AAE86 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		A187D11C253C4AD4008AAE86 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		A187D125253C5230008AAE86 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
+		A1889B922576F803003C6280 /* MockRequestSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRequestSender.swift; sourceTree = "<group>"; };
+		A1889B9A2576F8EE003C6280 /* WebImageServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebImageServiceTests.swift; sourceTree = "<group>"; };
 		A18A6864253EF9B400E1B4D7 /* FirebaseExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseExtensions.swift; sourceTree = "<group>"; };
 		A18E47382534BB330096D1B3 /* GCDUserDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDUserDataService.swift; sourceTree = "<group>"; };
 		A18E473B2534BB430096D1B3 /* OperationUserDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationUserDataService.swift; sourceTree = "<group>"; };
@@ -622,6 +626,15 @@
 			path = FirebaseService;
 			sourceTree = "<group>";
 		};
+		A1889B912576F7DA003C6280 /* WebImageServiceTests */ = {
+			isa = PBXGroup;
+			children = (
+				A1889B922576F803003C6280 /* MockRequestSender.swift */,
+				A1889B9A2576F8EE003C6280 /* WebImageServiceTests.swift */,
+			);
+			path = WebImageServiceTests;
+			sourceTree = "<group>";
+		};
 		A188A7D42561EB6F0053FFFA /* NetworkCore */ = {
 			isa = PBXGroup;
 			children = (
@@ -677,6 +690,7 @@
 			isa = PBXGroup;
 			children = (
 				A11D14112575B81800F34146 /* ThemeServiceTests */,
+				A1889B912576F7DA003C6280 /* WebImageServiceTests */,
 				A1F1957A2575A67900CA9050 /* Info.plist */,
 			);
 			path = FintechAppTests;
@@ -984,6 +998,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A11D14172575B82900F34146 /* MockThemeCore.swift in Sources */,
+				A1889B932576F803003C6280 /* MockRequestSender.swift in Sources */,
+				A1889B9B2576F8EE003C6280 /* WebImageServiceTests.swift in Sources */,
 				A1F195832575A70900CA9050 /* ThemeServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
