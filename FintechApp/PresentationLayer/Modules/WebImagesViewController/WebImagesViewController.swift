@@ -30,6 +30,7 @@ final class WebImagesViewController: UIViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.delaysContentTouches = false
         collectionView.register(WebImageCell.self, forCellWithReuseIdentifier: WebImageCell.reuseIdentifier)
         collectionView.backgroundColor = webImagesInteractor.currentTheme.backgroundColor
         return collectionView

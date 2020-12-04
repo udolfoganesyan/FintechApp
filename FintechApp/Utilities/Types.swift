@@ -10,3 +10,4 @@ import Foundation
 
 typealias VoidClosure = () -> Void
 typealias BoolClosure = (Bool) -> Void
+//typealias ResultClosure<ReturnType> = (ReturnType) -> Void

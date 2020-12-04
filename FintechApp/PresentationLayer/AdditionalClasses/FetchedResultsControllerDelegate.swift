@@ -31,15 +31,15 @@ final class FetchedResultsControllerDelegate<Entity>: NSObject, NSFetchedResults
         guard anObject is Entity else { return }
         
         switch type {
+        case .update:
+            guard let indexPath = indexPath else { return }
+            tableView.reloadRows(at: [indexPath], with: .fade)
         case .insert:
             guard let newIndexPath = newIndexPath else { return }
             tableView.insertRows(at: [newIndexPath], with: .fade)
         case .delete:
             guard let indexPath = indexPath else { return }
             tableView.deleteRows(at: [indexPath], with: .fade)
-        case .update:
-            guard let indexPath = indexPath else { return }
-            tableView.reloadRows(at: [indexPath], with: .fade)
         case .move:
             guard let indexPath = indexPath,
                   let newIndexPath = newIndexPath else { return }
