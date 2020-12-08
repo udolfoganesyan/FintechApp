@@ -1,0 +1,7 @@
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+desc "builds for testing"
+lane :build_for_testing do
+    scan
+end

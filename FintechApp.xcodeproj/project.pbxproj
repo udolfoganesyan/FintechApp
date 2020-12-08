@@ -51,6 +51,9 @@
 		A1475869250F5FA3004DFCAA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1475867250F5FA3004DFCAA /* LaunchScreen.storyboard */; };
 		A1475871250F5FEA004DFCAA /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1475870250F5FEA004DFCAA /* Logger.swift */; };
 		A1475874250F6036004DFCAA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A1475873250F6036004DFCAA /* README.md */; };
+		A149F95C257EDC760069460D /* Gemfile in Resources */ = {isa = PBXBuildFile; fileRef = A149F95B257EDC760069460D /* Gemfile */; };
+		A149F961257EEE570069460D /* Fastfile in Resources */ = {isa = PBXBuildFile; fileRef = A149F960257EEE570069460D /* Fastfile */; };
+		A149F966257F7C070069460D /* .travis.yml in Resources */ = {isa = PBXBuildFile; fileRef = A149F965257F7C060069460D /* .travis.yml */; };
 		A1635973255DE0E700D1888A /* PresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1635972255DE0E700D1888A /* PresentationAssembly.swift */; };
 		A163597C255DE20B00D1888A /* RootAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = A163597B255DE20B00D1888A /* RootAssembly.swift */; };
 		A163597F255DE31600D1888A /* ServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = A163597E255DE31600D1888A /* ServiceAssembly.swift */; };
@@ -160,6 +163,9 @@
 		A147586A250F5FA3004DFCAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A1475870250F5FEA004DFCAA /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		A1475873250F6036004DFCAA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		A149F95B257EDC760069460D /* Gemfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Gemfile; sourceTree = "<group>"; };
+		A149F960257EEE570069460D /* Fastfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Fastfile; path = fastlane/Fastfile; sourceTree = "<group>"; };
+		A149F965257F7C060069460D /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .travis.yml; sourceTree = "<group>"; };
 		A1635972255DE0E700D1888A /* PresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationAssembly.swift; sourceTree = "<group>"; };
 		A163597B255DE20B00D1888A /* RootAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootAssembly.swift; sourceTree = "<group>"; };
 		A163597E255DE31600D1888A /* ServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAssembly.swift; sourceTree = "<group>"; };
@@ -432,6 +438,9 @@
 			children = (
 				A1475873250F6036004DFCAA /* README.md */,
 				A187D119253B9391008AAE86 /* .swiftlint.yml */,
+				A149F95B257EDC760069460D /* Gemfile */,
+				A149F960257EEE570069460D /* Fastfile */,
+				A149F965257F7C060069460D /* .travis.yml */,
 				A147585B250F5FA2004DFCAA /* FintechApp */,
 				A1F195772575A67900CA9050 /* FintechAppTests */,
 				A11D142A2576480F00F34146 /* FintechAppUITests */,
@@ -829,9 +838,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A149F961257EEE570069460D /* Fastfile in Resources */,
+				A149F95C257EDC760069460D /* Gemfile in Resources */,
 				A187D11A253B9391008AAE86 /* .swiftlint.yml in Resources */,
 				A1475869250F5FA3004DFCAA /* LaunchScreen.storyboard in Resources */,
 				A12320752528C30B005F8249 /* ThemeSettingsViewController.xib in Resources */,
+				A149F966257F7C070069460D /* .travis.yml in Resources */,
 				A1475866250F5FA3004DFCAA /* Assets.xcassets in Resources */,
 				A1475874250F6036004DFCAA /* README.md in Resources */,
 				A1C743A8251E3ABA005B5195 /* ConversationCell.xib in Resources */,
