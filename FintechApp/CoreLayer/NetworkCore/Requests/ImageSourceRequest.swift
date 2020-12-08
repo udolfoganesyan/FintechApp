@@ -27,8 +27,9 @@ final class ImageSourceRequest: RequestProtocol {
     }
     private var url: URL? {
         let queryItems = query.compactMap { URLQueryItem(name: $0, value: $1) }
+        let sortedQueryItems = queryItems.sorted(by: { $0.name < $1.name })
         var comps = URLComponents(string: baseUrl)
-        comps?.queryItems = queryItems
+        comps?.queryItems = sortedQueryItems
         return comps?.url
     }
     

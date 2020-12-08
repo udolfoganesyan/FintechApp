@@ -4,7 +4,26 @@
 desc "builds for testing"
 lane :build_for_testing do
     scan(
-        device: "iPhone Xs",
-        clean: true
+        build_for_testing: true
     )
+    discord_notifier(
+    webhook_url: "",
+    title: "Finished building",
+    description: "SUCCESS",
+    success: true,
+    thumbnail_url:"https://acdn.tinkoff.ru/static/documents/703d269e-ec01-4187-9544-5f01fb27bbb6.png"
+    )
+end
+
+desc "runs tests"
+lane :just_run_tests do
+    scan(
+        test_without_building: true
+    )
+end
+
+desc "builds and runs tests"
+lane :build_and_test do
+    build_for_testing
+    run_tests
 end

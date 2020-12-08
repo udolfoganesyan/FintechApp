@@ -20,6 +20,16 @@ or alternatively using `brew install fastlane`
 fastlane build_for_testing
 ```
 builds for testing
+### just_run_tests
+```
+fastlane just_run_tests
+```
+runs tests
+### build_and_test
+```
+fastlane build_and_test
+```
+builds and runs tests
 
 ----
 

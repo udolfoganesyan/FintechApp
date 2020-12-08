@@ -6,4 +6,4 @@ install:
     - bundle install
     - bundle exec pod install
 script:
-    - fastlane build_for_testing
+    - fastlane build_and_test
