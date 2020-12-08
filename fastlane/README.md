@@ -15,21 +15,26 @@ Install _fastlane_ using
 or alternatively using `brew install fastlane`
 
 # Available Actions
+### install_pods
+```
+fastlane install_pods
+```
+Installs Pods listed in Podfile
 ### build_for_testing
 ```
 fastlane build_for_testing
 ```
-builds for testing
+Builds for testing
 ### just_run_tests
 ```
 fastlane just_run_tests
 ```
-runs tests
+Runs tests
 ### build_and_test
 ```
 fastlane build_and_test
 ```
-builds and runs tests
+Builds and runs tests
 
 ----
 

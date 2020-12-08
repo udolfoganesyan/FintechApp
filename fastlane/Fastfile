@@ -1,7 +1,12 @@
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
 
-desc "builds for testing"
+desc "Installs Pods listed in Podfile"
+lane :install_pods do
+    cocoapods
+end
+
+desc "Builds for testing"
 lane :build_for_testing do
     scan(
          build_for_testing: true
@@ -20,14 +25,14 @@ lane :build_for_testing do
                           )
 end
 
-desc "runs tests"
+desc "Runs tests"
 lane :just_run_tests do
     scan(
          test_without_building: true
          )
 end
 
-desc "builds and runs tests"
+desc "Builds and runs tests"
 lane :build_and_test do
     build_for_testing
     run_tests
