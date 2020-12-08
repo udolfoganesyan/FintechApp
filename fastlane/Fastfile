@@ -4,7 +4,7 @@
 desc "builds for testing"
 lane :build_for_testing do
     scan(
-        device: "iPhone SE"
+        device: "iPhone SE",
         clean: true
     )
 end
