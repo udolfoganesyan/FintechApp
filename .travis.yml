@@ -8,4 +8,4 @@ install:
     - bundle exec pod install
     - brew install libsodium
 script:
-    - fastlane build_and_test
+    - bundle exec fastlane build_and_test
