@@ -22,6 +22,7 @@ lane :just_run_tests do
                    rescue
                    message_on(success: false,
                               step: "Testing")
+#                              UI.crash!("Testing failed")
                               next
     end
 end
@@ -48,4 +49,3 @@ private_lane :message_on do |options|
                      value: "Rudolf Oganesyan"
                      }])
 end
-

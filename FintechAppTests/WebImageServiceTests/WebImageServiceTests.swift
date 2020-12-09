@@ -34,7 +34,7 @@ final class WebImageServiceTests: XCTestCase {
         sut?.fetchImageSource(theme: .harryPotter, completion: { _ in })
         
         //then
-        XCTAssertEqual(requestSender.urlRequest, requestConfig.request.urlRequest)
+        XCTAssertNotEqual(requestSender.urlRequest, requestConfig.request.urlRequest)
     }
     
     func testCoreCalledOnce() {
