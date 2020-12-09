@@ -1,5 +1,6 @@
 language: swift
 osx_image: xcode12.2
+cache: bundler
 before_install:
     - gem install bundler
 install:
