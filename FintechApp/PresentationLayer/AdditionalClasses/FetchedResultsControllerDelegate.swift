@@ -41,9 +41,10 @@ final class FetchedResultsControllerDelegate<Entity>: NSObject, NSFetchedResults
             guard let indexPath = indexPath else { return }
             tableView.deleteRows(at: [indexPath], with: .fade)
         case .move:
-            guard let indexPath = indexPath,
-                  let newIndexPath = newIndexPath else { return }
-            tableView.moveRow(at: indexPath, to: newIndexPath)
+            guard let deleteIndexPath = indexPath,
+                  let insertIndexPath = newIndexPath else { return }
+            tableView.deleteRows(at: [deleteIndexPath], with: .fade)
+            tableView.insertRows(at: [insertIndexPath], with: .fade)
         default: return
         }
     }

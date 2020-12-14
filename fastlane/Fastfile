@@ -1,0 +1,51 @@
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+desc "Installs Pods listed in Podfile"
+lane :install_pods do
+    cocoapods
+end
+
+desc "Builds for testing"
+lane :build_for_testing do
+    scan(build_for_testing: true)
+    message_on(success: true,
+               step: "Building")
+end
+
+desc "Runs tests"
+lane :just_run_tests do
+    begin
+        scan(test_without_building: true)
+        message_on(success: true,
+                   step: "Testing")
+                   rescue
+                   message_on(success: false,
+                              step: "Testing")
+                              UI.crash!("Testing failed")
+                              next
+    end
+end
+
+desc "Builds and runs tests"
+lane :build_and_test do
+    build_for_testing
+    just_run_tests
+end
+
+private_lane :message_on do |options|
+    success = options[:success]
+    step = options[:step]
+    success_string = success ? "SUCCESS" : "FAILURE"
+    title = step + ": " + success_string
+    discord_notifier(webhook_url: ENV['DISCORD_WEBHOOK_URL'],
+                     title: title,
+                     description: "",
+                     success: success,
+                     thumbnail_url: "https://acdn.tinkoff.ru/static/documents/703d269e-ec01-4187-9544-5f01fb27bbb6.png",
+                     fields: [
+                     {
+                     name: "Done by: ",
+                     value: "Rudolf Oganesyan"
+                     }])
+end

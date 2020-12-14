@@ -1,0 +1,13 @@
+language: swift
+osx_image: xcode12.2
+cache:
+    bundler: true
+    cocoapods: true
+before_install:
+    - gem install bundler
+install:
+    - bundle install
+    - bundle exec pod install
+    - brew install libsodium
+script:
+    - bundle exec fastlane build_and_test

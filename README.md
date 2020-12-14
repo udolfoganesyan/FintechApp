@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/udolfoganesyan/FintechApp.svg?branch=homework13)](https://travis-ci.org/udolfoganesyan/FintechApp)
+
 ### Project Name
 # FintechApp
 
@@ -11,3 +13,5 @@ Developing app for educational purposes
 
 - Firebase/Firestore
 - SwiftLint
+
+[![forthebadge](https://forthebadge.com/images/badges/made-with-swift.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/powered-by-electricity.svg)](https://forthebadge.com)

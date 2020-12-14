@@ -51,6 +51,9 @@
 		A1475869250F5FA3004DFCAA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1475867250F5FA3004DFCAA /* LaunchScreen.storyboard */; };
 		A1475871250F5FEA004DFCAA /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1475870250F5FEA004DFCAA /* Logger.swift */; };
 		A1475874250F6036004DFCAA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A1475873250F6036004DFCAA /* README.md */; };
+		A149F95C257EDC760069460D /* Gemfile in Resources */ = {isa = PBXBuildFile; fileRef = A149F95B257EDC760069460D /* Gemfile */; };
+		A149F961257EEE570069460D /* Fastfile in Resources */ = {isa = PBXBuildFile; fileRef = A149F960257EEE570069460D /* Fastfile */; };
+		A149F966257F7C070069460D /* .travis.yml in Resources */ = {isa = PBXBuildFile; fileRef = A149F965257F7C060069460D /* .travis.yml */; };
 		A1635973255DE0E700D1888A /* PresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1635972255DE0E700D1888A /* PresentationAssembly.swift */; };
 		A163597C255DE20B00D1888A /* RootAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = A163597B255DE20B00D1888A /* RootAssembly.swift */; };
 		A163597F255DE31600D1888A /* ServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = A163597E255DE31600D1888A /* ServiceAssembly.swift */; };
@@ -160,6 +163,9 @@
 		A147586A250F5FA3004DFCAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A1475870250F5FEA004DFCAA /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		A1475873250F6036004DFCAA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		A149F95B257EDC760069460D /* Gemfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Gemfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A149F960257EEE570069460D /* Fastfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Fastfile; path = fastlane/Fastfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A149F965257F7C060069460D /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .travis.yml; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.yaml; };
 		A1635972255DE0E700D1888A /* PresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationAssembly.swift; sourceTree = "<group>"; };
 		A163597B255DE20B00D1888A /* RootAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootAssembly.swift; sourceTree = "<group>"; };
 		A163597E255DE31600D1888A /* ServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAssembly.swift; sourceTree = "<group>"; };
@@ -172,7 +178,7 @@
 		A16D5B1F2569C78200C48F78 /* WigglingAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WigglingAnimation.swift; sourceTree = "<group>"; };
 		A16D5B24256B079900C48F78 /* ProfileTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTransition.swift; sourceTree = "<group>"; };
 		A1761CBC255F375900BDFF14 /* UserDataCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataCore.swift; sourceTree = "<group>"; };
-		A187D119253B9391008AAE86 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		A187D119253B9391008AAE86 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.yaml; };
 		A187D11C253C4AD4008AAE86 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		A187D125253C5230008AAE86 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		A1889B922576F803003C6280 /* MockRequestSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRequestSender.swift; sourceTree = "<group>"; };
@@ -432,6 +438,9 @@
 			children = (
 				A1475873250F6036004DFCAA /* README.md */,
 				A187D119253B9391008AAE86 /* .swiftlint.yml */,
+				A149F95B257EDC760069460D /* Gemfile */,
+				A149F960257EEE570069460D /* Fastfile */,
+				A149F965257F7C060069460D /* .travis.yml */,
 				A147585B250F5FA2004DFCAA /* FintechApp */,
 				A1F195772575A67900CA9050 /* FintechAppTests */,
 				A11D142A2576480F00F34146 /* FintechAppUITests */,
@@ -829,9 +838,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A149F961257EEE570069460D /* Fastfile in Resources */,
+				A149F95C257EDC760069460D /* Gemfile in Resources */,
 				A187D11A253B9391008AAE86 /* .swiftlint.yml in Resources */,
 				A1475869250F5FA3004DFCAA /* LaunchScreen.storyboard in Resources */,
 				A12320752528C30B005F8249 /* ThemeSettingsViewController.xib in Resources */,
+				A149F966257F7C070069460D /* .travis.yml in Resources */,
 				A1475866250F5FA3004DFCAA /* Assets.xcassets in Resources */,
 				A1475874250F6036004DFCAA /* README.md in Resources */,
 				A1C743A8251E3ABA005B5195 /* ConversationCell.xib in Resources */,
@@ -1037,7 +1049,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 226833GSKB;
 				INFOPLIST_FILE = FintechAppUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1057,7 +1069,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 226833GSKB;
 				INFOPLIST_FILE = FintechAppUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1122,7 +1134,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1177,7 +1189,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1232,7 +1244,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 226833GSKB;
 				INFOPLIST_FILE = FintechAppTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1253,7 +1265,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 226833GSKB;
 				INFOPLIST_FILE = FintechAppTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
