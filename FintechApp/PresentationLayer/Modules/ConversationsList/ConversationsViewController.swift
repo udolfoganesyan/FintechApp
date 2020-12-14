@@ -204,5 +204,6 @@ extension ConversationsViewController: SettingsDelegate {
         
         navigationController?.navigationBar.barTintColor = conversationsInteractor.currentTheme.backgroundColor
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: conversationsInteractor.currentTheme.primaryTextColor]
+        navigationController?.navigationBar.barStyle = conversationsInteractor.currentTheme.barStyle
     }
 }

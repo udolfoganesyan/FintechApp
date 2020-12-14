@@ -21,7 +21,7 @@ final class ServicesAssembly: ServicesAssemblyProtocol {
     
     private let coreAssembly: CoreAssemblyProtocol
     
-    lazy var themeService: ThemeServiceProtocol = ThemeService()
+    lazy var themeService: ThemeServiceProtocol = ThemeService(themeCore: coreAssembly.themeCore)
     lazy var firebaseService: FirebaseServiceProtocol = FirebaseService()
     lazy var coreDataService: CoreDataServiceProtocol = CoreDataService(dataModelName: CoreDataService.chatDataModelName)
     lazy var gcdUserDataService: UserDataServiceProtocol = GCDUserDataService(userDataCore: coreAssembly.userDataCore)

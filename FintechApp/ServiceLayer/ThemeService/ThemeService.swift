@@ -16,24 +16,20 @@ protocol ThemeServiceProtocol {
 
 final class ThemeService: ThemeServiceProtocol {
     
-    private let selectedThemeKey = "selectedTheme"
+    private let themeCore: ThemeCoreProtocol
     
     var currentTheme: Theme {
-        if let storedTheme = (UserDefaults.standard.value(forKey: selectedThemeKey) as AnyObject).integerValue {
-            return Theme(rawValue: storedTheme)!
-        } else {
-            return .classic
-        }
+        return themeCore.getCurrentSavedTheme() ?? .classic
+    }
+    
+    init(themeCore: ThemeCoreProtocol) {
+        self.themeCore = themeCore
     }
     
     func updateThemeWith(_ theme: Theme, completion: @escaping VoidClosure) {
-        DispatchQueue.global().async {
-            UserDefaults.standard.setValue(theme.rawValue, forKey: self.selectedThemeKey)
-            
-            DispatchQueue.main.async {
-                self.setupNavigationBarAppearance()
-                completion()
-            }
+        themeCore.saveTheme(theme: theme) {
+            self.setupNavigationBarAppearance()
+            completion()
         }
     }
     
